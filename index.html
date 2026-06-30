@@ -3,44 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <title>ONYX GROUP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
   margin:0;
   font-family:Arial;
-  background:#f5f5f5;
-  color:#111;
+  background:#f4f4f4;
+}
+
+header{
+  background:#fff;
+  padding:18px 25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  border-bottom:1px solid #eee;
+}
+
+.logo{
+  font-weight:900;
+  font-size:20px;
+}
+
+.btn{
+  background:#111;
+  color:#fff;
+  padding:10px 14px;
+  border-radius:10px;
+  cursor:pointer;
+  border:none;
 }
 
 .container{
   max-width:1100px;
   margin:auto;
+  padding:20px;
+}
+
+.hero{
+  background:#fff;
   padding:25px;
-}
-
-.header{
-  font-size:34px;
-  font-weight:800;
-}
-
-.sub{
-  color:#777;
-  margin-top:5px;
+  border-radius:18px;
+  margin-top:20px;
 }
 
 .search{
   width:100%;
+  margin-top:15px;
   padding:14px;
-  margin-top:20px;
   border-radius:12px;
   border:1px solid #ddd;
 }
 
-/* GRID */
 .grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:20px;
+  gap:18px;
   margin-top:25px;
 }
 
@@ -48,45 +69,74 @@ body{
   background:#fff;
   padding:18px;
   border-radius:16px;
-  transition:0.2s;
 }
 
-.card:hover{
-  transform:translateY(-3px);
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+.title{
+  font-weight:700;
 }
 
-.price{
-  color:#666;
-  font-size:14px;
-  margin-top:5px;
+.small{
+  color:#777;
+  font-size:13px;
 }
 
 .total{
-  font-weight:bold;
-  margin-top:10px;
+  font-weight:800;
+  margin-top:8px;
 }
 
-.btn{
-  width:100%;
+.actions{
+  display:flex;
+  gap:8px;
   margin-top:12px;
-  padding:10px;
+}
+
+.add{
+  flex:1;
+}
+
+.del{
+  background:#eee;
   border:none;
-  background:#111;
-  color:#fff;
+  padding:10px;
   border-radius:10px;
   cursor:pointer;
 }
 
-.cart{
+/* CART */
+.cartBtn{
   position:fixed;
   right:20px;
-  top:20px;
+  bottom:20px;
   background:#111;
   color:#fff;
-  padding:12px 16px;
-  border-radius:12px;
+  padding:14px 16px;
+  border-radius:14px;
   cursor:pointer;
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+.modalBox{
+  background:#fff;
+  width:350px;
+  padding:20px;
+  border-radius:16px;
+}
+
+.item{
+  display:flex;
+  justify-content:space-between;
+  margin:10px 0;
+  font-size:14px;
 }
 </style>
 
@@ -94,30 +144,58 @@ body{
 
 <body>
 
+<header>
+  <div class="logo">ONYX GROUP</div>
+  <button class="btn" onclick="openAdmin()">Админ</button>
+</header>
+
 <div class="container">
 
-  <div class="header">ONYX GROUP</div>
-  <div class="sub">Китайские товары с доставкой в Россию</div>
-
-  <input class="search" id="search" placeholder="Поиск товара...">
+  <div class="hero">
+    <h2>Китайские товары с доставкой</h2>
+    <input class="search" id="search" placeholder="Поиск...">
+  </div>
 
   <div class="grid" id="grid"></div>
 
 </div>
 
-<div class="cart" onclick="order()">
-🛒 Заказать
+<div class="cartBtn" onclick="openCart()">
+🛒 Корзина
+</div>
+
+<!-- CART MODAL -->
+<div class="modal" id="cart">
+  <div class="modalBox">
+    <h3>Корзина</h3>
+    <div id="cartItems"></div>
+    <hr>
+    <div id="sum"></div>
+    <button class="btn" onclick="order()">Оформить</button>
+    <button class="btn" onclick="closeCart()">Закрыть</button>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="modal" id="admin">
+  <div class="modalBox">
+    <h3>Добавить товар</h3>
+    <input id="name" placeholder="Название"><br><br>
+    <input id="price" placeholder="Цена"><br><br>
+    <input id="weight" placeholder="Вес"><br><br>
+
+    <button class="btn" onclick="addProduct()">Добавить</button>
+    <button class="btn" onclick="closeAdmin()">Закрыть</button>
+  </div>
 </div>
 
 <script>
 
-const products = [
+let products = JSON.parse(localStorage.getItem("products")) || [
   {name:"AirPods Pro 2", price:156, weight:0.2},
   {name:"Nike Hoodie", price:45, weight:0.6},
   {name:"Jordan Shoes", price:210, weight:1.2},
-  {name:"Smart Watch", price:120, weight:0.3},
-  {name:"iPhone Case", price:20, weight:0.1},
-  {name:"Gaming Mouse", price:35, weight:0.2}
+  {name:"Smart Watch", price:120, weight:0.3}
 ];
 
 let cart = [];
@@ -126,25 +204,23 @@ const grid = document.getElementById("grid");
 const search = document.getElementById("search");
 
 function render(list){
-  grid.innerHTML = "";
+  grid.innerHTML="";
 
   list.forEach((p,i)=>{
 
-    const delivery = Math.round(p.weight * 45 + 15);
-    const total = p.price + delivery;
+    let d = Math.round(p.weight*50+15);
+    let t = p.price+d;
 
     grid.innerHTML += `
       <div class="card">
-        <h3>${p.name}</h3>
+        <div class="title">${p.name}</div>
+        <div class="small">Цена: $${p.price}</div>
+        <div class="small">Доставка: $${d}</div>
+        <div class="total">Итого: $${t}</div>
 
-        <div class="price">Цена: $${p.price}</div>
-        <div class="price">Доставка: $${delivery}</div>
-
-        <div class="total">Итого: $${total}</div>
-
-        <button class="btn" onclick="add(${i})">
-          В корзину
-        </button>
+        <div class="actions">
+          <button class="btn add" onclick="add(${i})">В корзину</button>
+        </div>
       </div>
     `;
   });
@@ -154,29 +230,69 @@ function add(i){
   cart.push(products[i]);
 }
 
-function order(){
+function openCart(){
+  document.getElementById("cart").style.display="flex";
+  renderCart();
+}
 
-  if(cart.length === 0){
-    alert("Корзина пустая");
-    return;
-  }
+function closeCart(){
+  document.getElementById("cart").style.display="none";
+}
 
-  let text = "🔥 ONYX GROUP ORDER:%0A";
+function renderCart(){
+  let box=document.getElementById("cartItems");
+  box.innerHTML="";
+
+  let sum=0;
 
   cart.forEach(p=>{
-    text += `- ${p.name} $${p.price}%0A`;
+    let d=Math.round(p.weight*50+15);
+    let t=p.price+d;
+    sum+=t;
+
+    box.innerHTML+=`<div class="item">${p.name} <b>$${t}</b></div>`;
   });
 
-  // Telegram (вставишь сам TOKEN и CHAT_ID)
-  window.open(
-    `https://api.telegram.org/botTOKEN/sendMessage?chat_id=CHAT_ID&text=${text}`
-  );
+  document.getElementById("sum").innerHTML="ИТОГО: $"+sum;
+}
+
+function order(){
+
+  let text="ONYX ORDER:%0A";
+
+  cart.forEach(p=>{
+    text+=`- ${p.name} $${p.price}%0A`;
+  });
+
+  window.open(`https://api.telegram.org/botTOKEN/sendMessage?chat_id=CHAT_ID&text=${text}`);
+}
+
+function openAdmin(){
+  document.getElementById("admin").style.display="flex";
+}
+
+function closeAdmin(){
+  document.getElementById("admin").style.display="none";
+}
+
+function addProduct(){
+  let p={
+    name:name.value,
+    price:+price.value,
+    weight:+weight.value
+  };
+
+  products.push(p);
+  localStorage.setItem("products",JSON.stringify(products));
+
+  render(products);
+  closeAdmin();
 }
 
 render(products);
 
-search.addEventListener("input", e=>{
-  const v = e.target.value.toLowerCase();
+search.addEventListener("input",e=>{
+  let v=e.target.value.toLowerCase();
   render(products.filter(p=>p.name.toLowerCase().includes(v)));
 });
 
