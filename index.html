@@ -223,21 +223,207 @@
     @media(max-width:1020px){.hero-grid,.calculator-layout,.tracking-layout,.about-layout,.warehouse-grid,.support-grid,.banner-grid,.modal-grid{grid-template-columns:1fr}.hero-grid{min-height:auto}.hero-stage{min-height:540px}.stage-bottom{position:relative;left:auto;right:auto;bottom:auto;margin-top:16px}.search-row{grid-template-columns:1fr 1fr}.search-row .primary-btn{grid-column:1/-1}.modal-media{min-height:390px}}
     @media(max-width:820px){:root{--header:76px}.brand{min-width:auto}.brand-sub{display:none}.nav{position:fixed;top:var(--header);right:12px;left:12px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:14px;border-radius:22px;background:rgba(10,10,10,.985);border:1px solid var(--line);transform:translateY(-10px);opacity:0;pointer-events:none;transition:.24s ease;box-shadow:var(--shadow)}.nav.open{opacity:1;transform:translateY(0);pointer-events:auto}.burger{display:inline-block}.cart-btn span:first-child{display:none}.section-head,.catalog-toolbar,.footer-inner{grid-template-columns:1fr;display:grid;align-items:stretch}.section-actions,.toolbar-selects,.footer-links{justify-content:flex-start}.source-grid,.category-grid,.product-grid,.benefits-grid,.process-grid,.reviews-grid,.insurance-grid,.contact-grid,.blog-grid,.stats-grid{grid-template-columns:1fr}.route-points{grid-template-columns:repeat(2,1fr)}.search-row,.calc-grid,.newsletter-form{grid-template-columns:1fr}.cart-item{grid-template-columns:60px 1fr}.cart-actions{grid-column:1/-1;justify-items:start}.hero-stage{min-height:auto}.stage-bottom{grid-template-columns:1fr}.hero{padding-top:42px}h1{font-size:clamp(3rem,14vw,5rem)}.floating-label{display:none}.floating-actions{right:12px;bottom:12px}.floating-tg,.floating-plus{width:48px;height:48px}}
     @media(max-width:520px){.container{width:min(var(--container),calc(100% - 24px))}.header-actions{gap:7px}.icon-btn,.cart-btn,.burger{width:42px;height:42px}.brand-mark{width:34px;height:34px}.brand-main{font-size:1rem}.hero-actions,.modal-actions,.product-actions{flex-direction:column}.primary-btn,.secondary-btn,.ghost-btn{width:100%}.section{padding:68px 0}.route-points{grid-template-columns:1fr}.modal-content{padding:0}.product-modal-inner{padding:14px;border-radius:24px}.modal-media{min-height:320px}.modal-visual{width:78%;height:70%}}
-  </style>
+  
+    /* ===== FINAL HOTFIX: logo, Telegram icon and visible first screen ===== */
+    .logo-emblem{
+      background:linear-gradient(135deg,#ff7a3d,#e12a00)!important;
+      box-shadow:0 14px 36px rgba(225,42,0,.38)!important;
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .logo-emblem svg{display:block}
+    .brand{
+      min-width:238px;
+      border-color:rgba(255,90,31,.42);
+      background:
+        linear-gradient(135deg,rgba(255,255,255,.095),rgba(255,255,255,.032)),
+        radial-gradient(circle at 18% 20%,rgba(225,42,0,.34),transparent 38%);
+    }
+    .brand-main{color:#fff;text-shadow:0 0 22px rgba(225,42,0,.18)}
+    .brand-sub{letter-spacing:.18em}
+    .reveal{
+      opacity:1!important;
+      transform:translateY(0)!important;
+      animation:onyxFadeReady .72s ease both;
+    }
+    .reveal.visible{
+      opacity:1!important;
+      transform:translateY(0)!important;
+    }
+    @keyframes onyxFadeReady{
+      from{opacity:0;transform:translateY(18px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+    .floating-tg{
+      background:linear-gradient(135deg,#2AABEE,#229ED9)!important;
+      border-color:transparent!important;
+      color:#fff!important;
+      box-shadow:0 16px 38px rgba(34,158,217,.38)!important;
+      font-size:0;
+    }
+    .floating-tg svg{
+      display:block;
+      filter:drop-shadow(0 2px 6px rgba(0,0,0,.18));
+    }
+    .hero{
+      padding-top:72px;
+      padding-bottom:42px;
+    }
+    .hero-grid{
+      align-items:center;
+    }
+    .hero-stage{
+      background:
+        radial-gradient(circle at 24% 20%,rgba(225,42,0,.34),transparent 28%),
+        radial-gradient(circle at 85% 80%,rgba(255,90,31,.15),transparent 24%),
+        linear-gradient(145deg,rgba(255,255,255,.095),rgba(255,255,255,.028));
+    }
+    .stage-label,.stage-chip{
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+    @media(max-width:820px){
+      .brand{min-width:auto}
+      .brand-sub{display:none}
+    }
+  
+</style>
 </head>
 <body>
   <div class="grain"></div><div class="glow one"></div><div class="glow two"></div><div class="glow three"></div>
   <header class="site-header"><div class="container header-inner">
-    <a href="#top" class="brand" id="top" aria-label="ONYX GROUP"><span class="brand-mark">OX</span><span class="brand-copy"><span class="brand-main">ONYX GROUP</span><span class="brand-sub">China Buyer</span></span></a>
+    <a href="#top" class="brand" id="top" aria-label="ONYX GROUP">
+        <span class="brand-mark logo-emblem">
+          <svg viewBox="0 0 64 64" width="26" height="26" aria-hidden="true">
+            <defs>
+              <linearGradient id="onyxLogoGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#ff8a50"/>
+                <stop offset="48%" stop-color="#ff5a1f"/>
+                <stop offset="100%" stop-color="#e12a00"/>
+              </linearGradient>
+              <filter id="onyxLogoGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ff5a1f" flood-opacity="0.55"/>
+              </filter>
+            </defs>
+            <path d="M32 4L54 16.5V40.5C54 49.7 45.2 57.1 32 61C18.8 57.1 10 49.7 10 40.5V16.5L32 4Z" fill="url(#onyxLogoGrad)" filter="url(#onyxLogoGlow)"/>
+            <path d="M32 11L47 19.5V38.2C47 44.9 41.1 50.2 32 53.2C22.9 50.2 17 44.9 17 38.2V19.5L32 11Z" fill="rgba(0,0,0,0.22)" stroke="rgba(255,255,255,0.28)"/>
+            <path d="M22.8 22.8H29.1L32 27.15L34.9 22.8H41.2L35.2 31.6L42 41.2H35.45L32 36.1L28.55 41.2H22L28.8 31.6L22.8 22.8Z" fill="#fff"/>
+            <path d="M21.5 17.7L32 11.8L42.5 17.7" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="brand-copy">
+          <span class="brand-main">ONYX GROUP</span>
+          <span class="brand-sub">China Buyer / Cargo Service</span>
+        </span>
+      </a>
     <nav class="nav" id="nav"><a href="#catalog">Каталог</a><a href="#sources">Площадки</a><a href="#calculator">Расчёт</a><a href="#process">Как работает</a><a href="#tracking">Трекинг</a><a href="#faq">FAQ</a><a href="#contacts">Контакты</a></nav>
     <div class="header-actions"><button class="icon-btn" id="openSearchBtn" aria-label="Поиск">⌕</button><button class="cart-btn" id="openCartBtn" aria-label="Заявка"><span>Заявка</span><span class="cart-count" id="cartCount">0</span></button><button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button></div>
   </div></header>
 
   <main>
-    <section class="hero"><div class="container hero-grid">
-      <div class="reveal"><div class="eyebrow"><span class="dot"></span> CHINA → RUSSIA / BUYER & CARGO PLATFORM</div><h1>Любые товары<br><span class="gradient-text">из Китая</span><br>под ключ.</h1><p class="hero-text">ONYX GROUP — это байер и карго-сервис: находим товары на 1688, Taobao, Poizon, Pinduoduo и AliExpress, проверяем поставщика, выкупаем товар, принимаем на склад в Китае и доставляем в Россию.</p><div class="hero-actions"><a class="primary-btn" href="#catalog">Смотреть витрину</a><a class="secondary-btn" href="#calculator">Рассчитать доставку</a><a class="ghost-btn" href="#quote">Отправить ссылку</a></div><div class="hero-metrics"><div class="metric"><strong>1688 / Taobao / Poizon</strong><span>Работаем с китайскими маркетплейсами</span></div><div class="metric"><strong>7–24 дня</strong><span>Средний срок доставки до РФ</span></div><div class="metric"><strong>Проверка товара</strong><span>Фото, контроль и упаковка на складе</span></div></div></div>
-      <div class="hero-stage reveal"><div class="stage-top"><div class="stage-label">LIVE ROUTE / ORDER FLOW</div><div class="stage-chip">AUTO CALC</div></div><div class="stage-main"><div class="route-card"><div class="route-head"><div><div class="route-title">Guangzhou → Moscow</div><div class="route-status">Маршрут активен</div></div><div class="stage-chip">12–18 days</div></div><div class="route-line"></div><div class="route-points"><div class="route-point"><strong>Поиск</strong><span>Товар найден</span></div><div class="route-point"><strong>Выкуп</strong><span>Поставщик проверен</span></div><div class="route-point"><strong>Склад</strong><span>Фото / упаковка</span></div><div class="route-point"><strong>РФ</strong><span>Доставка клиенту</span></div></div></div><div class="finder-card"><div class="finder-input"><small>Запрос клиента</small><strong>Найти кроссовки, techwear jacket, аксессуары для iPhone</strong></div><div class="finder-result"><span>Найдено</span><b>218 товаров</b></div></div></div><div class="floating-label">Buyer + Cargo в одном сервисе</div><div class="stage-bottom"><div class="cargo-card"><strong>📦 Склад в Китае</strong><span>Принимаем товар, сверяем комплектацию, делаем фото и готовим отправку.</span></div><div class="cargo-card"><strong>💰 Честная цена</strong><span>Показываем стоимость товара, доставку, комиссию и итог до оформления.</span></div></div></div>
-    </div></section>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <div class="eyebrow"><span class="dot"></span> ONYX GROUP / CHINA → RUSSIA</div>
+
+          <h1>
+            Привозим товары<br>
+            <span class="gradient-text">из Китая</span><br>
+            под ключ.
+          </h1>
+
+          <p class="hero-text">
+            ONYX GROUP — байер и карго-сервис. Мы находим нужные товары на 1688, Taobao, Poizon,
+            Pinduoduo и AliExpress, проверяем продавца, выкупаем заказ, принимаем его на складе
+            в Китае и доставляем в Россию.
+          </p>
+
+          <div class="hero-actions">
+            <a class="primary-btn" href="#catalog">Смотреть каталог</a>
+            <a class="secondary-btn" href="#calculator">Рассчитать доставку</a>
+            <a class="ghost-btn" href="#quote">Оставить заявку</a>
+          </div>
+
+          <div class="hero-metrics">
+            <div class="metric">
+              <strong>1688 / Taobao / Poizon</strong>
+              <span>Работаем с китайскими маркетплейсами, фабриками и поставщиками.</span>
+            </div>
+            <div class="metric">
+              <strong>7–24 дня</strong>
+              <span>Средний срок доставки товара из Китая в Россию.</span>
+            </div>
+            <div class="metric">
+              <strong>Фото-проверка</strong>
+              <span>Контроль товара, упаковки и комплектации на складе.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-stage reveal">
+          <div class="stage-top">
+            <div class="stage-label">КАК ЭТО РАБОТАЕТ</div>
+            <div class="stage-chip">BUYER + CARGO</div>
+          </div>
+
+          <div class="stage-main">
+            <div class="route-card">
+              <div class="route-head">
+                <div>
+                  <div class="route-title">Китайский маркетплейс → склад → Россия</div>
+                  <div class="route-status">Все этапы прозрачны</div>
+                </div>
+                <div class="stage-chip">12–18 days</div>
+              </div>
+
+              <div class="route-line"></div>
+
+              <div class="route-points">
+                <div class="route-point">
+                  <strong>1. Запрос</strong>
+                  <span>Ты отправляешь ссылку, фото или название товара</span>
+                </div>
+                <div class="route-point">
+                  <strong>2. Выкуп</strong>
+                  <span>Мы проверяем продавца и покупаем товар в Китае</span>
+                </div>
+                <div class="route-point">
+                  <strong>3. Склад</strong>
+                  <span>Фотографируем, проверяем и упаковываем</span>
+                </div>
+                <div class="route-point">
+                  <strong>4. Доставка</strong>
+                  <span>Отправляем заказ в Россию</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="finder-card">
+              <div class="finder-input">
+                <small>Что можно заказать</small>
+                <strong>Одежда, обувь, техника, аксессуары, товары для дома, авто и многое другое</strong>
+              </div>
+              <div class="finder-result">
+                <span>Поиск</span>
+                <b>по ссылке / фото / названию</b>
+              </div>
+            </div>
+          </div>
+
+          <div class="floating-label">Подбор + выкуп + доставка</div>
+
+          <div class="stage-bottom">
+            <div class="cargo-card">
+              <strong>📦 Склад в Китае</strong>
+              <span>Принимаем заказы, объединяем посылки и готовим их к отправке.</span>
+            </div>
+            <div class="cargo-card">
+              <strong>💰 Прозрачная стоимость</strong>
+              <span>Показываем цену товара, доставку, комиссию и итоговую сумму.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section class="search-band" id="smart-search"><div class="container"><div class="search-shell reveal"><div class="search-row"><div class="input-wrap"><input type="text" id="globalSearch" placeholder="Найти товар: кроссовки, пуховик, электроника, ссылка 1688..."></div><div class="input-wrap"><select id="mainCategoryFilter"><option value="all">Все категории</option><option value="clothes">Одежда</option><option value="shoes">Обувь</option><option value="electronics">Электроника</option><option value="accessories">Аксессуары</option><option value="home">Дом</option><option value="auto">Авто</option></select></div><div class="input-wrap"><select id="sourceFilter"><option value="all">Все площадки</option><option value="1688">1688</option><option value="Taobao">Taobao</option><option value="Poizon">Poizon</option><option value="Pinduoduo">Pinduoduo</option><option value="AliExpress">AliExpress</option></select></div><div class="input-wrap"><select id="priceFilter"><option value="all">Любая цена</option><option value="under2000">до 2 000 ₽</option><option value="under5000">до 5 000 ₽</option><option value="premium">premium</option></select></div><button class="primary-btn" id="searchNowBtn">Найти</button></div><div class="search-tags"><span>Популярное:</span><button class="tag-link" data-search="techwear">techwear</button><button class="tag-link" data-search="кроссовки">кроссовки</button><button class="tag-link" data-search="iPhone">iPhone</button><button class="tag-link" data-search="сумка">сумка</button><button class="tag-link" data-search="авто">авто</button><button class="tag-link" data-search="дом">дом</button></div></div></div></section>
 
@@ -279,7 +465,11 @@
   <div class="overlay" id="overlay"></div>
   <aside class="cart-drawer" id="cartDrawer" aria-hidden="true"><div class="drawer-head"><h3>Заявка / корзина</h3><button class="icon-btn" id="closeCartBtn" aria-label="Закрыть">✕</button></div><div class="cart-body" id="cartItems"></div><div class="cart-foot"><div class="cart-total"><span>Примерный итог</span><strong id="cartTotal">0 ₽</strong></div><form class="checkout-form" id="checkoutForm"><input type="text" id="customerName" placeholder="Имя" required><input type="text" id="customerContact" placeholder="Telegram или телефон" required><input type="text" id="customerCity" placeholder="Город доставки" required><textarea id="customerComment" placeholder="Комментарий: размер, цвет, количество, пожелания"></textarea><button type="submit" class="primary-btn">Отправить заявку</button></form></div></aside>
   <div class="product-modal" id="productModal"><div class="product-modal-inner"><button class="modal-close" id="closeModalBtn">✕</button><div class="modal-grid"><div class="modal-media" id="modalMedia"></div><div class="modal-content"><div class="modal-meta" id="modalMeta"></div><h3 id="modalTitle"></h3><div class="modal-price" id="modalPrice"></div><p class="modal-desc" id="modalDesc"></p><div class="trust-box"><span>🚚 Доставка Китай → РФ 7–24 дня</span><span>📦 Проверка товара на складе</span><span>💰 Прозрачная комиссия ONYX GROUP</span><span>💬 Подтверждение заказа в Telegram</span></div><div class="modal-block"><div class="modal-block-title">Характеристики</div><div class="product-chips" id="modalChips"></div></div><div class="modal-block" id="sizeBlock" style="display:none;"><div class="modal-block-title">Размер</div><div class="option-grid" id="sizeOptions"></div></div><div class="modal-block" id="colorBlock" style="display:none;"><div class="modal-block-title">Цвет / модель</div><div class="option-grid" id="colorOptions"></div></div><div class="modal-block"><div class="modal-block-title">Источник</div><div class="calc-result" id="modalSourceBox"></div></div><div class="modal-actions"><button class="secondary-btn" id="modalCloseAction">Закрыть</button><button class="primary-btn" id="modalAddToCartBtn">Добавить в заявку</button></div></div></div></div></div>
-  <div class="toast" id="toast"></div><div class="floating-actions"><a class="floating-tg" href="https://t.me/onyxgroup" target="_blank" rel="noopener noreferrer" aria-label="Telegram">TG</a><a class="floating-plus" href="#quote" aria-label="Заявка">+</a></div>
+  <div class="toast" id="toast"></div><div class="floating-actions"><a class="floating-tg" href="https://t.me/onyxgroup" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+      <svg viewBox="0 0 24 24" width="23" height="23" aria-hidden="true">
+        <path fill="currentColor" d="M9.78 15.53L9.41 20.74C9.94 20.74 10.17 20.51 10.45 20.23L12.94 17.84L18.11 21.62C19.06 22.15 19.73 21.87 19.99 20.75L23.4 4.77C23.71 3.33 22.88 2.77 21.96 3.11L1.91 10.78C0.54 11.31 0.56 12.07 1.68 12.41L6.81 14.01L18.73 6.53C19.29 6.19 19.8 6.38 19.38 6.72L9.78 15.53Z"/>
+      </svg>
+    </a><a class="floating-plus" href="#quote" aria-label="Заявка">+</a></div>
 
   <script>
     const TELEGRAM_USERNAME = "onyxgroup";
