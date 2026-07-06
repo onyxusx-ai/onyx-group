@@ -286,6 +286,439 @@
       .brand-sub{display:none}
     }
   
+
+    /* ===== ONYX GROUP FINAL FIX PACK ===== */
+
+    body {
+      text-rendering: geometricPrecision;
+    }
+
+    .hero-stage,
+    .route-card,
+    .finder-card,
+    .warehouse-card,
+    .tracking-panel,
+    .calc-panel,
+    .quote-panel,
+    .support-card {
+      overflow: hidden;
+    }
+
+    .hero-stage {
+      min-height: 700px;
+    }
+
+    .route-points {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .route-point {
+      min-width: 0;
+    }
+
+    .route-point strong,
+    .route-point span,
+    .finder-input strong,
+    .cargo-card span {
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+
+    .finder-card {
+      grid-template-columns: 1fr !important;
+      align-items: start;
+    }
+
+    .finder-result {
+      justify-items: start;
+    }
+
+    .stage-bottom {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .search-shell {
+      overflow: hidden;
+    }
+
+    .search-row {
+      grid-template-columns: minmax(260px, 1fr) minmax(190px, .55fr) minmax(190px, .55fr) minmax(165px, .45fr) 120px;
+    }
+
+    .input-wrap,
+    .input-wrap input,
+    .input-wrap select {
+      min-width: 0;
+    }
+
+    .product-grid {
+      min-height: 360px;
+    }
+
+    .final-calc-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .auto-rate-panel {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .auto-rate-panel > div {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.075);
+    }
+
+    .auto-rate-panel span {
+      display: block;
+      color: var(--muted);
+      font-size: .82rem;
+      margin-bottom: 6px;
+    }
+
+    .auto-rate-panel strong {
+      display: block;
+      font-size: .98rem;
+      letter-spacing: -.03em;
+    }
+
+    .calc-note,
+    .newsletter-explain {
+      margin-top: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: .92rem;
+    }
+
+    .tracking-map {
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 16% 30%, rgba(255,90,31,.18), transparent 28%),
+        linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.085);
+      overflow: hidden;
+    }
+
+    .tracking-map-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .tracking-map-head span {
+      color: var(--accent-3);
+      font-size: .9rem;
+    }
+
+    .tracking-route-line {
+      position: relative;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.09);
+      overflow: visible;
+      margin: 26px 10px 22px;
+    }
+
+    .tracking-route-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--success));
+      box-shadow: 0 0 30px rgba(255,90,31,.38);
+      transition: width .9s ease;
+    }
+
+    .tracking-package {
+      position: absolute;
+      top: 50%;
+      left: 0%;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      transform: translate(-50%, -50%);
+      display: grid;
+      place-items: center;
+      background: rgba(0,0,0,.65);
+      border: 1px solid rgba(255,90,31,.42);
+      box-shadow: 0 0 26px rgba(255,90,31,.38);
+      transition: left .9s ease;
+      animation: packageFloat 2.2s ease-in-out infinite;
+    }
+
+    .tracking-cities {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      color: var(--muted);
+      font-size: .78rem;
+      text-align: center;
+    }
+
+    .tracking-step.done,
+    .tracking-step.active {
+      border-color: rgba(255,90,31,.42);
+      background: rgba(255,90,31,.08);
+    }
+
+    .tracking-step.done .tracking-dot,
+    .tracking-step.active .tracking-dot {
+      background: var(--accent-2);
+      box-shadow: 0 0 18px rgba(255,90,31,.58);
+    }
+
+    .tracking-step.current {
+      border-color: rgba(57,217,138,.45);
+      background: rgba(57,217,138,.08);
+    }
+
+    .tracking-step.current .tracking-dot {
+      background: var(--success);
+      box-shadow: 0 0 18px rgba(57,217,138,.58);
+    }
+
+    @keyframes packageFloat {
+      0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+      50% { transform: translate(-50%, -50%) translateY(-5px); }
+    }
+
+    .route-map-card {
+      min-height: 500px !important;
+    }
+
+    .premium-route-map {
+      position: relative;
+      min-height: 330px;
+      margin-top: 22px;
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,.09);
+      background:
+        radial-gradient(circle at 18% 50%, rgba(255,90,31,.18), transparent 20%),
+        radial-gradient(circle at 65% 43%, rgba(255,255,255,.11), transparent 15%),
+        radial-gradient(circle at 84% 63%, rgba(57,217,138,.18), transparent 16%),
+        rgba(0,0,0,.22);
+      overflow: hidden;
+    }
+
+    .map-grid-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.065) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255,255,255,.055) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(circle at center, black, transparent 82%);
+      opacity: .75;
+    }
+
+    .map-route-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      overflow: visible;
+    }
+
+    .animated-route-path {
+      fill: none;
+      stroke: url(#finalRouteGradient);
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-dasharray: 18 18;
+      filter: url(#routeGlow);
+      animation: routeDashMove 1.8s linear infinite;
+    }
+
+    @keyframes routeDashMove {
+      to { stroke-dashoffset: -36; }
+    }
+
+    .moving-cargo-box {
+      position: absolute;
+      left: 12%;
+      top: 62%;
+      z-index: 5;
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: rgba(0,0,0,.72);
+      border: 1px solid rgba(255,90,31,.42);
+      box-shadow: 0 0 32px rgba(255,90,31,.5);
+      animation: cargoMove 6.5s ease-in-out infinite;
+    }
+
+    @keyframes cargoMove {
+      0% { left: 12%; top: 62%; }
+      32% { left: 36%; top: 38%; }
+      63% { left: 66%; top: 49%; }
+      100% { left: 88%; top: 32%; }
+    }
+
+    .map-city {
+      position: absolute;
+      z-index: 4;
+      display: grid;
+      gap: 4px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(0,0,0,.58);
+      border: 1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(12px);
+      min-width: 130px;
+    }
+
+    .map-city strong {
+      font-size: .9rem;
+      letter-spacing: -.03em;
+    }
+
+    .map-city small {
+      color: var(--muted);
+      font-size: .76rem;
+    }
+
+    .city-a { left: 8%; top: 56%; }
+    .city-b { left: 55%; top: 28%; }
+    .city-c { right: 7%; top: 58%; }
+
+    .map-dot {
+      width: 13px;
+      height: 13px;
+      border-radius: 999px;
+      position: absolute;
+      left: -7px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .map-dot.orange { background: var(--accent-2); box-shadow: 0 0 22px rgba(255,90,31,.75); }
+    .map-dot.white { background: #fff; box-shadow: 0 0 22px rgba(255,255,255,.65); }
+    .map-dot.green { background: var(--success); box-shadow: 0 0 22px rgba(57,217,138,.75); }
+
+    .route-map-caption {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .route-map-caption div {
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .route-map-caption strong {
+      display: block;
+      color: var(--accent-3);
+      margin-bottom: 4px;
+    }
+
+    .route-map-caption span {
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .final-newsletter-form {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .newsletter-result.saved {
+      border-color: rgba(57,217,138,.28);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(57,217,138,.14), transparent 36%),
+        rgba(255,255,255,.045);
+    }
+
+    @media (max-width: 1420px) {
+      .search-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .search-row .primary-btn {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 1020px) {
+      .hero-stage {
+        min-height: auto;
+      }
+
+      .final-calc-grid,
+      .auto-rate-panel,
+      .route-map-caption {
+        grid-template-columns: 1fr;
+      }
+
+      .premium-route-map {
+        min-height: 420px;
+      }
+
+      .city-a { left: 8%; top: 18%; }
+      .city-b { left: 48%; top: 42%; }
+      .city-c { right: 7%; top: 66%; }
+
+      .moving-cargo-box {
+        animation: cargoMoveMobile 6.5s ease-in-out infinite;
+      }
+
+      @keyframes cargoMoveMobile {
+        0% { left: 16%; top: 26%; }
+        50% { left: 54%; top: 48%; }
+        100% { left: 82%; top: 72%; }
+      }
+    }
+
+    @media (max-width: 720px) {
+      .route-points,
+      .stage-bottom,
+      .search-row,
+      .tracking-cities,
+      .final-newsletter-form {
+        grid-template-columns: 1fr !important;
+      }
+
+      .tracking-cities {
+        text-align: left;
+      }
+
+      .premium-route-map {
+        min-height: 500px;
+      }
+
+      .map-city {
+        min-width: 170px;
+      }
+
+      .city-a { left: 10%; top: 12%; }
+      .city-b { left: 10%; top: 40%; }
+      .city-c { left: 10%; top: 68%; }
+
+      .route-map-caption {
+        display: none;
+      }
+    }
+
 </style>
 </head>
 <body>
@@ -439,13 +872,244 @@
 
     <section class="section" id="process"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">PROCESS</div><h2>Как работает заказ</h2><p>От идеи до получения — один понятный сценарий.</p></div></div><div class="process-grid"><div class="process-card reveal"><div class="process-mini">🔗</div><strong>Отправляешь запрос</strong><p>Ссылка, фото, название товара или описание того, что нужно найти.</p></div><div class="process-card reveal"><div class="process-mini">🔎</div><strong>Мы ищем варианты</strong><p>Сравниваем цены, рейтинг продавца, отзывы, наличие и условия.</p></div><div class="process-card reveal"><div class="process-mini">🧾</div><strong>Считаем итог</strong><p>Фиксируем цену товара, доставку, комиссию и сроки до оплаты.</p></div><div class="process-card reveal"><div class="process-mini">📦</div><strong>Выкупаем и везём</strong><p>Принимаем товар на склад, проверяем, упаковываем и отправляем в РФ.</p></div></div></div></section>
 
-    <section class="section" id="calculator"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">CALCULATOR</div><h2>Калькулятор примерной цены</h2><p>Быстрый расчёт показывает примерную итоговую стоимость. Финальная цена зависит от товара, веса, маршрута и курса.</p></div></div><div class="calculator-layout"><div class="calc-panel reveal"><h3>Рассчитать заказ</h3><p>Введи цену в юанях, вес и тип доставки — сайт покажет структуру стоимости.</p><div class="calc-tabs" id="calcTabs"><button class="calc-tab active" data-calc-route="standard">Стандарт</button><button class="calc-tab" data-calc-route="fast">Быстро</button><button class="calc-tab" data-calc-route="cargo">Карго</button></div><div class="calc-grid"><div class="calc-field"><label>Цена товара, ¥</label><input type="number" id="calcCny" value="188" min="0"></div><div class="calc-field"><label>Вес, кг</label><input type="number" id="calcWeight" value="1.2" min="0" step="0.1"></div><div class="calc-field"><label>Курс ¥ → ₽</label><input type="number" id="calcRate" value="13.5" min="0" step="0.1"></div><div class="calc-field"><label>Комиссия сервиса</label><select id="calcFee"><option value="0.12">12%</option><option value="0.15" selected>15%</option><option value="0.18">18%</option></select></div></div><div class="calc-result" id="calcResult"></div></div><div class="quote-panel reveal" id="quote"><h3>Заявка на поиск / выкуп</h3><p>Форма работает без backend: она собирает текст заявки и открывает Telegram-сообщение.</p><form class="quote-form" id="quoteForm"><input type="text" id="quoteName" placeholder="Имя" required><input type="text" id="quoteContact" placeholder="Telegram / телефон" required><input type="text" id="quoteLink" placeholder="Ссылка на товар или название"><textarea id="quoteText" placeholder="Что нужно найти / размер / цвет / количество / город доставки"></textarea><button class="primary-btn" type="submit">Отправить заявку в Telegram</button></form></div></div></div></section>
+    <section class="section" id="calculator">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head-copy reveal">
+            <div class="eyebrow">CALCULATOR</div>
+            <h2>Калькулятор доставки</h2>
+            <p>Клиент вводит только цену товара и вес. Курс и комиссия считаются сайтом автоматически по настройкам ONYX GROUP.</p>
+          </div>
+        </div>
 
-    <section class="section" id="tracking"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">TRACKING</div><h2>Статус заказа</h2><p>Демонстрационный трекинг: клиент вводит номер ONYX-заказа и видит этапы.</p></div></div><div class="tracking-layout"><div class="tracking-panel reveal"><h3>Проверить заказ</h3><p>Например: ONYX-2406, ONYX-8801, ONYX-7777.</p><form class="track-form" id="trackForm"><input type="text" id="trackInput" placeholder="Введите номер заказа"><button class="primary-btn" type="submit">Проверить</button></form><div class="calc-result" id="trackResult" style="display:none;"></div></div><div class="tracking-visual reveal" id="trackingSteps"><div class="tracking-step active"><div class="tracking-dot"></div><div><strong>Заявка принята</strong><span>Менеджер проверяет товар и цену</span></div><small>1</small></div><div class="tracking-step active"><div class="tracking-dot"></div><div><strong>Товар выкуплен</strong><span>Оплата поставщику в Китае</span></div><small>2</small></div><div class="tracking-step active"><div class="tracking-dot"></div><div><strong>Склад в Китае</strong><span>Фото, проверка, упаковка</span></div><small>3</small></div><div class="tracking-step"><div class="tracking-dot"></div><div><strong>В пути в РФ</strong><span>Карго маршрут активен</span></div><small>4</small></div><div class="tracking-step"><div class="tracking-dot"></div><div><strong>Выдача клиенту</strong><span>Передача или доставка по городу</span></div><small>5</small></div></div></div></div></section>
+        <div class="calculator-layout">
+          <div class="calc-panel reveal">
+            <h3>Рассчитать заказ</h3>
+            <p>Введи цену товара в юанях и примерный вес. Сайт сам добавит доставку, сервисную комиссию и покажет итог.</p>
+
+            <div class="calc-tabs" id="calcTabs">
+              <button class="calc-tab active" data-calc-route="standard">Стандарт</button>
+              <button class="calc-tab" data-calc-route="fast">Быстро</button>
+              <button class="calc-tab" data-calc-route="cargo">Карго</button>
+            </div>
+
+            <div class="calc-grid final-calc-grid">
+              <div class="calc-field">
+                <label>Цена товара в Китае, ¥</label>
+                <input type="number" id="calcCny" value="188" min="0" placeholder="Например: 188">
+              </div>
+              <div class="calc-field">
+                <label>Примерный вес, кг</label>
+                <input type="number" id="calcWeight" value="1.2" min="0" step="0.1" placeholder="Например: 1.2">
+              </div>
+            </div>
+
+            <div class="auto-rate-panel">
+              <div>
+                <span>Курс сайта</span>
+                <strong id="siteRateLabel">¥ → ₽</strong>
+              </div>
+              <div>
+                <span>Комиссия ONYX</span>
+                <strong id="siteFeeLabel">авто</strong>
+              </div>
+              <div>
+                <span>Маршрут</span>
+                <strong id="siteRouteLabel">Стандарт</strong>
+              </div>
+            </div>
+
+            <div class="calc-result" id="calcResult"></div>
+
+            <div class="calc-note">
+              Итог является предварительным. Финальная сумма фиксируется менеджером после проверки товара, продавца, веса и маршрута.
+            </div>
+          </div>
+
+          <div class="quote-panel reveal" id="quote">
+            <h3>Заявка на поиск / выкуп</h3>
+            <p>Отправь ссылку, фото или описание товара. Форма соберёт сообщение и откроет Telegram для отправки менеджеру.</p>
+
+            <form class="quote-form" id="quoteForm">
+              <input type="text" id="quoteName" placeholder="Имя" required>
+              <input type="text" id="quoteContact" placeholder="Telegram / телефон" required>
+              <input type="text" id="quoteLink" placeholder="Ссылка на товар или название">
+              <textarea id="quoteText" placeholder="Что нужно найти / размер / цвет / количество / город доставки"></textarea>
+              <button class="primary-btn" type="submit">Отправить заявку в Telegram</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tracking">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head-copy reveal">
+            <div class="eyebrow">TRACKING</div>
+            <h2>Статус заказа</h2>
+            <p>Рабочий демо-трекинг: введи код ONYX-2406, ONYX-8801 или ONYX-7777. Сайт покажет этап, маршрут и движение заказа.</p>
+          </div>
+        </div>
+
+        <div class="tracking-layout">
+          <div class="tracking-panel reveal">
+            <h3>Проверить заказ</h3>
+            <p>Трек-коды для проверки: <b>ONYX-2406</b>, <b>ONYX-8801</b>, <b>ONYX-7777</b>.</p>
+
+            <form class="track-form" id="trackForm">
+              <input type="text" id="trackInput" placeholder="Введите номер заказа">
+              <button class="primary-btn" type="submit">Проверить</button>
+            </form>
+
+            <div class="tracking-map" id="trackingMap">
+              <div class="tracking-map-head">
+                <strong id="trackingMapTitle">Маршрут заказа</strong>
+                <span id="trackingMapStatus">Введите трек-код</span>
+              </div>
+
+              <div class="tracking-route-line">
+                <span class="tracking-route-fill" id="trackingRouteFill"></span>
+                <span class="tracking-package" id="trackingPackage">📦</span>
+              </div>
+
+              <div class="tracking-cities">
+                <span>Заявка</span>
+                <span>Выкуп</span>
+                <span>Склад CN</span>
+                <span>В пути</span>
+                <span>Россия</span>
+              </div>
+            </div>
+
+            <div class="calc-result" id="trackResult" style="display:none;"></div>
+          </div>
+
+          <div class="tracking-visual reveal" id="trackingSteps">
+            <div class="tracking-step" data-step="1">
+              <div class="tracking-dot"></div>
+              <div>
+                <strong>Заявка принята</strong>
+                <span>Менеджер проверяет товар и цену</span>
+              </div>
+              <small>1</small>
+            </div>
+            <div class="tracking-step" data-step="2">
+              <div class="tracking-dot"></div>
+              <div>
+                <strong>Товар выкуплен</strong>
+                <span>Оплата поставщику в Китае</span>
+              </div>
+              <small>2</small>
+            </div>
+            <div class="tracking-step" data-step="3">
+              <div class="tracking-dot"></div>
+              <div>
+                <strong>Склад в Китае</strong>
+                <span>Фото, проверка, упаковка</span>
+              </div>
+              <small>3</small>
+            </div>
+            <div class="tracking-step" data-step="4">
+              <div class="tracking-dot"></div>
+              <div>
+                <strong>В пути в РФ</strong>
+                <span>Карго маршрут активен</span>
+              </div>
+              <small>4</small>
+            </div>
+            <div class="tracking-step" data-step="5">
+              <div class="tracking-dot"></div>
+              <div>
+                <strong>Выдача клиенту</strong>
+                <span>Передача или доставка по городу</span>
+              </div>
+              <small>5</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section class="section" id="about"><div class="container about-layout"><div class="about-panel reveal"><div class="eyebrow">ABOUT</div><h2>ONYX GROUP — не просто магазин.</h2><p>Это сервис, который соединяет китайские маркетплейсы, проверку товара, выкуп, склад и доставку в одну понятную систему.</p><p>Сайт сделан как премиальная оболочка: товары могут быть ручными, загруженными из базы или в будущем подтянутыми из API/парсера.</p><div class="hero-actions"><a class="secondary-btn" href="#catalog">Каталог</a><a class="primary-btn" href="#contacts">Связаться</a></div></div><div class="stats-grid"><div class="stat-card reveal"><strong>5+</strong><span>ключевых китайских площадок для поиска</span></div><div class="stat-card reveal"><strong>24/7</strong><span>заявки через сайт и Telegram</span></div><div class="stat-card reveal"><strong>7–24</strong><span>дня средняя логистика до РФ</span></div><div class="stat-card reveal"><strong>100%</strong><span>фокус на понятной покупке из Китая</span></div></div></div></section>
 
-    <section class="section" id="warehouse"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">WAREHOUSE & ROUTE</div><h2>Склад, проверка и маршрут</h2><p>Важная часть сервиса — не просто купить товар, а принять его, проверить, упаковать и довезти.</p></div></div><div class="warehouse-grid"><div class="warehouse-card big reveal"><h3>China warehouse → Russia delivery</h3><p>Складской этап нужен, чтобы снизить риск: товар можно сфотографировать, объединить с другими заказами и отправить правильным маршрутом.</p><div class="warehouse-map"><span class="map-pin one"></span><span class="map-pin two"></span><span class="map-pin three"></span></div></div><div class="warehouse-side"><div class="warehouse-card reveal"><h3>Фото перед отправкой</h3><p>Показываем клиенту, что товар приехал на склад и соответствует заказу.</p></div><div class="warehouse-card reveal"><h3>Объединение заказов</h3><p>Несколько товаров можно собрать в одну посылку, чтобы логистика была выгоднее.</p></div><div class="warehouse-card reveal"><h3>Аккуратная упаковка</h3><p>Переупаковка и защита товара перед маршрутом Китай → РФ.</p></div></div></div></div></section>
+    <section class="section" id="warehouse">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head-copy reveal">
+            <div class="eyebrow">WAREHOUSE & ROUTE</div>
+            <h2>Склад, проверка и маршрут</h2>
+            <p>Товар не едет вслепую: сначала он приходит на склад в Китае, проходит фото-проверку, переупаковку и только потом отправляется в Россию.</p>
+          </div>
+        </div>
+
+        <div class="warehouse-grid">
+          <div class="warehouse-card big route-map-card reveal">
+            <h3>China warehouse → Russia delivery</h3>
+            <p>Маршрут построен как полноценная логистическая цепочка: продавец → склад ONYX в Китае → карго-линия → Россия → клиент.</p>
+
+            <div class="premium-route-map">
+              <div class="map-grid-bg"></div>
+
+              <div class="map-city city-a">
+                <span class="map-dot orange"></span>
+                <strong>Guangzhou</strong>
+                <small>Склад ONYX</small>
+              </div>
+
+              <div class="map-city city-b">
+                <span class="map-dot white"></span>
+                <strong>Almaty / Transit</strong>
+                <small>Маршрут</small>
+              </div>
+
+              <div class="map-city city-c">
+                <span class="map-dot green"></span>
+                <strong>Moscow</strong>
+                <small>Выдача РФ</small>
+              </div>
+
+              <svg class="map-route-svg" viewBox="0 0 1000 360" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="finalRouteGradient" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#ff3d00"/>
+                    <stop offset="52%" stop-color="#ffb000"/>
+                    <stop offset="100%" stop-color="#39d98a"/>
+                  </linearGradient>
+                  <filter id="routeGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#ff5a1f" flood-opacity="0.55"/>
+                  </filter>
+                </defs>
+                <path class="animated-route-path" d="M120 230 C310 110, 540 130, 710 185 S850 230, 920 120" />
+              </svg>
+
+              <div class="moving-cargo-box">📦</div>
+
+              <div class="route-map-caption">
+                <div><strong>A</strong><span>Приём товара</span></div>
+                <div><strong>B</strong><span>Карго маршрут</span></div>
+                <div><strong>C</strong><span>Россия / выдача</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="warehouse-side">
+            <div class="warehouse-card reveal">
+              <h3>Фото перед отправкой</h3>
+              <p>Показываем клиенту, что товар приехал на склад и соответствует заказу.</p>
+            </div>
+            <div class="warehouse-card reveal">
+              <h3>Объединение заказов</h3>
+              <p>Несколько товаров можно собрать в одну посылку, чтобы логистика была выгоднее.</p>
+            </div>
+            <div class="warehouse-card reveal">
+              <h3>Аккуратная упаковка</h3>
+              <p>Переупаковка и защита товара перед маршрутом Китай → РФ.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section class="section" id="insurance"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">SAFETY</div><h2>Безопасность и контроль</h2><p>Китайский рынок огромный, поэтому проверка продавца и товара — обязательная часть сервиса.</p></div></div><div class="insurance-grid"><div class="insurance-card reveal"><strong>Проверка продавца</strong><p>Смотрим рейтинг, отзывы, количество заказов, фото покупателей и поведение карточки.</p></div><div class="insurance-card reveal"><strong>Контроль параметров</strong><p>Размер, цвет, модель, комплект, количество — всё фиксируется перед выкупом.</p></div><div class="insurance-card reveal"><strong>Риск-оценка</strong><p>Если товар сомнительный, менеджер предупреждает и предлагает альтернативу.</p></div></div></div></section>
 
@@ -457,10 +1121,38 @@
 
     <section class="section" id="contacts"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">CONTACTS</div><h2>Связь с ONYX GROUP</h2><p>Заменишь контакты на свои — и сайт готов под реальный запуск.</p></div></div><div class="contact-grid"><a class="contact-card reveal" href="https://t.me/onyxgroup" target="_blank" rel="noopener noreferrer"><span>Telegram</span><strong>@onyxgroup</strong></a><a class="contact-card reveal" href="https://instagram.com/onyxgroup" target="_blank" rel="noopener noreferrer"><span>Instagram</span><strong>@onyxgroup</strong></a><a class="contact-card reveal" href="mailto:orders@onyx-group.ru"><span>Email</span><strong>orders@onyx-group.ru</strong></a><a class="contact-card reveal" href="#quote"><span>Заявка</span><strong>Через сайт</strong></a></div></div></section>
 
-    <section class="section tight"><div class="container"><div class="support-grid"><div class="support-card reveal"><div class="eyebrow">SUPPORT</div><h2 style="margin:14px 0 10px;letter-spacing:-.06em;line-height:.96;">Поддержка до и после заказа</h2><p style="color:var(--muted);line-height:1.55;margin:0;">Клиенту важно не просто нажать кнопку, а понимать, где заказ и что происходит.</p><div class="support-list"><div class="support-row"><i>💬</i><div><strong>Менеджер в Telegram</strong><span>Уточнение размера, цвета, модели и адреса доставки.</span></div></div><div class="support-row"><i>📦</i><div><strong>Статусы заказа</strong><span>Выкуплен, на складе, в пути, прибыл в РФ.</span></div></div><div class="support-row"><i>🧾</i><div><strong>Прозрачный расчёт</strong><span>Понятная структура итоговой стоимости.</span></div></div></div></div><div class="support-card reveal"><div class="eyebrow">NEWSLETTER</div><h2 style="margin:14px 0 10px;letter-spacing:-.06em;line-height:.96;">Подборки и тренды из Китая</h2><p style="color:var(--muted);line-height:1.55;margin:0;">Можно использовать как форму подписки или сбор заявок на подборки.</p><form class="newsletter-form" id="newsletterForm"><input type="text" id="newsletterInput" placeholder="Telegram или email"><button class="primary-btn" type="submit">Подписаться</button></form><div class="calc-result" style="margin-top:18px;"><div class="calc-result-row"><span>Новые подборки</span><strong>еженедельно</strong></div><div class="calc-result-row"><span>Категории</span><strong>одежда / обувь / техника</strong></div><div class="calc-result-row"><span>Формат</span><strong>Telegram</strong></div></div></div></div></div></section>
+    <section class="section tight"><div class="container"><div class="support-grid"><div class="support-card reveal"><div class="eyebrow">SUPPORT</div><h2 style="margin:14px 0 10px;letter-spacing:-.06em;line-height:.96;">Поддержка до и после заказа</h2><p style="color:var(--muted);line-height:1.55;margin:0;">Клиенту важно не просто нажать кнопку, а понимать, где заказ и что происходит.</p><div class="support-list"><div class="support-row"><i>💬</i><div><strong>Менеджер в Telegram</strong><span>Уточнение размера, цвета, модели и адреса доставки.</span></div></div><div class="support-row"><i>📦</i><div><strong>Статусы заказа</strong><span>Выкуплен, на складе, в пути, прибыл в РФ.</span></div></div><div class="support-row"><i>🧾</i><div><strong>Прозрачный расчёт</strong><span>Понятная структура итоговой стоимости.</span></div></div></div></div><div class="support-card reveal"><div class="eyebrow">NEWSLETTER</div><h2 style="margin:14px 0 10px;letter-spacing:-.06em;line-height:.96;">Подборки и тренды из Китая</h2><p style="color:var(--muted);line-height:1.55;margin:0;">Можно использовать как форму подписки или сбор заявок на подборки.</p><form class="newsletter-form final-newsletter-form" id="newsletterForm">
+              <input type="text" id="newsletterInput" placeholder="Telegram или email для подборок" required>
+              <button class="primary-btn" type="submit">Получать подборки</button>
+            </form>
+
+            <p class="newsletter-explain">
+              Оставь Telegram или email — сайт сохранит контакт и подготовит заявку на подборки: трендовые товары,
+              дешёвые находки 1688, подборки одежды, обуви, техники и аксессуаров из Китая.
+            </p>
+
+            <div class="calc-result newsletter-result" id="newsletterResult" style="margin-top:18px;">
+              <div class="calc-result-row">
+                <span>Что отправляем</span>
+                <strong>подборки товаров</strong>
+              </div>
+              <div class="calc-result-row">
+                <span>Категории</span>
+                <strong>одежда / обувь / техника</strong>
+              </div>
+              <div class="calc-result-row">
+                <span>Формат</span>
+                <strong>Telegram / email</strong>
+              </div>
+            </div></div></div></div></section>
   </main>
 
-  <footer class="site-footer"><div class="container footer-inner"><div><div class="footer-logo"><span>OX</span> ONYX GROUP</div><p>China buyer service / cargo / product search / delivery to Russia.</p></div><div class="footer-links"><a href="#catalog">Каталог</a><a href="#calculator">Расчёт</a><a href="#quote">Заявка</a><a href="#faq">FAQ</a><a href="#contacts">Контакты</a></div></div></footer>
+  <footer class="site-footer"><div class="container footer-inner"><div><div class="footer-logo"><span>
+          <svg viewBox="0 0 64 64" width="18" height="18" aria-hidden="true">
+            <path d="M32 6L52 17V39C52 48 44 55 32 58C20 55 12 48 12 39V17L32 6Z" fill="currentColor"/>
+            <path d="M22 22H28.5L32 27.2L35.5 22H42L36 31.5L42.5 42H36L32 36L28 42H21.5L28 31.5L22 22Z" fill="#050505"/>
+          </svg>
+        </span> ONYX GROUP</div><p>China buyer service / cargo / product search / delivery to Russia.</p></div><div class="footer-links"><a href="#catalog">Каталог</a><a href="#calculator">Расчёт</a><a href="#quote">Заявка</a><a href="#faq">FAQ</a><a href="#contacts">Контакты</a></div></div></footer>
 
   <div class="overlay" id="overlay"></div>
   <aside class="cart-drawer" id="cartDrawer" aria-hidden="true"><div class="drawer-head"><h3>Заявка / корзина</h3><button class="icon-btn" id="closeCartBtn" aria-label="Закрыть">✕</button></div><div class="cart-body" id="cartItems"></div><div class="cart-foot"><div class="cart-total"><span>Примерный итог</span><strong id="cartTotal">0 ₽</strong></div><form class="checkout-form" id="checkoutForm"><input type="text" id="customerName" placeholder="Имя" required><input type="text" id="customerContact" placeholder="Telegram или телефон" required><input type="text" id="customerCity" placeholder="Город доставки" required><textarea id="customerComment" placeholder="Комментарий: размер, цвет, количество, пожелания"></textarea><button type="submit" class="primary-btn">Отправить заявку</button></form></div></aside>
@@ -473,1279 +1165,1158 @@
 
   <script>
     const TELEGRAM_USERNAME = "onyxgroup";
+
     const products = [
       {
-            "id": 1,
-            "name": "Techwear Utility Jacket",
-            "category": "clothes",
-            "source": "1688",
-            "type": "Одежда",
-            "priceCny": 188,
-            "priceRub": 3890,
-            "badge": "HOT",
-            "rating": 4.8,
-            "orders": 2400,
-            "deliveryDays": "12–18",
-            "description": "Плотная techwear-куртка с карманами, свободной посадкой и визуалом под городские образы.",
-            "visual": "TECH JACKET",
-            "sizes": [
-                  "S",
-                  "M",
-                  "L",
-                  "XL",
-                  "2XL"
-            ],
-            "colors": [
-                  "Чёрный",
-                  "Серый",
-                  "Хаки"
-            ],
-            "quick": [
-                  "hot",
-                  "fast"
-            ],
-            "tags": [
-                  "techwear utility jacket",
-                  "clothes",
-                  "1688",
-                  "одежда",
-                  "hot"
-            ]
+        id: 1,
+        name: "Techwear Utility Jacket",
+        category: "clothes",
+        source: "1688",
+        type: "Одежда",
+        priceCny: 188,
+        priceRub: 3890,
+        badge: "HOT",
+        rating: 4.8,
+        orders: 2400,
+        deliveryDays: "12–18",
+        description: "Плотная techwear-куртка с карманами, свободной посадкой и визуалом под городские образы.",
+        tags: ["techwear", "jacket", "factory"],
+        sizes: ["S", "M", "L", "XL", "2XL"],
+        colors: ["Чёрный", "Серый", "Хаки"],
+        quick: ["hot", "fast"],
+        visual: "TECH JACKET"
       },
       {
-            "id": 2,
-            "name": "Minimal Runner Sneakers",
-            "category": "shoes",
-            "source": "Taobao",
-            "type": "Обувь",
-            "priceCny": 235,
-            "priceRub": 4990,
-            "badge": "TREND",
-            "rating": 4.7,
-            "orders": 5300,
-            "deliveryDays": "14–22",
-            "description": "Лёгкие городские кроссовки с минималистичным силуэтом для streetwear и casual.",
-            "visual": "RUNNER",
-            "sizes": [
-                  "36",
-                  "37",
-                  "38",
-                  "39",
-                  "40",
-                  "41",
-                  "42",
-                  "43",
-                  "44",
-                  "45"
-            ],
-            "colors": [
-                  "Белый",
-                  "Чёрный",
-                  "Серый"
-            ],
-            "quick": [
-                  "hot",
-                  "premium"
-            ],
-            "tags": [
-                  "minimal runner sneakers",
-                  "shoes",
-                  "taobao",
-                  "обувь",
-                  "trend"
-            ]
+        id: 2,
+        name: "Minimal Runner Sneakers",
+        category: "shoes",
+        source: "Taobao",
+        type: "Обувь",
+        priceCny: 235,
+        priceRub: 4990,
+        badge: "TREND",
+        rating: 4.7,
+        orders: 5300,
+        deliveryDays: "14–22",
+        description: "Лёгкие городские кроссовки с минималистичным силуэтом. Подходят под streetwear и casual.",
+        tags: ["sneakers", "кроссовки", "minimal", "daily"],
+        sizes: ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45"],
+        colors: ["Белый", "Чёрный", "Серый"],
+        quick: ["hot", "premium"],
+        visual: "RUNNER"
       },
       {
-            "id": 3,
-            "name": "Smart LED Ambient Lamp",
-            "category": "electronics",
-            "source": "AliExpress",
-            "type": "Электроника",
-            "priceCny": 96,
-            "priceRub": 2190,
-            "badge": "FAST",
-            "rating": 4.6,
-            "orders": 8700,
-            "deliveryDays": "7–15",
-            "description": "Атмосферная LED-лампа для комнаты, студии или рабочего стола с несколькими режимами свечения.",
-            "visual": "LED",
-            "sizes": [],
-            "colors": [
-                  "Black",
-                  "White"
-            ],
-            "quick": [
-                  "fast",
-                  "low"
-            ],
-            "tags": [
-                  "smart led ambient lamp",
-                  "electronics",
-                  "aliexpress",
-                  "электроника",
-                  "fast"
-            ]
+        id: 3,
+        name: "Smart LED Ambient Lamp",
+        category: "electronics",
+        source: "AliExpress",
+        type: "Электроника",
+        priceCny: 96,
+        priceRub: 2190,
+        badge: "FAST",
+        rating: 4.6,
+        orders: 8700,
+        deliveryDays: "7–15",
+        description: "Атмосферная LED-лампа для комнаты, студии или рабочего стола. Несколько режимов свечения.",
+        tags: ["LED", "room", "smart", "электроника"],
+        sizes: [],
+        colors: ["Black", "White"],
+        quick: ["fast", "low"],
+        visual: "LED"
       },
       {
-            "id": 4,
-            "name": "iPhone Premium Case Pack",
-            "category": "accessories",
-            "source": "Pinduoduo",
-            "type": "Аксессуары",
-            "priceCny": 42,
-            "priceRub": 990,
-            "badge": "LOW PRICE",
-            "rating": 4.5,
-            "orders": 11200,
-            "deliveryDays": "10–18",
-            "description": "Набор чехлов для iPhone в clean-эстетике. Подходит для личного использования и перепродажи.",
-            "visual": "CASE",
-            "sizes": [],
-            "colors": [
-                  "iPhone 11",
-                  "iPhone 12",
-                  "iPhone 13",
-                  "iPhone 14",
-                  "iPhone 15",
-                  "iPhone 16"
-            ],
-            "quick": [
-                  "low",
-                  "hot"
-            ],
-            "tags": [
-                  "iphone premium case pack",
-                  "accessories",
-                  "pinduoduo",
-                  "аксессуары",
-                  "low price"
-            ]
+        id: 4,
+        name: "iPhone Premium Case Pack",
+        category: "accessories",
+        source: "Pinduoduo",
+        type: "Аксессуары",
+        priceCny: 42,
+        priceRub: 990,
+        badge: "LOW PRICE",
+        rating: 4.5,
+        orders: 11200,
+        deliveryDays: "10–18",
+        description: "Набор чехлов для iPhone в clean-эстетике. Хороший вариант для перепродажи или личного использования.",
+        tags: ["iPhone", "case", "pack", "чехол"],
+        sizes: [],
+        colors: ["iPhone 11", "iPhone 12", "iPhone 13", "iPhone 14", "iPhone 15", "iPhone 16"],
+        quick: ["low", "hot"],
+        visual: "CASE"
       },
       {
-            "id": 5,
-            "name": "Cargo Bag Modular",
-            "category": "accessories",
-            "source": "1688",
-            "type": "Аксессуары",
-            "priceCny": 118,
-            "priceRub": 2690,
-            "badge": "UTILITY",
-            "rating": 4.8,
-            "orders": 1800,
-            "deliveryDays": "12–20",
-            "description": "Модульная сумка в cargo-стиле: много карманов, плотная ткань, городской вайб.",
-            "visual": "CARGO BAG",
-            "sizes": [
-                  "One size"
-            ],
-            "colors": [
-                  "Чёрный",
-                  "Оливковый",
-                  "Песочный"
-            ],
-            "quick": [
-                  "low",
-                  "hot"
-            ],
-            "tags": [
-                  "cargo bag modular",
-                  "accessories",
-                  "1688",
-                  "аксессуары",
-                  "utility"
-            ]
+        id: 5,
+        name: "Cargo Bag Modular",
+        category: "accessories",
+        source: "1688",
+        type: "Аксессуары",
+        priceCny: 118,
+        priceRub: 2690,
+        badge: "UTILITY",
+        rating: 4.8,
+        orders: 1800,
+        deliveryDays: "12–20",
+        description: "Модульная сумка в cargo-стиле: много карманов, плотная ткань, городской вайб.",
+        tags: ["bag", "cargo", "utility", "сумка"],
+        sizes: ["One size"],
+        colors: ["Чёрный", "Оливковый", "Песочный"],
+        quick: ["low", "hot"],
+        visual: "CARGO BAG"
       },
       {
-            "id": 6,
-            "name": "Home Storage System",
-            "category": "home",
-            "source": "Taobao",
-            "type": "Дом",
-            "priceCny": 156,
-            "priceRub": 3490,
-            "badge": "HOME",
-            "rating": 4.7,
-            "orders": 3900,
-            "deliveryDays": "15–24",
-            "description": "Система хранения для комнаты, гардероба или студии. Удобная модульная конструкция.",
-            "visual": "STORAGE",
-            "sizes": [
-                  "S",
-                  "M",
-                  "L"
-            ],
-            "colors": [
-                  "Белый",
-                  "Серый",
-                  "Прозрачный"
-            ],
-            "quick": [
-                  "premium"
-            ],
-            "tags": [
-                  "home storage system",
-                  "home",
-                  "taobao",
-                  "дом",
-                  "home"
-            ]
+        id: 6,
+        name: "Home Storage System",
+        category: "home",
+        source: "Taobao",
+        type: "Дом",
+        priceCny: 156,
+        priceRub: 3490,
+        badge: "HOME",
+        rating: 4.7,
+        orders: 3900,
+        deliveryDays: "15–24",
+        description: "Система хранения для комнаты, гардероба или студии. Удобная модульная конструкция.",
+        tags: ["home", "storage", "modular", "дом"],
+        sizes: ["S", "M", "L"],
+        colors: ["Белый", "Серый", "Прозрачный"],
+        quick: ["premium"],
+        visual: "STORAGE"
       },
       {
-            "id": 7,
-            "name": "Auto Interior Detail Kit",
-            "category": "auto",
-            "source": "AliExpress",
-            "type": "Авто",
-            "priceCny": 82,
-            "priceRub": 1890,
-            "badge": "AUTO",
-            "rating": 4.6,
-            "orders": 6400,
-            "deliveryDays": "8–16",
-            "description": "Набор аксессуаров для ухода за салоном авто: щётки, микрофибра, органайзер и инструменты.",
-            "visual": "AUTO KIT",
-            "sizes": [],
-            "colors": [
-                  "Комплект"
-            ],
-            "quick": [
-                  "fast",
-                  "low"
-            ],
-            "tags": [
-                  "auto interior detail kit",
-                  "auto",
-                  "aliexpress",
-                  "авто",
-                  "auto"
-            ]
+        id: 7,
+        name: "Auto Interior Detail Kit",
+        category: "auto",
+        source: "AliExpress",
+        type: "Авто",
+        priceCny: 82,
+        priceRub: 1890,
+        badge: "AUTO",
+        rating: 4.6,
+        orders: 6400,
+        deliveryDays: "8–16",
+        description: "Набор аксессуаров для ухода за салоном авто: щётки, микрофибра, органайзер и мелкие инструменты.",
+        tags: ["auto", "авто", "detail", "kit"],
+        sizes: [],
+        colors: ["Комплект"],
+        quick: ["fast", "low"],
+        visual: "AUTO KIT"
       },
       {
-            "id": 8,
-            "name": "Oversized Washed Hoodie",
-            "category": "clothes",
-            "source": "1688",
-            "type": "Одежда",
-            "priceCny": 132,
-            "priceRub": 2990,
-            "badge": "STREET",
-            "rating": 4.8,
-            "orders": 7600,
-            "deliveryDays": "12–19",
-            "description": "Плотное washed-худи свободного кроя. Хорошая база под streetwear-луки.",
-            "visual": "HOODIE",
-            "sizes": [
-                  "S",
-                  "M",
-                  "L",
-                  "XL",
-                  "2XL"
-            ],
-            "colors": [
-                  "Графит",
-                  "Чёрный",
-                  "Кремовый"
-            ],
-            "quick": [
-                  "hot",
-                  "low"
-            ],
-            "tags": [
-                  "oversized washed hoodie",
-                  "clothes",
-                  "1688",
-                  "одежда",
-                  "street"
-            ]
+        id: 8,
+        name: "Oversized Washed Hoodie",
+        category: "clothes",
+        source: "1688",
+        type: "Одежда",
+        priceCny: 132,
+        priceRub: 2990,
+        badge: "STREET",
+        rating: 4.8,
+        orders: 7600,
+        deliveryDays: "12–19",
+        description: "Плотное washed-худи свободного кроя. Хорошая база под streetwear-луки.",
+        tags: ["hoodie", "washed", "oversize", "одежда"],
+        sizes: ["S", "M", "L", "XL", "2XL"],
+        colors: ["Графит", "Чёрный", "Кремовый"],
+        quick: ["hot", "low"],
+        visual: "HOODIE"
       },
       {
-            "id": 9,
-            "name": "Poizon Basketball Sneakers",
-            "category": "shoes",
-            "source": "Poizon",
-            "type": "Обувь",
-            "priceCny": 520,
-            "priceRub": 10990,
-            "badge": "PREMIUM",
-            "rating": 4.9,
-            "orders": 3100,
-            "deliveryDays": "14–24",
-            "description": "Пара из Poizon для тех, кому нужна сильная обувь с проверкой источника.",
-            "visual": "POIZON",
-            "sizes": [
-                  "38",
-                  "39",
-                  "40",
-                  "41",
-                  "42",
-                  "43",
-                  "44",
-                  "45"
-            ],
-            "colors": [
-                  "White/Blue",
-                  "Black/Red"
-            ],
-            "quick": [
-                  "premium",
-                  "hot"
-            ],
-            "tags": [
-                  "poizon basketball sneakers",
-                  "shoes",
-                  "poizon",
-                  "обувь",
-                  "premium"
-            ]
+        id: 9,
+        name: "Poizon Basketball Sneakers",
+        category: "shoes",
+        source: "Poizon",
+        type: "Обувь",
+        priceCny: 520,
+        priceRub: 10990,
+        badge: "PREMIUM",
+        rating: 4.9,
+        orders: 3100,
+        deliveryDays: "14–24",
+        description: "Пара из Poizon для тех, кому нужна более сильная обувь с проверкой источника.",
+        tags: ["poizon", "sneakers", "premium", "кроссовки"],
+        sizes: ["38", "39", "40", "41", "42", "43", "44", "45"],
+        colors: ["White/Blue", "Black/Red"],
+        quick: ["premium", "hot"],
+        visual: "POIZON"
       },
       {
-            "id": 10,
-            "name": "Desk Setup Accessories",
-            "category": "electronics",
-            "source": "Taobao",
-            "type": "Электроника",
-            "priceCny": 178,
-            "priceRub": 3990,
-            "badge": "SETUP",
-            "rating": 4.7,
-            "orders": 4500,
-            "deliveryDays": "13–21",
-            "description": "Набор аксессуаров для рабочего стола: подставка, кабель-менеджмент, подсветка, органайзер.",
-            "visual": "SETUP",
-            "sizes": [
-                  "Set"
-            ],
-            "colors": [
-                  "Black",
-                  "White",
-                  "Silver"
-            ],
-            "quick": [
-                  "premium"
-            ],
-            "tags": [
-                  "desk setup accessories",
-                  "electronics",
-                  "taobao",
-                  "электроника",
-                  "setup"
-            ]
+        id: 10,
+        name: "Desk Setup Accessories",
+        category: "electronics",
+        source: "Taobao",
+        type: "Электроника",
+        priceCny: 178,
+        priceRub: 3990,
+        badge: "SETUP",
+        rating: 4.7,
+        orders: 4500,
+        deliveryDays: "13–21",
+        description: "Набор аксессуаров для рабочего стола: подставка, кабель-менеджмент, подсветка, органайзер.",
+        tags: ["desk", "setup", "work", "электроника"],
+        sizes: ["Set"],
+        colors: ["Black", "White", "Silver"],
+        quick: ["premium"],
+        visual: "SETUP"
       },
       {
-            "id": 11,
-            "name": "Travel Vacuum Backpack",
-            "category": "accessories",
-            "source": "1688",
-            "type": "Аксессуары",
-            "priceCny": 248,
-            "priceRub": 5390,
-            "badge": "TRAVEL",
-            "rating": 4.8,
-            "orders": 2900,
-            "deliveryDays": "12–20",
-            "description": "Рюкзак для путешествий с вакуумным отсеком, плотной спинкой и большим объёмом.",
-            "visual": "BACKPACK",
-            "sizes": [
-                  "20L",
-                  "30L",
-                  "40L"
-            ],
-            "colors": [
-                  "Чёрный",
-                  "Серый"
-            ],
-            "quick": [
-                  "premium",
-                  "hot"
-            ],
-            "tags": [
-                  "travel vacuum backpack",
-                  "accessories",
-                  "1688",
-                  "аксессуары",
-                  "travel"
-            ]
+        id: 11,
+        name: "Travel Vacuum Backpack",
+        category: "accessories",
+        source: "1688",
+        type: "Аксессуары",
+        priceCny: 248,
+        priceRub: 5390,
+        badge: "TRAVEL",
+        rating: 4.8,
+        orders: 2900,
+        deliveryDays: "12–20",
+        description: "Рюкзак для путешествий с вакуумным отсеком, плотной спинкой и большим объёмом.",
+        tags: ["travel", "backpack", "vacuum", "сумка"],
+        sizes: ["20L", "30L", "40L"],
+        colors: ["Чёрный", "Серый"],
+        quick: ["premium", "hot"],
+        visual: "BACKPACK"
       },
       {
-            "id": 12,
-            "name": "Kitchen Smart Scale",
-            "category": "home",
-            "source": "Pinduoduo",
-            "type": "Дом",
-            "priceCny": 38,
-            "priceRub": 890,
-            "badge": "DEAL",
-            "rating": 4.4,
-            "orders": 15600,
-            "deliveryDays": "9–17",
-            "description": "Компактные кухонные весы с точным измерением. Бюджетный товар для быта.",
-            "visual": "SCALE",
-            "sizes": [],
-            "colors": [
-                  "White",
-                  "Black"
-            ],
-            "quick": [
-                  "low",
-                  "fast"
-            ],
-            "tags": [
-                  "kitchen smart scale",
-                  "home",
-                  "pinduoduo",
-                  "дом",
-                  "deal"
-            ]
+        id: 12,
+        name: "Kitchen Smart Scale",
+        category: "home",
+        source: "Pinduoduo",
+        type: "Дом",
+        priceCny: 38,
+        priceRub: 890,
+        badge: "DEAL",
+        rating: 4.4,
+        orders: 15600,
+        deliveryDays: "9–17",
+        description: "Компактные кухонные весы с точным измерением. Хороший бюджетный товар для быта.",
+        tags: ["kitchen", "scale", "cheap", "дом"],
+        sizes: [],
+        colors: ["White", "Black"],
+        quick: ["low", "fast"],
+        visual: "SCALE"
       },
       {
-            "id": 13,
-            "name": "Baggy Denim Pants",
-            "category": "clothes",
-            "source": "Taobao",
-            "type": "Одежда",
-            "priceCny": 168,
-            "priceRub": 3690,
-            "badge": "TREND",
-            "rating": 4.7,
-            "orders": 5100,
-            "deliveryDays": "13–20",
-            "description": "Свободные джинсы baggy fit с плотным денимом и трендовой посадкой.",
-            "visual": "DENIM",
-            "sizes": [
-                  "S",
-                  "M",
-                  "L",
-                  "XL",
-                  "2XL"
-            ],
-            "colors": [
-                  "Blue",
-                  "Black",
-                  "Grey"
-            ],
-            "quick": [
-                  "hot"
-            ],
-            "tags": [
-                  "baggy denim pants",
-                  "clothes",
-                  "taobao",
-                  "одежда",
-                  "trend"
-            ]
+        id: 13,
+        name: "Baggy Denim Pants",
+        category: "clothes",
+        source: "Taobao",
+        type: "Одежда",
+        priceCny: 168,
+        priceRub: 3690,
+        badge: "TREND",
+        rating: 4.7,
+        orders: 5100,
+        deliveryDays: "13–20",
+        description: "Свободные джинсы baggy fit с плотным денимом и трендовой посадкой.",
+        tags: ["jeans", "baggy", "denim", "одежда"],
+        sizes: ["S", "M", "L", "XL", "2XL"],
+        colors: ["Blue", "Black", "Grey"],
+        quick: ["hot"],
+        visual: "DENIM"
       },
       {
-            "id": 14,
-            "name": "Car Ambient Light Kit",
-            "category": "auto",
-            "source": "AliExpress",
-            "type": "Авто",
-            "priceCny": 124,
-            "priceRub": 2790,
-            "badge": "FAST",
-            "rating": 4.6,
-            "orders": 7200,
-            "deliveryDays": "7–14",
-            "description": "Комплект ambient-подсветки для салона автомобиля с несколькими режимами.",
-            "visual": "RGB AUTO",
-            "sizes": [
-                  "Universal"
-            ],
-            "colors": [
-                  "RGB"
-            ],
-            "quick": [
-                  "fast",
-                  "low"
-            ],
-            "tags": [
-                  "car ambient light kit",
-                  "auto",
-                  "aliexpress",
-                  "авто",
-                  "fast"
-            ]
+        id: 14,
+        name: "Car Ambient Light Kit",
+        category: "auto",
+        source: "AliExpress",
+        type: "Авто",
+        priceCny: 124,
+        priceRub: 2790,
+        badge: "FAST",
+        rating: 4.6,
+        orders: 7200,
+        deliveryDays: "7–14",
+        description: "Комплект ambient-подсветки для салона автомобиля с несколькими режимами.",
+        tags: ["car", "ambient", "light", "авто"],
+        sizes: ["Universal"],
+        colors: ["RGB"],
+        quick: ["fast", "low"],
+        visual: "RGB AUTO"
       },
       {
-            "id": 15,
-            "name": "Premium Minimal Watch",
-            "category": "accessories",
-            "source": "Taobao",
-            "type": "Аксессуары",
-            "priceCny": 298,
-            "priceRub": 6490,
-            "badge": "PREMIUM",
-            "rating": 4.8,
-            "orders": 2100,
-            "deliveryDays": "14–22",
-            "description": "Минималистичные часы с чистым дизайном. Подходят под casual и smart-casual.",
-            "visual": "WATCH",
-            "sizes": [
-                  "One size"
-            ],
-            "colors": [
-                  "Silver",
-                  "Black",
-                  "Gold"
-            ],
-            "quick": [
-                  "premium"
-            ],
-            "tags": [
-                  "premium minimal watch",
-                  "accessories",
-                  "taobao",
-                  "аксессуары",
-                  "premium"
-            ]
+        id: 15,
+        name: "Premium Minimal Watch",
+        category: "accessories",
+        source: "Taobao",
+        type: "Аксессуары",
+        priceCny: 298,
+        priceRub: 6490,
+        badge: "PREMIUM",
+        rating: 4.8,
+        orders: 2100,
+        deliveryDays: "14–22",
+        description: "Минималистичные часы с чистым дизайном. Подходят под casual и smart-casual.",
+        tags: ["watch", "minimal", "premium"],
+        sizes: ["One size"],
+        colors: ["Silver", "Black", "Gold"],
+        quick: ["premium"],
+        visual: "WATCH"
       },
       {
-            "id": 16,
-            "name": "Studio Microphone Arm",
-            "category": "electronics",
-            "source": "1688",
-            "type": "Электроника",
-            "priceCny": 108,
-            "priceRub": 2490,
-            "badge": "CONTENT",
-            "rating": 4.7,
-            "orders": 3300,
-            "deliveryDays": "12–19",
-            "description": "Пантограф для микрофона, удобный для стримов, записи голоса и домашней студии.",
-            "visual": "MIC ARM",
-            "sizes": [
-                  "Standard"
-            ],
-            "colors": [
-                  "Black",
-                  "White"
-            ],
-            "quick": [
-                  "low"
-            ],
-            "tags": [
-                  "studio microphone arm",
-                  "electronics",
-                  "1688",
-                  "электроника",
-                  "content"
-            ]
-      },
-      {
-            "id": 17,
-            "name": "Winter Puffer Jacket",
-            "category": "clothes",
-            "source": "1688",
-            "type": "Одежда",
-            "priceCny": 230,
-            "priceRub": 5190,
-            "badge": "WINTER",
-            "rating": 4.6,
-            "orders": 6200,
-            "deliveryDays": "14–24",
-            "description": "Тёплый пуховик с объёмным силуэтом, капюшоном и плотной внешней тканью.",
-            "visual": "PUFFER",
-            "sizes": [
-                  "M",
-                  "L",
-                  "XL",
-                  "2XL"
-            ],
-            "colors": [
-                  "Black",
-                  "Grey",
-                  "Beige"
-            ],
-            "quick": [
-                  "premium",
-                  "hot"
-            ],
-            "tags": [
-                  "winter puffer jacket",
-                  "clothes",
-                  "1688",
-                  "одежда",
-                  "winter"
-            ]
-      },
-      {
-            "id": 18,
-            "name": "Portable Mini Projector",
-            "category": "electronics",
-            "source": "AliExpress",
-            "type": "Электроника",
-            "priceCny": 310,
-            "priceRub": 6990,
-            "badge": "GADGET",
-            "rating": 4.5,
-            "orders": 4800,
-            "deliveryDays": "10–18",
-            "description": "Компактный проектор для дома, презентаций и просмотра фильмов.",
-            "visual": "PROJECTOR",
-            "sizes": [
-                  "Base",
-                  "Pro"
-            ],
-            "colors": [
-                  "White",
-                  "Black"
-            ],
-            "quick": [
-                  "premium",
-                  "fast"
-            ],
-            "tags": [
-                  "portable mini projector",
-                  "electronics",
-                  "aliexpress",
-                  "электроника",
-                  "gadget"
-            ]
-      },
-      {
-            "id": 19,
-            "name": "Anime Figure Display Box",
-            "category": "home",
-            "source": "Taobao",
-            "type": "Дом",
-            "priceCny": 88,
-            "priceRub": 1990,
-            "badge": "DISPLAY",
-            "rating": 4.7,
-            "orders": 2700,
-            "deliveryDays": "12–20",
-            "description": "Прозрачный display-box для фигурок, коллекций и декора комнаты.",
-            "visual": "DISPLAY",
-            "sizes": [
-                  "S",
-                  "M",
-                  "L"
-            ],
-            "colors": [
-                  "Clear",
-                  "Black frame"
-            ],
-            "quick": [
-                  "low"
-            ],
-            "tags": [
-                  "anime figure display box",
-                  "home",
-                  "taobao",
-                  "дом",
-                  "display"
-            ]
-      },
-      {
-            "id": 20,
-            "name": "Carbon Fiber Car Spoiler",
-            "category": "auto",
-            "source": "1688",
-            "type": "Авто",
-            "priceCny": 460,
-            "priceRub": 9990,
-            "badge": "CARBON",
-            "rating": 4.8,
-            "orders": 900,
-            "deliveryDays": "18–28",
-            "description": "Автомобильный спойлер под карбон. Требуется уточнение совместимости по модели авто.",
-            "visual": "SPOILER",
-            "sizes": [
-                  "Universal",
-                  "Custom"
-            ],
-            "colors": [
-                  "Carbon look",
-                  "Gloss black"
-            ],
-            "quick": [
-                  "premium"
-            ],
-            "tags": [
-                  "carbon fiber car spoiler",
-                  "auto",
-                  "1688",
-                  "авто",
-                  "carbon"
-            ]
-      },
-      {
-            "id": 21,
-            "name": "Street Messenger Bag",
-            "category": "accessories",
-            "source": "Pinduoduo",
-            "type": "Аксессуары",
-            "priceCny": 66,
-            "priceRub": 1590,
-            "badge": "DEAL",
-            "rating": 4.5,
-            "orders": 9400,
-            "deliveryDays": "9–16",
-            "description": "Компактная сумка через плечо с уличным дизайном и несколькими отделениями.",
-            "visual": "MESSENGER",
-            "sizes": [
-                  "One size"
-            ],
-            "colors": [
-                  "Black",
-                  "Grey",
-                  "Khaki"
-            ],
-            "quick": [
-                  "low",
-                  "fast"
-            ],
-            "tags": [
-                  "street messenger bag",
-                  "accessories",
-                  "pinduoduo",
-                  "аксессуары",
-                  "deal"
-            ]
-      },
-      {
-            "id": 22,
-            "name": "Gaming Mouse Wireless",
-            "category": "electronics",
-            "source": "1688",
-            "type": "Электроника",
-            "priceCny": 145,
-            "priceRub": 3290,
-            "badge": "GAMING",
-            "rating": 4.6,
-            "orders": 6100,
-            "deliveryDays": "12–18",
-            "description": "Беспроводная игровая мышь с подсветкой, быстрой зарядкой и несколькими DPI-режимами.",
-            "visual": "MOUSE",
-            "sizes": [
-                  "Standard"
-            ],
-            "colors": [
-                  "Black",
-                  "White"
-            ],
-            "quick": [
-                  "hot"
-            ],
-            "tags": [
-                  "gaming mouse wireless",
-                  "electronics",
-                  "1688",
-                  "электроника",
-                  "gaming"
-            ]
-      },
-      {
-            "id": 23,
-            "name": "Minimal Coffee Table",
-            "category": "home",
-            "source": "Taobao",
-            "type": "Дом",
-            "priceCny": 390,
-            "priceRub": 8490,
-            "badge": "INTERIOR",
-            "rating": 4.7,
-            "orders": 1200,
-            "deliveryDays": "18–30",
-            "description": "Минималистичный журнальный столик для современного интерьера. Доставка считается отдельно.",
-            "visual": "TABLE",
-            "sizes": [
-                  "Small",
-                  "Medium"
-            ],
-            "colors": [
-                  "Walnut",
-                  "Black",
-                  "White"
-            ],
-            "quick": [
-                  "premium"
-            ],
-            "tags": [
-                  "minimal coffee table",
-                  "home",
-                  "taobao",
-                  "дом",
-                  "interior"
-            ]
-      },
-      {
-            "id": 24,
-            "name": "Running Compression Set",
-            "category": "clothes",
-            "source": "AliExpress",
-            "type": "Одежда",
-            "priceCny": 74,
-            "priceRub": 1690,
-            "badge": "SPORT",
-            "rating": 4.5,
-            "orders": 7300,
-            "deliveryDays": "8–15",
-            "description": "Спортивный компрессионный комплект для тренировок, бега и зала.",
-            "visual": "SPORT SET",
-            "sizes": [
-                  "S",
-                  "M",
-                  "L",
-                  "XL"
-            ],
-            "colors": [
-                  "Black",
-                  "Blue",
-                  "Grey"
-            ],
-            "quick": [
-                  "low",
-                  "fast"
-            ],
-            "tags": [
-                  "running compression set",
-                  "clothes",
-                  "aliexpress",
-                  "одежда",
-                  "sport"
-            ]
-      },
-      {
-            "id": 25,
-            "name": "Cold Culture Longsleeve",
-            "category": "clothes",
-            "source": "Taobao",
-            "type": "Одежда",
-            "priceCny": 128,
-            "priceRub": 2890,
-            "badge": "DROP",
-            "rating": 4.4,
-            "orders": 9075,
-            "deliveryDays": "10–22",
-            "description": "Товар из категории «Одежда». Подходит для заказа из Китая через ONYX GROUP с проверкой и доставкой в РФ.",
-            "visual": "LONGSLEEVE",
-            "sizes": [
-                  "S",
-                  "M",
-                  "L",
-                  "XL"
-            ],
-            "colors": [
-                  "Black",
-                  "White",
-                  "Grey"
-            ],
-            "quick": [
-                  "low"
-            ],
-            "tags": [
-                  "cold culture longsleeve",
-                  "clothes",
-                  "taobao",
-                  "одежда",
-                  "drop"
-            ]
-      },
-      {
-            "id": 26,
-            "name": "MagSafe Power Bank",
-            "category": "electronics",
-            "source": "1688",
-            "type": "Электроника",
-            "priceCny": 92,
-            "priceRub": 2190,
-            "badge": "POWER",
-            "rating": 4.5,
-            "orders": 9390,
-            "deliveryDays": "10–22",
-            "description": "Товар из категории «Электроника». Подходит для заказа из Китая через ONYX GROUP с проверкой и доставкой в РФ.",
-            "visual": "POWER BANK",
-            "sizes": [
-                  "Standard"
-            ],
-            "colors": [
-                  "Black",
-                  "White",
-                  "Grey"
-            ],
-            "quick": [
-                  "low"
-            ],
-            "tags": [
-                  "magsafe power bank",
-                  "electronics",
-                  "1688",
-                  "электроника",
-                  "power"
-            ]
-      },
-      {
-            "id": 27,
-            "name": "Designer Style Cardholder",
-            "category": "accessories",
-            "source": "Pinduoduo",
-            "type": "Аксессуары",
-            "priceCny": 36,
-            "priceRub": 790,
-            "badge": "LOW",
-            "rating": 4.6,
-            "orders": 9705,
-            "deliveryDays": "10–22",
-            "description": "Товар из категории «Аксессуары». Подходит для заказа из Китая через ONYX GROUP с проверкой и доставкой в РФ.",
-            "visual": "CARD",
-            "sizes": [
-                  "Standard"
-            ],
-            "colors": [
-                  "Black",
-                  "White",
-                  "Grey"
-            ],
-            "quick": [
-                  "hot"
-            ],
-            "tags": [
-                  "designer style cardholder",
-                  "accessories",
-                  "pinduoduo",
-                  "аксессуары",
-                  "low"
-            ]
-      },
-      {
-            "id": 28,
-            "name": "Ceramic Dinnerware Set",
-            "category": "home",
-            "source": "Taobao",
-            "type": "Дом",
-            "priceCny": 210,
-            "priceRub": 4790,
-            "badge": "HOME",
-            "rating": 4.7,
-            "orders": 10020,
-            "deliveryDays": "10–22",
-            "description": "Товар из категории «Дом». Подходит для заказа из Китая через ONYX GROUP с проверкой и доставкой в РФ.",
-            "visual": "DISH SET",
-            "sizes": [
-                  "Standard"
-            ],
-            "colors": [
-                  "Black",
-                  "White",
-                  "Grey"
-            ],
-            "quick": [
-                  "premium"
-            ],
-            "tags": [
-                  "ceramic dinnerware set",
-                  "home",
-                  "taobao",
-                  "дом",
-                  "home"
-            ]
-      },
-      {
-            "id": 29,
-            "name": "Car Vacuum Cleaner",
-            "category": "auto",
-            "source": "AliExpress",
-            "type": "Авто",
-            "priceCny": 136,
-            "priceRub": 3090,
-            "badge": "FAST",
-            "rating": 4.8,
-            "orders": 10335,
-            "deliveryDays": "10–22",
-            "description": "Товар из категории «Авто». Подходит для заказа из Китая через ONYX GROUP с проверкой и доставкой в РФ.",
-            "visual": "VACUUM",
-            "sizes": [
-                  "Standard"
-            ],
-            "colors": [
-                  "Black",
-                  "White",
-                  "Grey"
-            ],
-            "quick": [
-                  "premium"
-            ],
-            "tags": [
-                  "car vacuum cleaner",
-                  "auto",
-                  "aliexpress",
-                  "авто",
-                  "fast"
-            ]
-      },
-      {
-            "id": 30,
-            "name": "Outdoor Tactical Vest",
-            "category": "clothes",
-            "source": "1688",
-            "type": "Одежда",
-            "priceCny": 178,
-            "priceRub": 3990,
-            "badge": "UTILITY",
-            "rating": 4.4,
-            "orders": 10650,
-            "deliveryDays": "10–22",
-            "description": "Товар из категории «Одежда». Подходит для заказа из Китая через ONYX GROUP с проверкой и доставкой в РФ.",
-            "visual": "VEST",
-            "sizes": [
-                  "S",
-                  "M",
-                  "L",
-                  "XL"
-            ],
-            "colors": [
-                  "Black",
-                  "White",
-                  "Grey"
-            ],
-            "quick": [
-                  "hot"
-            ],
-            "tags": [
-                  "outdoor tactical vest",
-                  "clothes",
-                  "1688",
-                  "одежда",
-                  "utility"
-            ]
-      },
-      {
-            "id": 31,
-            "name": "Retro Skate Sneakers",
-            "category": "shoes",
-            "source": "Poizon",
-            "type": "Обувь",
-            "priceCny": 460,
-            "priceRub": 9690,
-            "badge": "POIZON",
-            "rating": 4.5,
-            "orders": 10965,
-            "deliveryDays": "10–22",
-            "description": "Товар из категории «Обувь». Подходит для заказа из Китая через ONYX GROUP с проверкой и доставкой в РФ.",
-            "visual": "SKATE",
-            "sizes": [
-                  "S",
-                  "M",
-                  "L",
-                  "XL"
-            ],
-            "colors": [
-                  "Black",
-                  "White",
-                  "Grey"
-            ],
-            "quick": [
-                  "premium"
-            ],
-            "tags": [
-                  "retro skate sneakers",
-                  "shoes",
-                  "poizon",
-                  "обувь",
-                  "poizon"
-            ]
-      },
-      {
-            "id": 32,
-            "name": "USB-C Dock Station",
-            "category": "electronics",
-            "source": "1688",
-            "type": "Электроника",
-            "priceCny": 188,
-            "priceRub": 4290,
-            "badge": "WORK",
-            "rating": 4.6,
-            "orders": 11280,
-            "deliveryDays": "10–22",
-            "description": "Товар из категории «Электроника». Подходит для заказа из Китая через ONYX GROUP с проверкой и доставкой в РФ.",
-            "visual": "DOCK",
-            "sizes": [
-                  "Standard"
-            ],
-            "colors": [
-                  "Black",
-                  "White",
-                  "Grey"
-            ],
-            "quick": [
-                  "premium"
-            ],
-            "tags": [
-                  "usb-c dock station",
-                  "electronics",
-                  "1688",
-                  "электроника",
-                  "work"
-            ]
-      },
-      {
-            "id": 33,
-            "name": "Luxury Phone Strap",
-            "category": "accessories",
-            "source": "Taobao",
-            "type": "Аксессуары",
-            "priceCny": 58,
-            "priceRub": 1290,
-            "badge": "STYLE",
-            "rating": 4.7,
-            "orders": 11595,
-            "deliveryDays": "10–22",
-            "description": "Товар из категории «Аксессуары». Подходит для заказа из Китая через ONYX GROUP с проверкой и доставкой в РФ.",
-            "visual": "STRAP",
-            "sizes": [
-                  "Standard"
-            ],
-            "colors": [
-                  "Black",
-                  "White",
-                  "Grey"
-            ],
-            "quick": [
-                  "hot"
-            ],
-            "tags": [
-                  "luxury phone strap",
-                  "accessories",
-                  "taobao",
-                  "аксессуары",
-                  "style"
-            ]
-      },
-      {
-            "id": 34,
-            "name": "LED Makeup Mirror",
-            "category": "home",
-            "source": "Pinduoduo",
-            "type": "Дом",
-            "priceCny": 112,
-            "priceRub": 2590,
-            "badge": "BEAUTY",
-            "rating": 4.8,
-            "orders": 11910,
-            "deliveryDays": "10–22",
-            "description": "Товар из категории «Дом». Подходит для заказа из Китая через ONYX GROUP с проверкой и доставкой в РФ.",
-            "visual": "MIRROR",
-            "sizes": [
-                  "Standard"
-            ],
-            "colors": [
-                  "Black",
-                  "White",
-                  "Grey"
-            ],
-            "quick": [
-                  "low"
-            ],
-            "tags": [
-                  "led makeup mirror",
-                  "home",
-                  "pinduoduo",
-                  "дом",
-                  "beauty"
-            ]
-      },
-      {
-            "id": 35,
-            "name": "Car Seat Organizer",
-            "category": "auto",
-            "source": "1688",
-            "type": "Авто",
-            "priceCny": 68,
-            "priceRub": 1590,
-            "badge": "AUTO",
-            "rating": 4.4,
-            "orders": 12225,
-            "deliveryDays": "10–22",
-            "description": "Товар из категории «Авто». Подходит для заказа из Китая через ONYX GROUP с проверкой и доставкой в РФ.",
-            "visual": "ORGANIZER",
-            "sizes": [
-                  "Standard"
-            ],
-            "colors": [
-                  "Black",
-                  "White",
-                  "Grey"
-            ],
-            "quick": [
-                  "low"
-            ],
-            "tags": [
-                  "car seat organizer",
-                  "auto",
-                  "1688",
-                  "авто",
-                  "auto"
-            ]
-      },
-      {
-            "id": 36,
-            "name": "Rainproof Shell Jacket",
-            "category": "clothes",
-            "source": "Taobao",
-            "type": "Одежда",
-            "priceCny": 198,
-            "priceRub": 4490,
-            "badge": "SHELL",
-            "rating": 4.5,
-            "orders": 12540,
-            "deliveryDays": "10–22",
-            "description": "Товар из категории «Одежда». Подходит для заказа из Китая через ONYX GROUP с проверкой и доставкой в РФ.",
-            "visual": "SHELL",
-            "sizes": [
-                  "S",
-                  "M",
-                  "L",
-                  "XL"
-            ],
-            "colors": [
-                  "Black",
-                  "White",
-                  "Grey"
-            ],
-            "quick": [
-                  "hot"
-            ],
-            "tags": [
-                  "rainproof shell jacket",
-                  "clothes",
-                  "taobao",
-                  "одежда",
-                  "shell"
-            ]
+        id: 16,
+        name: "Studio Microphone Arm",
+        category: "electronics",
+        source: "1688",
+        type: "Электроника",
+        priceCny: 108,
+        priceRub: 2490,
+        badge: "CONTENT",
+        rating: 4.7,
+        orders: 3300,
+        deliveryDays: "12–19",
+        description: "Пантограф для микрофона, удобный для стримов, записи голоса и домашней студии.",
+        tags: ["studio", "mic", "content", "электроника"],
+        sizes: ["Standard"],
+        colors: ["Black", "White"],
+        quick: ["low"],
+        visual: "MIC ARM"
       }
-];
-    const deliveryRates = {standard:{title:"Стандарт",perKg:650,days:"12–20",base:350},fast:{title:"Быстро",perKg:950,days:"7–14",base:520},cargo:{title:"Карго",perKg:520,days:"14–24",base:280}};
-    let cart = JSON.parse(localStorage.getItem("onyx_group_cart")) || [];
-    let activeQuickFilter = "all", activeCalcRoute = "standard", currentProduct = null, selectedSize = "", selectedColor = "";
-    const nav=document.getElementById("nav"),burger=document.getElementById("burger"),overlay=document.getElementById("overlay"),productGrid=document.getElementById("productGrid"),globalSearch=document.getElementById("globalSearch"),mainCategoryFilter=document.getElementById("mainCategoryFilter"),sourceFilter=document.getElementById("sourceFilter"),priceFilter=document.getElementById("priceFilter"),sortFilter=document.getElementById("sortFilter"),cartCount=document.getElementById("cartCount"),cartDrawer=document.getElementById("cartDrawer"),cartItems=document.getElementById("cartItems"),cartTotal=document.getElementById("cartTotal"),productModal=document.getElementById("productModal"),toast=document.getElementById("toast");
-    function formatRub(v){return Math.round(v).toLocaleString("ru-RU")+" ₽"}function formatCny(v){return "¥"+Number(v).toLocaleString("ru-RU")}function norm(v){return String(v||"").trim().toLowerCase()}
-    function showToast(t){toast.textContent=t;toast.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>toast.classList.remove("show"),2200)}
-    function saveCart(){localStorage.setItem("onyx_group_cart",JSON.stringify(cart))}function updateCartCount(){cartCount.textContent=cart.reduce((s,i)=>s+i.qty,0)}function getCartTotal(){return cart.reduce((s,i)=>s+i.priceRub*i.qty,0)}
-    function visualHTML(p,modal=false){return `<div class="${modal?"modal-visual":"visual-object"}"><span>${p.visual||p.name}</span></div>`}
-    function card(p){const chips=[`${p.deliveryDays} дней`,`★ ${p.rating}`,`${p.orders}+ заказов`].map(x=>`<span class="chip">${x}</span>`).join("");return `<article class="product-card reveal"><div class="product-media"><span class="product-badge">${p.badge}</span><span class="source-badge">${p.source}</span><div class="fake-product-visual">${visualHTML(p)}</div></div><div class="product-body"><div class="product-meta"><span>${p.type}</span><span>${formatCny(p.priceCny)}</span></div><h3 class="product-title">${p.name}</h3><p class="product-desc">${p.description}</p><div class="product-chips">${chips}</div><div class="price-area"><div class="price-row"><strong class="price-main">${formatRub(p.priceRub)}</strong><span class="price-cny">из ${p.source}</span></div><div class="product-actions"><button class="secondary-btn" onclick="openProductModal(${p.id})">Подробнее</button><button class="primary-btn" onclick="quickAdd(${p.id})">В заявку</button></div></div></div></article>`}
-    function filtered(){const search=norm(globalSearch.value),cat=mainCategoryFilter.value,src=sourceFilter.value,price=priceFilter.value,sort=sortFilter.value;let list=products.filter(p=>{const hay=norm([p.name,p.category,p.source,p.type,p.badge,p.description,...(p.tags||[])].join(" "));let mp=true;if(price==="under2000")mp=p.priceRub<=2000;if(price==="under5000")mp=p.priceRub<=5000;if(price==="premium")mp=p.priceRub>=5000;let mq=true;if(activeQuickFilter!=="all"){if(activeQuickFilter==="low")mq=p.priceRub<=3000;else mq=(p.quick||[]).includes(activeQuickFilter)}return(!search||hay.includes(search))&&(cat==="all"||p.category===cat)&&(src==="all"||p.source===src)&&mp&&mq});if(sort==="priceAsc")list.sort((a,b)=>a.priceRub-b.priceRub);if(sort==="priceDesc")list.sort((a,b)=>b.priceRub-a.priceRub);if(sort==="ratingDesc")list.sort((a,b)=>b.rating-a.rating);if(sort==="ordersDesc")list.sort((a,b)=>b.orders-a.orders);return list}
-    function renderProducts(){const list=filtered();if(!list.length){productGrid.innerHTML=`<div class="empty-state" style="grid-column:1/-1;">Ничего не найдено. Попробуй другой запрос, площадку или категорию.</div>`;return}productGrid.innerHTML=list.map(card).join("");applyReveal()}
-    function openDrawer(){cartDrawer.classList.add("open");overlay.classList.add("show");document.body.classList.add("no-scroll");cartDrawer.setAttribute("aria-hidden","false")}function closeDrawer(){cartDrawer.classList.remove("open");if(!productModal.classList.contains("show")){overlay.classList.remove("show");document.body.classList.remove("no-scroll")}cartDrawer.setAttribute("aria-hidden","true")}
-    function openProductModal(id){const p=products.find(x=>x.id===id);if(!p)return;currentProduct=p;selectedSize="";selectedColor="";document.getElementById("modalMedia").innerHTML=visualHTML(p,true);document.getElementById("modalMeta").textContent=`${p.type} · ${p.source} · ★ ${p.rating} · ${p.orders}+ заказов`;document.getElementById("modalTitle").textContent=p.name;document.getElementById("modalPrice").textContent=`${formatRub(p.priceRub)} · ${formatCny(p.priceCny)}`;document.getElementById("modalDesc").textContent=p.description;document.getElementById("modalChips").innerHTML=(p.tags||[]).slice(0,6).map(t=>`<span class="chip">${t}</span>`).join("");document.getElementById("modalSourceBox").innerHTML=`<div class="calc-result-row"><span>Площадка</span><strong>${p.source}</strong></div><div class="calc-result-row"><span>Срок</span><strong>${p.deliveryDays} дней</strong></div><div class="calc-result-row"><span>Цена в Китае</span><strong>${formatCny(p.priceCny)}</strong></div><div class="calc-result-row total"><span>Примерно к оплате</span><strong>${formatRub(p.priceRub)}</strong></div>`;renderOptions("size",p.sizes||[]);renderOptions("color",p.colors||[]);productModal.classList.add("show");overlay.classList.add("show");document.body.classList.add("no-scroll")}
-    function closeProductModal(){productModal.classList.remove("show");if(!cartDrawer.classList.contains("open")){overlay.classList.remove("show");document.body.classList.remove("no-scroll")}currentProduct=null}
-    function renderOptions(type,opts){const block=document.getElementById(type==="size"?"sizeBlock":"colorBlock"),box=document.getElementById(type==="size"?"sizeOptions":"colorOptions"),sel=type==="size"?selectedSize:selectedColor;if(!opts.length){block.style.display="none";box.innerHTML="";return}block.style.display="block";box.innerHTML=opts.map(o=>`<button class="option-btn ${sel===o?"active":""}" type="button" data-option-type="${type}" data-option-value="${o}">${o}</button>`).join("")}
-    function addProductToCart(p,cfg={}){cart.push({id:Date.now()+Math.random(),productId:p.id,name:p.name,source:p.source,type:p.type,priceRub:p.priceRub,priceCny:p.priceCny,qty:1,size:cfg.size||"",color:cfg.color||"",visual:p.visual});renderCart();showToast("Добавлено в заявку")}function quickAdd(id){const p=products.find(x=>x.id===id);if(p){addProductToCart(p);openDrawer()}}
-    function addCurrentModalProduct(){if(!currentProduct)return;if((currentProduct.sizes||[]).length&&!selectedSize){showToast("Выбери размер");return}if((currentProduct.colors||[]).length&&!selectedColor){showToast("Выбери цвет / модель");return}addProductToCart(currentProduct,{size:selectedSize,color:selectedColor});closeProductModal();openDrawer()}
-    function changeQty(id,dir){const item=cart.find(p=>p.id===id);if(!item)return;if(dir==="plus")item.qty++;if(dir==="minus")item.qty--;cart=cart.filter(p=>p.qty>0);renderCart()}function removeCartItem(id){cart=cart.filter(p=>p.id!==id);renderCart();showToast("Удалено из заявки")}
-    function renderCart(){if(!cart.length){cartItems.innerHTML=`<div class="empty-state">Заявка пока пустая. Добавь товары из витрины или отправь ссылку через форму.</div>`;cartTotal.textContent=formatRub(0);updateCartCount();saveCart();return}cartItems.innerHTML=cart.map(item=>{const props=[];if(item.size)props.push(`Размер: ${item.size}`);if(item.color)props.push(`Цвет/модель: ${item.color}`);return `<div class="cart-item"><div class="cart-thumb"><span>${item.visual||"ONYX"}</span></div><div><strong>${item.name}</strong><small>${item.source} · ${item.type}</small>${props.length?`<small>${props.join(" · ")}</small>`:""}<small>${formatRub(item.priceRub)} · ${formatCny(item.priceCny)}</small></div><div class="cart-actions"><div class="qty-group"><button class="qty-btn" onclick="changeQty(${item.id}, 'minus')">−</button><span>${item.qty}</span><button class="qty-btn" onclick="changeQty(${item.id}, 'plus')">+</button></div><button class="remove-btn" onclick="removeCartItem(${item.id})">Удалить</button></div></div>`}).join("");cartTotal.textContent=formatRub(getCartTotal());updateCartCount();saveCart()}
-    function tgMessage(title,fields){const lines=[title,""];fields.forEach(f=>{if(f.value)lines.push(`${f.label}: ${f.value}`)});return encodeURIComponent(lines.join("
-"))}function openTG(msg){window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${msg}`,"_blank","noopener,noreferrer")}
-    function submitQuote(e){e.preventDefault();const msg=tgMessage("🔥 Новая заявка ONYX GROUP",[{label:"Имя",value:quoteName.value.trim()},{label:"Контакт",value:quoteContact.value.trim()},{label:"Ссылка / товар",value:quoteLink.value.trim()},{label:"Комментарий",value:quoteText.value.trim()}]);openTG(msg);showToast("Открываю Telegram с заявкой");e.target.reset()}
-    function submitCheckout(e){e.preventDefault();if(!cart.length){showToast("Заявка пустая");return}const items=cart.map((item,i)=>`${i+1}) ${item.name} — ${item.qty} шт · ${item.source} · ${formatRub(item.priceRub)}${item.size?" · размер "+item.size:""}${item.color?" · цвет/модель "+item.color:""}`).join("
-");const msg=tgMessage("🧾 Заявка из корзины ONYX GROUP",[{label:"Имя",value:customerName.value.trim()},{label:"Контакт",value:customerContact.value.trim()},{label:"Город",value:customerCity.value.trim()},{label:"Товары",value:"
-"+items},{label:"Примерный итог",value:formatRub(getCartTotal())},{label:"Комментарий",value:customerComment.value.trim()}]);openTG(msg);showToast("Заявка собрана в Telegram");cart=[];renderCart();e.target.reset();setTimeout(closeDrawer,500)}
-    function calculatePrice(){const cny=Number(calcCny.value)||0,weight=Number(calcWeight.value)||0,rate=Number(calcRate.value)||0,fee=Number(calcFee.value)||0,route=deliveryRates[activeCalcRoute],itemRub=cny*rate,delivery=route.base+weight*route.perKg,service=itemRub*fee,total=itemRub+delivery+service;calcResult.innerHTML=`<div class="calc-result-row"><span>Товар</span><strong>${formatRub(itemRub)}</strong></div><div class="calc-result-row"><span>Доставка ${route.title}</span><strong>${formatRub(delivery)}</strong></div><div class="calc-result-row"><span>Комиссия</span><strong>${formatRub(service)}</strong></div><div class="calc-result-row"><span>Срок</span><strong>${route.days}</strong></div><div class="calc-result-row total"><span>Итого примерно</span><strong>${formatRub(total)}</strong></div>`}
-    function submitTrack(e){e.preventDefault();const v=trackInput.value.trim()||"ONYX-2406";trackResult.style.display="block";trackResult.innerHTML=`<div class="calc-result-row"><span>Номер</span><strong>${v}</strong></div><div class="calc-result-row"><span>Статус</span><strong>На складе в Китае</strong></div><div class="calc-result-row"><span>Следующий этап</span><strong>Отправка в РФ</strong></div><div class="calc-result-row total"><span>Прогноз</span><strong>8–14 дней</strong></div>`;showToast("Статус обновлён")}
-    function submitNewsletter(e){e.preventDefault();const v=newsletterInput.value.trim();if(!v){showToast("Укажи контакт");return}localStorage.setItem("onyx_group_newsletter",v);showToast("Контакт сохранён в браузере");e.target.reset()}
-    function applyReveal(){const items=document.querySelectorAll(".reveal");const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add("visible")})},{threshold:.12});items.forEach(item=>observer.observe(item))}
-    function bind(){burger.addEventListener("click",()=>{burger.classList.toggle("open");nav.classList.toggle("open")});nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{burger.classList.remove("open");nav.classList.remove("open")}));openSearchBtn.addEventListener("click",()=>{document.getElementById("smart-search").scrollIntoView({behavior:"smooth"});setTimeout(()=>globalSearch.focus(),350)});searchNowBtn.addEventListener("click",()=>{document.getElementById("catalog").scrollIntoView({behavior:"smooth"});renderProducts()});openCartBtn.addEventListener("click",openDrawer);closeCartBtn.addEventListener("click",closeDrawer);closeModalBtn.addEventListener("click",closeProductModal);modalCloseAction.addEventListener("click",closeProductModal);modalAddToCartBtn.addEventListener("click",addCurrentModalProduct);overlay.addEventListener("click",()=>{closeProductModal();closeDrawer()});[globalSearch,mainCategoryFilter,sourceFilter,priceFilter,sortFilter].forEach(el=>{el.addEventListener("input",renderProducts);el.addEventListener("change",renderProducts)});document.querySelectorAll(".tag-link").forEach(b=>b.addEventListener("click",()=>{globalSearch.value=b.dataset.search;document.getElementById("catalog").scrollIntoView({behavior:"smooth"});renderProducts()}));document.querySelectorAll("[data-category-jump]").forEach(b=>b.addEventListener("click",()=>{mainCategoryFilter.value=b.dataset.categoryJump;document.getElementById("catalog").scrollIntoView({behavior:"smooth"});renderProducts()}));document.querySelectorAll(".filter-pill").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".filter-pill").forEach(i=>i.classList.remove("active"));b.classList.add("active");activeQuickFilter=b.dataset.quick;renderProducts()}));resetFiltersBtn.addEventListener("click",()=>{globalSearch.value="";mainCategoryFilter.value="all";sourceFilter.value="all";priceFilter.value="all";sortFilter.value="default";activeQuickFilter="all";document.querySelectorAll(".filter-pill").forEach(i=>i.classList.remove("active"));document.querySelector('.filter-pill[data-quick="all"]').classList.add("active");renderProducts()});scrollQuoteBtn.addEventListener("click",()=>quote.scrollIntoView({behavior:"smooth"}));document.addEventListener("click",e=>{const o=e.target.closest(".option-btn");if(!o||!currentProduct)return;if(o.dataset.optionType==="size"){selectedSize=o.dataset.optionValue;renderOptions("size",currentProduct.sizes||[])}if(o.dataset.optionType==="color"){selectedColor=o.dataset.optionValue;renderOptions("color",currentProduct.colors||[])}});document.querySelectorAll(".calc-tab").forEach(tab=>tab.addEventListener("click",()=>{document.querySelectorAll(".calc-tab").forEach(i=>i.classList.remove("active"));tab.classList.add("active");activeCalcRoute=tab.dataset.calcRoute;calculatePrice()}));["calcCny","calcWeight","calcRate","calcFee"].forEach(id=>{document.getElementById(id).addEventListener("input",calculatePrice);document.getElementById(id).addEventListener("change",calculatePrice)});quoteForm.addEventListener("submit",submitQuote);checkoutForm.addEventListener("submit",submitCheckout);trackForm.addEventListener("submit",submitTrack);newsletterForm.addEventListener("submit",submitNewsletter);document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeProductModal();closeDrawer()}})}
-    renderProducts();renderCart();calculatePrice();bind();applyReveal();
+    ];
+
+    const deliveryRates = {
+      standard: { title: "Стандарт", perKg: 650, days: "12–20", base: 350 },
+      fast: { title: "Быстро", perKg: 950, days: "7–14", base: 520 },
+      cargo: { title: "Карго", perKg: 520, days: "14–24", base: 280 }
+    };
+
+    const SITE_CNY_RATE = 13.5;
+    const MIN_SERVICE_FEE = 450;
+
+    const trackingOrders = {
+      "ONYX-2406": {
+        code: "ONYX-2406",
+        step: 3,
+        status: "Склад в Китае",
+        location: "Guangzhou warehouse",
+        next: "Фото-проверка и упаковка",
+        eta: "10–14 дней"
+      },
+      "ONYX-8801": {
+        code: "ONYX-8801",
+        step: 4,
+        status: "В пути в РФ",
+        location: "Карго маршрут Китай → Россия",
+        next: "Прибытие на сортировку РФ",
+        eta: "5–8 дней"
+      },
+      "ONYX-7777": {
+        code: "ONYX-7777",
+        step: 5,
+        status: "Готов к выдаче",
+        location: "Россия",
+        next: "Передача клиенту",
+        eta: "1–2 дня"
+      }
+    };
+
+    let cart = JSON.parse(localStorage.getItem("onyx_group_cart") || "[]");
+    let activeQuickFilter = "all";
+    let activeCalcRoute = "standard";
+    let currentProduct = null;
+    let selectedSize = "";
+    let selectedColor = "";
+
+    const $ = (id) => document.getElementById(id);
+
+    const nav = $("nav");
+    const burger = $("burger");
+    const overlay = $("overlay");
+    const productGrid = $("productGrid");
+    const globalSearch = $("globalSearch");
+    const mainCategoryFilter = $("mainCategoryFilter");
+    const sourceFilter = $("sourceFilter");
+    const priceFilter = $("priceFilter");
+    const sortFilter = $("sortFilter");
+    const cartCount = $("cartCount");
+    const cartDrawer = $("cartDrawer");
+    const cartItems = $("cartItems");
+    const cartTotal = $("cartTotal");
+    const productModal = $("productModal");
+    const toast = $("toast");
+
+    function formatRub(value) {
+      return Math.round(Number(value) || 0).toLocaleString("ru-RU") + " ₽";
+    }
+
+    function formatCny(value) {
+      return "¥" + Math.round(Number(value) || 0).toLocaleString("ru-RU");
+    }
+
+    function normalizeText(value) {
+      return String(value || "").trim().toLowerCase();
+    }
+
+    function showToast(text) {
+      if (!toast) return;
+      toast.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+
+    function saveCart() {
+      localStorage.setItem("onyx_group_cart", JSON.stringify(cart));
+    }
+
+    function updateCartCount() {
+      if (!cartCount) return;
+      cartCount.textContent = cart.reduce((sum, item) => sum + item.qty, 0);
+    }
+
+    function getCartTotal() {
+      return cart.reduce((sum, item) => sum + item.priceRub * item.qty, 0);
+    }
+
+    function makeVisualHTML(product, size = "card") {
+      const text = product.visual || product.name;
+      return `
+        <div class="${size === "modal" ? "modal-visual" : "visual-object"}">
+          <span>${text}</span>
+        </div>
+      `;
+    }
+
+    function makeProductCard(product) {
+      const chips = [
+        `${product.deliveryDays} дней`,
+        `★ ${product.rating}`,
+        `${product.orders}+ заказов`
+      ].map(item => `<span class="chip">${item}</span>`).join("");
+
+      return `
+        <article class="product-card reveal">
+          <div class="product-media">
+            <span class="product-badge">${product.badge}</span>
+            <span class="source-badge">${product.source}</span>
+            <div class="fake-product-visual">${makeVisualHTML(product)}</div>
+          </div>
+
+          <div class="product-body">
+            <div class="product-meta">
+              <span>${product.type}</span>
+              <span>${formatCny(product.priceCny)}</span>
+            </div>
+            <h3 class="product-title">${product.name}</h3>
+            <p class="product-desc">${product.description}</p>
+            <div class="product-chips">${chips}</div>
+
+            <div class="price-area">
+              <div class="price-row">
+                <strong class="price-main">${formatRub(product.priceRub)}</strong>
+                <span class="price-cny">из ${product.source}</span>
+              </div>
+
+              <div class="product-actions">
+                <button class="secondary-btn" onclick="openProductModal(${product.id})">Подробнее</button>
+                <button class="primary-btn" onclick="quickAdd(${product.id})">В заявку</button>
+              </div>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function getFilteredProducts() {
+      const search = normalizeText(globalSearch ? globalSearch.value : "");
+      const category = mainCategoryFilter ? mainCategoryFilter.value : "all";
+      const source = sourceFilter ? sourceFilter.value : "all";
+      const price = priceFilter ? priceFilter.value : "all";
+      const sort = sortFilter ? sortFilter.value : "default";
+
+      let filtered = products.filter(product => {
+        const haystack = normalizeText([
+          product.name,
+          product.category,
+          product.source,
+          product.type,
+          product.badge,
+          product.description,
+          ...(product.tags || [])
+        ].join(" "));
+
+        const matchesSearch = !search || haystack.includes(search);
+        const matchesCategory = category === "all" || product.category === category;
+        const matchesSource = source === "all" || product.source === source;
+
+        let matchesPrice = true;
+        if (price === "under2000") matchesPrice = product.priceRub <= 2000;
+        if (price === "under5000") matchesPrice = product.priceRub <= 5000;
+        if (price === "premium") matchesPrice = product.priceRub >= 5000;
+
+        let matchesQuick = true;
+        if (activeQuickFilter !== "all") {
+          if (activeQuickFilter === "low") matchesQuick = product.priceRub <= 3000;
+          else matchesQuick = (product.quick || []).includes(activeQuickFilter);
+        }
+
+        return matchesSearch && matchesCategory && matchesSource && matchesPrice && matchesQuick;
+      });
+
+      if (sort === "priceAsc") filtered.sort((a, b) => a.priceRub - b.priceRub);
+      if (sort === "priceDesc") filtered.sort((a, b) => b.priceRub - a.priceRub);
+      if (sort === "ratingDesc") filtered.sort((a, b) => b.rating - a.rating);
+      if (sort === "ordersDesc") filtered.sort((a, b) => b.orders - a.orders);
+
+      return filtered;
+    }
+
+    function renderProducts() {
+      if (!productGrid) return;
+
+      const list = getFilteredProducts();
+
+      if (!list.length) {
+        productGrid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">Ничего не найдено. Попробуй другой запрос, площадку или категорию.</div>`;
+        return;
+      }
+
+      productGrid.innerHTML = list.map(makeProductCard).join("");
+      applyReveal();
+    }
+
+    function openDrawer() {
+      if (!cartDrawer || !overlay) return;
+      cartDrawer.classList.add("open");
+      overlay.classList.add("show");
+      document.body.classList.add("no-scroll");
+      cartDrawer.setAttribute("aria-hidden", "false");
+    }
+
+    function closeDrawer() {
+      if (!cartDrawer || !overlay) return;
+      cartDrawer.classList.remove("open");
+      if (!productModal || !productModal.classList.contains("show")) {
+        overlay.classList.remove("show");
+        document.body.classList.remove("no-scroll");
+      }
+      cartDrawer.setAttribute("aria-hidden", "true");
+    }
+
+    function openProductModal(id) {
+      const product = products.find(item => item.id === id);
+      if (!product || !productModal || !overlay) return;
+
+      currentProduct = product;
+      selectedSize = "";
+      selectedColor = "";
+
+      $("modalMedia").innerHTML = makeVisualHTML(product, "modal");
+      $("modalMeta").textContent = `${product.type} · ${product.source} · ★ ${product.rating} · ${product.orders}+ заказов`;
+      $("modalTitle").textContent = product.name;
+      $("modalPrice").textContent = `${formatRub(product.priceRub)} · ${formatCny(product.priceCny)}`;
+      $("modalDesc").textContent = product.description;
+      $("modalChips").innerHTML = (product.tags || []).map(tag => `<span class="chip">${tag}</span>`).join("");
+
+      $("modalSourceBox").innerHTML = `
+        <div class="calc-result-row">
+          <span>Площадка</span>
+          <strong>${product.source}</strong>
+        </div>
+        <div class="calc-result-row">
+          <span>Срок</span>
+          <strong>${product.deliveryDays} дней</strong>
+        </div>
+        <div class="calc-result-row">
+          <span>Цена в Китае</span>
+          <strong>${formatCny(product.priceCny)}</strong>
+        </div>
+        <div class="calc-result-row total">
+          <span>Примерно к оплате</span>
+          <strong>${formatRub(product.priceRub)}</strong>
+        </div>
+      `;
+
+      renderOptions("size", product.sizes || []);
+      renderOptions("color", product.colors || []);
+
+      productModal.classList.add("show");
+      overlay.classList.add("show");
+      document.body.classList.add("no-scroll");
+    }
+
+    function closeProductModal() {
+      if (!productModal || !overlay) return;
+      productModal.classList.remove("show");
+      if (!cartDrawer || !cartDrawer.classList.contains("open")) {
+        overlay.classList.remove("show");
+        document.body.classList.remove("no-scroll");
+      }
+      currentProduct = null;
+    }
+
+    function renderOptions(type, options) {
+      const block = $(type === "size" ? "sizeBlock" : "colorBlock");
+      const container = $(type === "size" ? "sizeOptions" : "colorOptions");
+      const selected = type === "size" ? selectedSize : selectedColor;
+
+      if (!block || !container) return;
+
+      if (!options.length) {
+        block.style.display = "none";
+        container.innerHTML = "";
+        return;
+      }
+
+      block.style.display = "block";
+      container.innerHTML = options.map(option => `
+        <button class="option-btn ${selected === option ? "active" : ""}" type="button" data-option-type="${type}" data-option-value="${option}">
+          ${option}
+        </button>
+      `).join("");
+    }
+
+    function addProductToCart(product, config = {}) {
+      const item = {
+        id: Date.now() + Math.random(),
+        productId: product.id,
+        name: product.name,
+        source: product.source,
+        type: product.type,
+        priceRub: product.priceRub,
+        priceCny: product.priceCny,
+        qty: 1,
+        size: config.size || "",
+        color: config.color || "",
+        visual: product.visual
+      };
+
+      cart.push(item);
+      renderCart();
+      showToast("Добавлено в заявку");
+    }
+
+    function quickAdd(id) {
+      const product = products.find(item => item.id === id);
+      if (!product) return;
+      addProductToCart(product);
+      openDrawer();
+    }
+
+    function addCurrentModalProduct() {
+      if (!currentProduct) return;
+
+      if ((currentProduct.sizes || []).length && !selectedSize) {
+        showToast("Выбери размер");
+        return;
+      }
+
+      if ((currentProduct.colors || []).length && !selectedColor) {
+        showToast("Выбери цвет / модель");
+        return;
+      }
+
+      addProductToCart(currentProduct, {
+        size: selectedSize,
+        color: selectedColor
+      });
+
+      closeProductModal();
+      openDrawer();
+    }
+
+    function changeQty(id, direction) {
+      const item = cart.find(product => product.id === id);
+      if (!item) return;
+
+      if (direction === "plus") item.qty += 1;
+      if (direction === "minus") item.qty -= 1;
+
+      cart = cart.filter(product => product.qty > 0);
+      renderCart();
+    }
+
+    function removeCartItem(id) {
+      cart = cart.filter(product => product.id !== id);
+      renderCart();
+      showToast("Удалено из заявки");
+    }
+
+    function renderCart() {
+      if (!cartItems || !cartTotal) return;
+
+      if (!cart.length) {
+        cartItems.innerHTML = `<div class="empty-state">Заявка пока пустая. Добавь товары из витрины или отправь ссылку через форму.</div>`;
+        cartTotal.textContent = formatRub(0);
+        updateCartCount();
+        saveCart();
+        return;
+      }
+
+      cartItems.innerHTML = cart.map(item => {
+        const props = [];
+        if (item.size) props.push(`Размер: ${item.size}`);
+        if (item.color) props.push(`Цвет/модель: ${item.color}`);
+
+        return `
+          <div class="cart-item">
+            <div class="cart-thumb"><span>${item.visual || "ONYX"}</span></div>
+            <div>
+              <strong>${item.name}</strong>
+              <small>${item.source} · ${item.type}</small>
+              ${props.length ? `<small>${props.join(" · ")}</small>` : ""}
+              <small>${formatRub(item.priceRub)} · ${formatCny(item.priceCny)}</small>
+            </div>
+            <div class="cart-actions">
+              <div class="qty-group">
+                <button class="qty-btn" onclick="changeQty(${item.id}, 'minus')">−</button>
+                <span>${item.qty}</span>
+                <button class="qty-btn" onclick="changeQty(${item.id}, 'plus')">+</button>
+              </div>
+              <button class="remove-btn" onclick="removeCartItem(${item.id})">Удалить</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      cartTotal.textContent = formatRub(getCartTotal());
+      updateCartCount();
+      saveCart();
+    }
+
+    function buildTelegramMessage(title, fields) {
+      const lines = [title, ""];
+      fields.forEach(field => {
+        if (field.value) lines.push(`${field.label}: ${field.value}`);
+      });
+      return encodeURIComponent(lines.join("\n"));
+    }
+
+    function openTelegramWithMessage(message) {
+      window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${message}`, "_blank", "noopener,noreferrer");
+    }
+
+    function submitQuoteForm(event) {
+      event.preventDefault();
+
+      const message = buildTelegramMessage("🔥 Новая заявка ONYX GROUP", [
+        { label: "Имя", value: $("quoteName").value.trim() },
+        { label: "Контакт", value: $("quoteContact").value.trim() },
+        { label: "Ссылка / товар", value: $("quoteLink").value.trim() },
+        { label: "Комментарий", value: $("quoteText").value.trim() }
+      ]);
+
+      openTelegramWithMessage(message);
+      showToast("Открываю Telegram с заявкой");
+      event.target.reset();
+    }
+
+    function submitCheckoutForm(event) {
+      event.preventDefault();
+
+      if (!cart.length) {
+        showToast("Заявка пустая");
+        return;
+      }
+
+      const itemsText = cart.map((item, index) => {
+        const props = [];
+        if (item.size) props.push(`размер ${item.size}`);
+        if (item.color) props.push(`цвет/модель ${item.color}`);
+        return `${index + 1}) ${item.name} — ${item.qty} шт · ${item.source} · ${formatRub(item.priceRub)}${props.length ? " · " + props.join(", ") : ""}`;
+      }).join("\n");
+
+      const message = buildTelegramMessage("🧾 Заявка из корзины ONYX GROUP", [
+        { label: "Имя", value: $("customerName").value.trim() },
+        { label: "Контакт", value: $("customerContact").value.trim() },
+        { label: "Город", value: $("customerCity").value.trim() },
+        { label: "Товары", value: "\n" + itemsText },
+        { label: "Примерный итог", value: formatRub(getCartTotal()) },
+        { label: "Комментарий", value: $("customerComment").value.trim() }
+      ]);
+
+      openTelegramWithMessage(message);
+      showToast("Заявка собрана в Telegram");
+      cart = [];
+      renderCart();
+      event.target.reset();
+      setTimeout(closeDrawer, 500);
+    }
+
+    function getAutoServiceFee(itemRub, weight) {
+      const percent = itemRub >= 7000 ? 0.10 : itemRub >= 3000 ? 0.12 : 0.15;
+      return Math.max(MIN_SERVICE_FEE, itemRub * percent + Math.max(0, weight - 1) * 80);
+    }
+
+    function calculatePrice() {
+      const calcCny = $("calcCny");
+      const calcWeight = $("calcWeight");
+      const calcResult = $("calcResult");
+
+      if (!calcCny || !calcWeight || !calcResult) return;
+
+      const priceCny = Number(calcCny.value) || 0;
+      const weight = Number(calcWeight.value) || 0;
+
+      const route = deliveryRates[activeCalcRoute];
+      const itemRub = priceCny * SITE_CNY_RATE;
+      const chinaDeliveryRub = priceCny > 0 ? 250 : 0;
+      const internationalDeliveryRub = route.base + weight * route.perKg;
+      const serviceFee = getAutoServiceFee(itemRub, weight);
+      const total = itemRub + chinaDeliveryRub + internationalDeliveryRub + serviceFee;
+
+      if ($("siteRateLabel")) $("siteRateLabel").textContent = `¥1 = ${SITE_CNY_RATE} ₽`;
+      if ($("siteFeeLabel")) $("siteFeeLabel").textContent = `${formatRub(serviceFee)}`;
+      if ($("siteRouteLabel")) $("siteRouteLabel").textContent = `${route.title} · ${route.days}`;
+
+      calcResult.innerHTML = `
+        <div class="calc-result-row">
+          <span>Товар по курсу сайта</span>
+          <strong>${formatRub(itemRub)}</strong>
+        </div>
+        <div class="calc-result-row">
+          <span>Доставка по Китаю</span>
+          <strong>${formatRub(chinaDeliveryRub)}</strong>
+        </div>
+        <div class="calc-result-row">
+          <span>Доставка Китай → РФ</span>
+          <strong>${formatRub(internationalDeliveryRub)}</strong>
+        </div>
+        <div class="calc-result-row">
+          <span>Комиссия ONYX GROUP</span>
+          <strong>${formatRub(serviceFee)}</strong>
+        </div>
+        <div class="calc-result-row">
+          <span>Срок маршрута</span>
+          <strong>${route.days}</strong>
+        </div>
+        <div class="calc-result-row total">
+          <span>Итого примерно</span>
+          <strong>${formatRub(total)}</strong>
+        </div>
+      `;
+    }
+
+    function updateTrackingView(order) {
+      const step = Number(order.step) || 1;
+      const progress = [0, 25, 50, 75, 100][step - 1] || 0;
+
+      document.querySelectorAll(".tracking-step").forEach(item => {
+        const itemStep = Number(item.dataset.step);
+        item.classList.remove("done", "active", "current");
+
+        if (itemStep < step) item.classList.add("done");
+        if (itemStep === step) item.classList.add("current");
+      });
+
+      if ($("trackingRouteFill")) $("trackingRouteFill").style.width = progress + "%";
+      if ($("trackingPackage")) $("trackingPackage").style.left = progress + "%";
+      if ($("trackingMapTitle")) $("trackingMapTitle").textContent = order.code;
+      if ($("trackingMapStatus")) $("trackingMapStatus").textContent = order.status;
+    }
+
+    function submitTrackForm(event) {
+      event.preventDefault();
+
+      const raw = $("trackInput").value.trim().toUpperCase();
+      const code = raw || "ONYX-2406";
+      const order = trackingOrders[code];
+      const result = $("trackResult");
+
+      if (!order) {
+        const demo = {
+          code,
+          step: 1,
+          status: "Код не найден",
+          location: "Создана демо-заявка",
+          next: "Напиши менеджеру для добавления трека",
+          eta: "уточняется"
+        };
+
+        updateTrackingView(demo);
+        result.style.display = "block";
+        result.innerHTML = `
+          <div class="calc-result-row">
+            <span>Номер</span>
+            <strong>${code}</strong>
+          </div>
+          <div class="calc-result-row">
+            <span>Статус</span>
+            <strong>Трек-код не найден</strong>
+          </div>
+          <div class="calc-result-row">
+            <span>Что делать</span>
+            <strong>Проверь код или напиши менеджеру</strong>
+          </div>
+          <div class="calc-result-row total">
+            <span>Демо-коды</span>
+            <strong>ONYX-2406 / 8801 / 7777</strong>
+          </div>
+        `;
+        showToast("Трек-код не найден");
+        return;
+      }
+
+      updateTrackingView(order);
+
+      result.style.display = "block";
+      result.innerHTML = `
+        <div class="calc-result-row">
+          <span>Номер</span>
+          <strong>${order.code}</strong>
+        </div>
+        <div class="calc-result-row">
+          <span>Статус</span>
+          <strong>${order.status}</strong>
+        </div>
+        <div class="calc-result-row">
+          <span>Локация</span>
+          <strong>${order.location}</strong>
+        </div>
+        <div class="calc-result-row">
+          <span>Следующий этап</span>
+          <strong>${order.next}</strong>
+        </div>
+        <div class="calc-result-row total">
+          <span>Прогноз</span>
+          <strong>${order.eta}</strong>
+        </div>
+      `;
+
+      showToast("Статус заказа обновлён");
+    }
+
+    function submitNewsletter(event) {
+      event.preventDefault();
+
+      const input = $("newsletterInput");
+      const value = input.value.trim();
+      const result = $("newsletterResult");
+
+      if (!value) {
+        showToast("Укажи Telegram или email");
+        return;
+      }
+
+      const subscribers = JSON.parse(localStorage.getItem("onyx_group_newsletter_list") || "[]");
+      subscribers.push({
+        contact: value,
+        date: new Date().toLocaleString("ru-RU")
+      });
+
+      localStorage.setItem("onyx_group_newsletter_list", JSON.stringify(subscribers));
+      localStorage.setItem("onyx_group_newsletter", value);
+
+      if (result) {
+        result.classList.add("saved");
+        result.innerHTML = `
+          <div class="calc-result-row">
+            <span>Контакт</span>
+            <strong>${value}</strong>
+          </div>
+          <div class="calc-result-row">
+            <span>Статус</span>
+            <strong>подписка сохранена</strong>
+          </div>
+          <div class="calc-result-row">
+            <span>Что будет приходить</span>
+            <strong>подборки товаров из Китая</strong>
+          </div>
+          <div class="calc-result-row total">
+            <span>Канал</span>
+            <strong>Telegram / email</strong>
+          </div>
+        `;
+      }
+
+      showToast("Подписка сохранена");
+      event.target.reset();
+    }
+
+    function applyReveal() {
+      const items = document.querySelectorAll(".reveal");
+
+      if (!("IntersectionObserver" in window)) {
+        items.forEach(item => item.classList.add("visible"));
+        return;
+      }
+
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add("visible");
+        });
+      }, { threshold: 0.12 });
+
+      items.forEach(item => observer.observe(item));
+    }
+
+    function resetQuickPills() {
+      document.querySelectorAll(".filter-pill").forEach(item => item.classList.remove("active"));
+      const allPill = document.querySelector('.filter-pill[data-quick="all"]');
+      if (allPill) allPill.classList.add("active");
+      activeQuickFilter = "all";
+    }
+
+    function bindEvents() {
+      if (burger && nav) {
+        burger.addEventListener("click", () => {
+          burger.classList.toggle("open");
+          nav.classList.toggle("open");
+        });
+
+        nav.querySelectorAll("a").forEach(link => {
+          link.addEventListener("click", () => {
+            burger.classList.remove("open");
+            nav.classList.remove("open");
+          });
+        });
+      }
+
+      if ($("openSearchBtn")) {
+        $("openSearchBtn").addEventListener("click", () => {
+          $("smart-search").scrollIntoView({ behavior: "smooth" });
+          setTimeout(() => globalSearch && globalSearch.focus(), 350);
+        });
+      }
+
+      if ($("searchNowBtn")) {
+        $("searchNowBtn").addEventListener("click", () => {
+          $("catalog").scrollIntoView({ behavior: "smooth" });
+          renderProducts();
+        });
+      }
+
+      if ($("openCartBtn")) $("openCartBtn").addEventListener("click", openDrawer);
+      if ($("closeCartBtn")) $("closeCartBtn").addEventListener("click", closeDrawer);
+      if ($("closeModalBtn")) $("closeModalBtn").addEventListener("click", closeProductModal);
+      if ($("modalCloseAction")) $("modalCloseAction").addEventListener("click", closeProductModal);
+      if ($("modalAddToCartBtn")) $("modalAddToCartBtn").addEventListener("click", addCurrentModalProduct);
+
+      if (overlay) {
+        overlay.addEventListener("click", () => {
+          closeProductModal();
+          closeDrawer();
+        });
+      }
+
+      [globalSearch, mainCategoryFilter, sourceFilter, priceFilter, sortFilter].forEach(element => {
+        if (!element) return;
+        element.addEventListener("input", renderProducts);
+        element.addEventListener("change", renderProducts);
+      });
+
+      document.querySelectorAll(".tag-link").forEach(button => {
+        button.addEventListener("click", () => {
+          const value = button.dataset.search;
+          const categoryMap = {
+            "дом": "home",
+            "авто": "auto"
+          };
+
+          if (globalSearch) globalSearch.value = "";
+          if (mainCategoryFilter) mainCategoryFilter.value = "all";
+          if (sourceFilter) sourceFilter.value = "all";
+          if (priceFilter) priceFilter.value = "all";
+          resetQuickPills();
+
+          if (categoryMap[value]) {
+            mainCategoryFilter.value = categoryMap[value];
+          } else {
+            globalSearch.value = value;
+          }
+
+          $("catalog").scrollIntoView({ behavior: "smooth" });
+          renderProducts();
+        });
+      });
+
+      document.querySelectorAll("[data-category-jump]").forEach(button => {
+        button.addEventListener("click", () => {
+          if (globalSearch) globalSearch.value = "";
+          if (mainCategoryFilter) mainCategoryFilter.value = button.dataset.categoryJump;
+          if (sourceFilter) sourceFilter.value = "all";
+          if (priceFilter) priceFilter.value = "all";
+          resetQuickPills();
+          $("catalog").scrollIntoView({ behavior: "smooth" });
+          renderProducts();
+        });
+      });
+
+      document.querySelectorAll(".filter-pill").forEach(button => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll(".filter-pill").forEach(item => item.classList.remove("active"));
+          button.classList.add("active");
+          activeQuickFilter = button.dataset.quick;
+          renderProducts();
+        });
+      });
+
+      if ($("resetFiltersBtn")) {
+        $("resetFiltersBtn").addEventListener("click", () => {
+          if (globalSearch) globalSearch.value = "";
+          if (mainCategoryFilter) mainCategoryFilter.value = "all";
+          if (sourceFilter) sourceFilter.value = "all";
+          if (priceFilter) priceFilter.value = "all";
+          if (sortFilter) sortFilter.value = "default";
+          resetQuickPills();
+          renderProducts();
+          showToast("Фильтры сброшены");
+        });
+      }
+
+      if ($("scrollQuoteBtn")) {
+        $("scrollQuoteBtn").addEventListener("click", () => {
+          $("quote").scrollIntoView({ behavior: "smooth" });
+        });
+      }
+
+      document.addEventListener("click", event => {
+        const option = event.target.closest(".option-btn");
+        if (!option || !currentProduct) return;
+
+        const type = option.dataset.optionType;
+        const value = option.dataset.optionValue;
+
+        if (type === "size") {
+          selectedSize = value;
+          renderOptions("size", currentProduct.sizes || []);
+        }
+
+        if (type === "color") {
+          selectedColor = value;
+          renderOptions("color", currentProduct.colors || []);
+        }
+      });
+
+      document.querySelectorAll(".calc-tab").forEach(tab => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll(".calc-tab").forEach(item => item.classList.remove("active"));
+          tab.classList.add("active");
+          activeCalcRoute = tab.dataset.calcRoute;
+          calculatePrice();
+        });
+      });
+
+      ["calcCny", "calcWeight"].forEach(id => {
+        const element = $(id);
+        if (!element) return;
+        element.addEventListener("input", calculatePrice);
+        element.addEventListener("change", calculatePrice);
+      });
+
+      if ($("quoteForm")) $("quoteForm").addEventListener("submit", submitQuoteForm);
+      if ($("checkoutForm")) $("checkoutForm").addEventListener("submit", submitCheckoutForm);
+      if ($("trackForm")) $("trackForm").addEventListener("submit", submitTrackForm);
+      if ($("newsletterForm")) $("newsletterForm").addEventListener("submit", submitNewsletter);
+
+      document.addEventListener("keydown", event => {
+        if (event.key === "Escape") {
+          closeProductModal();
+          closeDrawer();
+        }
+      });
+    }
+
+    window.openProductModal = openProductModal;
+    window.quickAdd = quickAdd;
+    window.changeQty = changeQty;
+    window.removeCartItem = removeCartItem;
+
+    renderProducts();
+    renderCart();
+    calculatePrice();
+    updateTrackingView(trackingOrders["ONYX-2406"]);
+    bindEvents();
+    applyReveal();
   </script>
 </body>
 </html>
