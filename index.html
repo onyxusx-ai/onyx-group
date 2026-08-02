@@ -1191,7 +1191,374 @@
       }
     }
 
+
+    /* ===== ONYX GROUP FINAL V5 — pearl graphite minimal theme ===== */
+    :root {
+      --bg: #111316;
+      --bg-2: #171a1d;
+      --panel: rgba(255,255,255,.075);
+      --panel-2: rgba(255,255,255,.11);
+      --panel-3: rgba(255,255,255,.048);
+      --line: rgba(255,255,255,.14);
+      --line-2: rgba(255,255,255,.22);
+      --text: #faf9f5;
+      --muted: #b8babd;
+      --muted-2: #e3e2de;
+      --accent: #f4532d;
+      --accent-2: #ff7045;
+      --accent-3: #ff9b72;
+      --success: #31bd7a;
+      --shadow: 0 28px 80px rgba(0,0,0,.34);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 10% 7%, rgba(255,112,69,.10), transparent 25%),
+        radial-gradient(circle at 83% 13%, rgba(255,255,255,.075), transparent 23%),
+        radial-gradient(circle at 45% 68%, rgba(255,255,255,.035), transparent 30%),
+        linear-gradient(180deg, #181b1e 0%, #111316 46%, #16191c 100%);
+    }
+
+    .page-glow.one { opacity: .055; background: #ff7045; }
+    .page-glow.two { opacity: .04; background: #fff; }
+    .page-glow.three { opacity: .035; }
+
+    .site-header {
+      background: rgba(22,25,28,.84);
+      border-bottom-color: rgba(255,255,255,.10);
+    }
+
+    .source-card,
+    .category-card,
+    .product-card,
+    .benefit-card,
+    .process-card,
+    .review-card,
+    .contact-card,
+    .stat-card,
+    .blog-card,
+    .support-card,
+    .quote-panel,
+    .calc-panel,
+    .tracking-panel,
+    .faq-item,
+    .about-panel,
+    .insurance-card,
+    .warehouse-card,
+    .banner-panel {
+      background: linear-gradient(180deg, rgba(255,255,255,.095), rgba(255,255,255,.045));
+      border-color: rgba(255,255,255,.145);
+      box-shadow: 0 24px 70px rgba(0,0,0,.25);
+    }
+
+    .hero-stage {
+      background:
+        radial-gradient(circle at 24% 20%, rgba(255,112,69,.14), transparent 28%),
+        radial-gradient(circle at 84% 78%, rgba(255,255,255,.07), transparent 24%),
+        linear-gradient(145deg, rgba(255,255,255,.11), rgba(255,255,255,.04));
+      border-color: rgba(255,255,255,.16);
+    }
+
+    .banner-panel::after {
+      left: 28px !important;
+      right: auto !important;
+      bottom: -8px !important;
+      white-space: nowrap;
+      color: rgba(255,255,255,.055) !important;
+      letter-spacing: -.075em;
+    }
+
+    .route-map-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    .route-map-header h3 { margin-bottom: 9px; }
+
+    .route-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(49,189,122,.10);
+      border: 1px solid rgba(49,189,122,.24);
+      color: #d9ffec;
+      font-size: .78rem;
+      letter-spacing: .09em;
+      white-space: nowrap;
+    }
+
+    .route-live-badge span,
+    .tracking-online span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 16px rgba(49,189,122,.7);
+    }
+
+    .route-map-card { min-height: 610px !important; }
+
+    .real-map-shell {
+      position: relative;
+      min-height: 470px;
+      margin-top: 22px;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.17);
+      background: #d8dfe2;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.12), 0 22px 55px rgba(0,0,0,.20);
+    }
+
+    .real-route-map {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      min-height: 470px;
+      background: transparent;
+    }
+
+    .map-offline-fallback {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+      transition: opacity .3s ease;
+    }
+
+    .map-offline-fallback svg { width: 100%; height: 100%; display: block; }
+    .real-map-shell.map-ready .map-offline-fallback { opacity: 0; pointer-events: none; }
+
+    .fallback-city {
+      position: absolute;
+      z-index: 3;
+      display: grid;
+      gap: 3px;
+      padding: 9px 12px;
+      border-radius: 14px;
+      color: #202326;
+      background: rgba(255,255,255,.90);
+      border: 1px solid rgba(28,32,35,.12);
+      box-shadow: 0 12px 28px rgba(0,0,0,.12);
+    }
+    .fallback-city span { font-size: .75rem; color: #626a6e; }
+    .fallback-cn { left: 14%; top: 62%; }
+    .fallback-transit { left: 51%; top: 32%; }
+    .fallback-ru { right: 10%; top: 22%; }
+
+    .map-route-legend {
+      position: absolute;
+      z-index: 550;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 9px;
+      pointer-events: none;
+    }
+
+    .map-route-legend > div {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 0;
+      padding: 11px 13px;
+      border-radius: 16px;
+      color: #202326;
+      background: rgba(255,255,255,.90);
+      border: 1px solid rgba(32,35,38,.10);
+      box-shadow: 0 14px 32px rgba(0,0,0,.12);
+      backdrop-filter: blur(12px);
+    }
+
+    .map-route-legend span { font-size: .79rem; line-height: 1.3; }
+    .legend-dot { width: 10px; height: 10px; flex: 0 0 10px; border-radius: 50%; }
+    .legend-dot.cn { background: #f4532d; box-shadow: 0 0 12px rgba(244,83,45,.55); }
+    .legend-dot.transit { background: #7a858a; }
+    .legend-dot.ru { background: #31bd7a; box-shadow: 0 0 12px rgba(49,189,122,.5); }
+
+    .leaflet-container { font-family: Inter, Arial, sans-serif; }
+    .leaflet-control-zoom a {
+      color: #25282a !important;
+      background: rgba(255,255,255,.94) !important;
+      border-bottom-color: rgba(0,0,0,.08) !important;
+    }
+    .leaflet-control-attribution {
+      background: rgba(255,255,255,.82) !important;
+      color: #697175 !important;
+      font-size: 9px !important;
+    }
+    .leaflet-control-attribution a { color: #3e6e86 !important; }
+
+    .onyx-city-marker,
+    .onyx-package-marker {
+      background: transparent;
+      border: 0;
+    }
+
+    .onyx-pin {
+      position: relative;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      box-shadow: 0 5px 18px rgba(0,0,0,.24), 0 0 0 5px rgba(255,255,255,.22);
+    }
+    .onyx-pin.cn { background: #f4532d; }
+    .onyx-pin.transit { background: #7f8b90; }
+    .onyx-pin.ru { background: #31bd7a; }
+
+    .onyx-package {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      font-size: 21px;
+      background: #22272a;
+      border: 3px solid #fff;
+      box-shadow: 0 10px 26px rgba(0,0,0,.26), 0 0 24px rgba(244,83,45,.42);
+    }
+
+    .onyx-map-popup .leaflet-popup-content-wrapper {
+      border-radius: 16px;
+      box-shadow: 0 16px 38px rgba(0,0,0,.18);
+    }
+    .onyx-map-popup .leaflet-popup-content { margin: 13px 15px; }
+    .map-popup-title { color: #1f2325; font-weight: 850; margin-bottom: 4px; }
+    .map-popup-text { color: #687075; font-size: 12px; line-height: 1.35; }
+
+    .final-tracking-layout { align-items: start; }
+
+    .client-tracking-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .tracking-online {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: rgba(49,189,122,.08);
+      border: 1px solid rgba(49,189,122,.22);
+      color: #d8ffeb;
+      font-size: .78rem;
+      white-space: nowrap;
+    }
+
+    .demo-track-codes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0;
+    }
+
+    .demo-track-codes button {
+      border: 1px solid rgba(255,255,255,.13);
+      background: rgba(255,255,255,.055);
+      color: var(--muted-2);
+      padding: 9px 11px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+    .demo-track-codes button:hover { background: rgba(255,112,69,.12); border-color: rgba(255,112,69,.28); }
+
+    .final-track-form { grid-template-columns: minmax(0,1fr) auto; }
+    .tracking-result-card { display: block !important; }
+
+    .tracking-map-head small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .manager-track-details {
+      margin-top: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 22px;
+      background: rgba(255,255,255,.035);
+      overflow: hidden;
+    }
+
+    .manager-track-details summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 16px 18px;
+      cursor: pointer;
+      list-style: none;
+    }
+    .manager-track-details summary::-webkit-details-marker { display:none; }
+    .manager-track-details summary span { font-weight: 800; }
+    .manager-track-details summary small { color: var(--muted); }
+
+    .manager-unlock,
+    .manager-track-form {
+      padding: 0 18px 18px;
+    }
+
+    .manager-unlock {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) auto;
+      gap: 10px;
+      align-items: center;
+    }
+    .manager-unlock small { grid-column: 1/-1; color: var(--muted); }
+
+    .manager-unlock input,
+    .manager-track-form input,
+    .manager-track-form select {
+      width: 100%;
+      min-width: 0;
+      padding: 13px 14px;
+      border-radius: 15px;
+      background: rgba(255,255,255,.055);
+      border: 1px solid var(--line);
+      color: #fff;
+      outline: none;
+    }
+
+    .manager-track-form {
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px;
+    }
+    .manager-track-form button { grid-column: 1/-1; justify-content: center; }
+    .manager-track-note { padding: 0 18px 18px; margin: 0; color: var(--muted); line-height: 1.45; font-size: .86rem; }
+
+    @media (max-width: 1020px) {
+      .route-map-header,
+      .client-tracking-head { flex-direction: column; }
+      .map-route-legend { grid-template-columns: 1fr; right: auto; max-width: 280px; }
+      .real-map-shell, .real-route-map { min-height: 560px; }
+    }
+
+    @media (max-width: 720px) {
+      .final-track-form,
+      .manager-unlock,
+      .manager-track-form { grid-template-columns: 1fr; }
+      .manager-unlock small,
+      .manager-track-form button { grid-column: auto; }
+      .real-map-shell, .real-route-map { min-height: 600px; }
+      .map-route-legend { left: 10px; bottom: 10px; max-width: calc(100% - 20px); }
+      .banner-panel::after { left: 16px !important; font-size: clamp(2.4rem, 15vw, 5rem) !important; }
+    }
+
 </style>
+
+  <meta name="tracking-api" content="" />
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://a.basemaps.cartocdn.com" crossorigin>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
   <div class="grain"></div><div class="glow one"></div><div class="glow two"></div><div class="glow three"></div>
@@ -1419,25 +1786,39 @@
         <div class="section-head">
           <div class="section-head-copy reveal">
             <div class="eyebrow">TRACKING</div>
-            <h2>Статус заказа</h2>
-            <p>Клиент вводит трек-код и видит этап заказа. Менеджер может обновить статус в мини-панели ниже.</p>
+            <h2>Отследить заказ</h2>
+            <p>Клиент вводит код и видит текущий этап, местоположение и прогноз. Менеджер обновляет тот же заказ в защищённой панели.</p>
           </div>
         </div>
 
-        <div class="tracking-layout">
+        <div class="tracking-layout final-tracking-layout">
           <div class="tracking-panel reveal">
-            <h3>Проверить заказ</h3>
-            <p>Демо-коды для проверки: <b>ONYX-2406</b>, <b>ONYX-8801</b>, <b>ONYX-7777</b>. Новые коды можно создать в панели менеджера.</p>
+            <div class="client-tracking-head">
+              <div>
+                <h3>Трекинг для клиента</h3>
+                <p>Попробуй демо-коды или введи созданный менеджером код.</p>
+              </div>
+              <div class="tracking-online"><span></span> система активна</div>
+            </div>
 
-            <form class="track-form" id="trackForm">
-              <input type="text" id="trackInput" placeholder="Введите номер заказа">
-              <button class="primary-btn" type="submit">Проверить</button>
+            <div class="demo-track-codes">
+              <button type="button" data-demo-track="ONYX-2406">ONYX-2406 · склад</button>
+              <button type="button" data-demo-track="ONYX-8801">ONYX-8801 · в пути</button>
+              <button type="button" data-demo-track="ONYX-7777">ONYX-7777 · Россия</button>
+            </div>
+
+            <form class="track-form final-track-form" id="trackForm">
+              <input type="text" id="trackInput" placeholder="Например, ONYX-8801" autocomplete="off">
+              <button class="primary-btn" type="submit">Показать статус</button>
             </form>
 
             <div class="tracking-map" id="trackingMap">
               <div class="tracking-map-head">
-                <strong id="trackingMapTitle">Маршрут заказа</strong>
-                <span id="trackingMapStatus">Введите трек-код</span>
+                <div>
+                  <small>Заказ</small>
+                  <strong id="trackingMapTitle">ONYX-2406</strong>
+                </div>
+                <span id="trackingMapStatus">Склад в Китае</span>
               </div>
 
               <div class="tracking-route-line">
@@ -1454,16 +1835,22 @@
               </div>
             </div>
 
-            <div class="calc-result" id="trackResult" style="display:none;"></div>
+            <div class="calc-result tracking-result-card" id="trackResult"></div>
 
-            <div class="manager-track-box">
-              <div class="manager-track-head">
-                <strong>Панель менеджера</strong>
-                <span>создание / обновление трека</span>
+            <details class="manager-track-details" id="managerTrackDetails">
+              <summary>
+                <span>Панель менеджера</span>
+                <small>создать или обновить трек-код</small>
+              </summary>
+
+              <div class="manager-unlock" id="managerUnlockBox">
+                <input type="password" id="managerPin" placeholder="PIN менеджера">
+                <button type="button" class="secondary-btn" id="unlockManagerBtn">Открыть панель</button>
+                <small>Демо-PIN: 2026. Перед публикацией замени его в коде.</small>
               </div>
 
-              <form class="manager-track-form" id="managerTrackForm">
-                <input type="text" id="managerTrackCode" placeholder="Код заказа, например ONYX-9090" required>
+              <form class="manager-track-form" id="managerTrackForm" hidden>
+                <input type="text" id="managerTrackCode" placeholder="Код, например ONYX-9090" required>
                 <select id="managerTrackStep">
                   <option value="1">1 — Заявка принята</option>
                   <option value="2">2 — Товар выкуплен</option>
@@ -1471,56 +1858,41 @@
                   <option value="4">4 — В пути в РФ</option>
                   <option value="5">5 — Готов к выдаче</option>
                 </select>
-                <input type="text" id="managerTrackLocation" placeholder="Локация / комментарий">
+                <input type="text" id="managerTrackLocation" placeholder="Локация или комментарий">
                 <input type="text" id="managerTrackEta" placeholder="Прогноз, например 8–12 дней">
-                <button class="secondary-btn" type="submit">Сохранить статус</button>
+                <button class="primary-btn" type="submit">Сохранить статус заказа</button>
               </form>
 
               <p class="manager-track-note">
-                В этой HTML-версии статусы сохраняются в браузере. Для реального отслеживания на разных устройствах нужен backend/база данных.
+                В одном HTML статусы сохраняются в браузере. В комплекте с сайтом приложен backend: после его подключения статусы будут общими для менеджера и клиентов на разных устройствах.
               </p>
-            </div>
+            </details>
           </div>
 
           <div class="tracking-visual reveal" id="trackingSteps">
             <div class="tracking-step" data-step="1">
               <div class="tracking-dot"></div>
-              <div>
-                <strong>Заявка принята</strong>
-                <span>Менеджер проверяет товар и цену</span>
-              </div>
+              <div><strong>Заявка принята</strong><span>Проверяем товар и считаем заказ</span></div>
               <small>1</small>
             </div>
             <div class="tracking-step" data-step="2">
               <div class="tracking-dot"></div>
-              <div>
-                <strong>Товар выкуплен</strong>
-                <span>Оплата поставщику в Китае</span>
-              </div>
+              <div><strong>Товар выкуплен</strong><span>Продавец отправляет на склад ONYX</span></div>
               <small>2</small>
             </div>
             <div class="tracking-step" data-step="3">
               <div class="tracking-dot"></div>
-              <div>
-                <strong>Склад в Китае</strong>
-                <span>Фото, проверка, упаковка</span>
-              </div>
+              <div><strong>Склад в Китае</strong><span>Фото, проверка и упаковка</span></div>
               <small>3</small>
             </div>
             <div class="tracking-step" data-step="4">
               <div class="tracking-dot"></div>
-              <div>
-                <strong>В пути в РФ</strong>
-                <span>Карго маршрут активен</span>
-              </div>
+              <div><strong>В пути в Россию</strong><span>Посылка движется по карго-маршруту</span></div>
               <small>4</small>
             </div>
             <div class="tracking-step" data-step="5">
               <div class="tracking-dot"></div>
-              <div>
-                <strong>Выдача клиенту</strong>
-                <span>Передача или доставка по городу</span>
-              </div>
+              <div><strong>Прибыл в Россию</strong><span>Готов к выдаче или доставке</span></div>
               <small>5</small>
             </div>
           </div>
@@ -1535,62 +1907,63 @@
         <div class="section-head">
           <div class="section-head-copy reveal">
             <div class="eyebrow">WAREHOUSE & ROUTE</div>
-            <h2>Склад, проверка и маршрут</h2>
-            <p>Товар проходит путь: продавец в Китае → склад ONYX → карго-маршрут → Россия → клиент.</p>
+            <h2>Настоящий маршрут доставки</h2>
+            <p>Интерактивная карта показывает реальный путь: Гуанчжоу → транзитный хаб → Москва. Карту можно двигать и увеличивать.</p>
           </div>
         </div>
 
         <div class="warehouse-grid">
           <div class="warehouse-card big route-map-card reveal">
-            <h3>Китай → склад ONYX → Россия</h3>
-            <p>Красивая логистическая карта показывает общий путь заказа. Товар сначала приходит на склад в Китае, проходит проверку, затем отправляется в Россию.</p>
+            <div class="route-map-header">
+              <div>
+                <h3>Guangzhou → Transit → Moscow</h3>
+                <p>Товар приходит на склад ONYX в Китае, проходит проверку и отправляется по карго-маршруту в Россию.</p>
+              </div>
+              <div class="route-live-badge"><span></span> LIVE ROUTE</div>
+            </div>
 
-            <div class="premium-route-map pro-world-map">
-              <div class="map-grid-bg"></div>
+            <div class="real-map-shell" id="realMapShell">
+              <div id="realRouteMap" class="real-route-map" aria-label="Интерактивная карта маршрута из Китая в Россию"></div>
 
-              <div class="map-world-shape china-shape"></div>
-              <div class="map-world-shape transit-shape"></div>
-              <div class="map-world-shape russia-shape"></div>
-
-              <svg class="map-route-svg" viewBox="0 0 1000 430" preserveAspectRatio="none" aria-hidden="true">
-                <defs>
-                  <linearGradient id="finalRouteGradient" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stop-color="#ff3d00"/>
-                    <stop offset="48%" stop-color="#ffb000"/>
-                    <stop offset="100%" stop-color="#39d98a"/>
-                  </linearGradient>
-                  <filter id="routeGlow" x="-25%" y="-25%" width="150%" height="150%">
-                    <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#ff5a1f" flood-opacity="0.62"/>
-                  </filter>
-                </defs>
-                <path class="route-shadow-path" d="M130 285 C280 135, 520 120, 690 205 C790 255, 850 230, 910 120"/>
-                <path class="animated-route-path" d="M130 285 C280 135, 520 120, 690 205 C790 255, 850 230, 910 120"/>
-              </svg>
-
-              <div class="map-city city-a">
-                <span class="map-dot orange"></span>
-                <strong>Guangzhou</strong>
-                <small>Склад ONYX в Китае</small>
+              <div class="map-offline-fallback" id="mapOfflineFallback" aria-hidden="true">
+                <svg viewBox="0 0 1100 520" preserveAspectRatio="xMidYMid slice">
+                  <defs>
+                    <linearGradient id="fallbackSea" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#dfe5e8"/>
+                      <stop offset="100%" stop-color="#cfd7db"/>
+                    </linearGradient>
+                    <linearGradient id="fallbackLand" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#f8f7f2"/>
+                      <stop offset="100%" stop-color="#e7e8e3"/>
+                    </linearGradient>
+                    <linearGradient id="fallbackRoute" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stop-color="#ff6235"/>
+                      <stop offset="52%" stop-color="#ff9d45"/>
+                      <stop offset="100%" stop-color="#28b978"/>
+                    </linearGradient>
+                    <filter id="fallbackGlow" x="-30%" y="-30%" width="160%" height="160%">
+                      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#ff7a45" flood-opacity="0.5"/>
+                    </filter>
+                  </defs>
+                  <rect width="1100" height="520" fill="url(#fallbackSea)"/>
+                  <path d="M65,125 C160,73 255,70 339,93 C413,113 459,101 524,77 C608,45 689,54 759,84 C835,117 937,104 1045,153 L1079,291 C992,313 936,349 869,361 C792,376 741,345 672,361 C602,378 559,419 473,419 C379,420 338,384 265,368 C193,351 127,370 62,327 Z" fill="url(#fallbackLand)" stroke="#b9c2c6" stroke-width="2"/>
+                  <path d="M811,365 C846,341 886,344 916,370 C941,392 950,430 935,455 C896,465 853,453 822,421 Z" fill="url(#fallbackLand)" stroke="#b9c2c6" stroke-width="2"/>
+                  <path d="M854,408 C873,401 891,407 901,421 C887,436 868,436 852,427 Z" fill="#f8f7f2"/>
+                  <path d="M236,328 C353,213 488,179 631,206 C749,228 816,202 897,148" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="18" stroke-linecap="round"/>
+                  <path d="M236,328 C353,213 488,179 631,206 C749,228 816,202 897,148" fill="none" stroke="url(#fallbackRoute)" stroke-width="8" stroke-linecap="round" stroke-dasharray="20 15" filter="url(#fallbackGlow)"/>
+                  <circle cx="236" cy="328" r="13" fill="#ff6235"/>
+                  <circle cx="631" cy="206" r="13" fill="#ffffff" stroke="#7d878c" stroke-width="3"/>
+                  <circle cx="897" cy="148" r="13" fill="#28b978"/>
+                </svg>
+                <div class="fallback-city fallback-cn"><strong>Guangzhou</strong><span>Склад ONYX</span></div>
+                <div class="fallback-city fallback-transit"><strong>Transit hub</strong><span>Карго</span></div>
+                <div class="fallback-city fallback-ru"><strong>Moscow</strong><span>Россия</span></div>
               </div>
 
-              <div class="map-city city-b">
-                <span class="map-dot white"></span>
-                <strong>Transit hub</strong>
-                <small>Карго-маршрут</small>
-              </div>
-
-              <div class="map-city city-c">
-                <span class="map-dot green"></span>
-                <strong>Russia</strong>
-                <small>Выдача клиенту</small>
-              </div>
-
-              <div class="moving-cargo-box">📦</div>
-
-              <div class="route-map-caption">
-                <div><strong>A</strong><span>Приём товара на складе</span></div>
-                <div><strong>B</strong><span>Проверка и маршрут</span></div>
-                <div><strong>C</strong><span>Доставка в Россию</span></div>
+              <div class="map-route-legend">
+                <div><i class="legend-dot cn"></i><span><strong>Гуанчжоу</strong> — приём и проверка</span></div>
+                <div><i class="legend-dot transit"></i><span><strong>Транзит</strong> — карго-маршрут</span></div>
+                <div><i class="legend-dot ru"></i><span><strong>Москва</strong> — выдача в РФ</span></div>
               </div>
             </div>
           </div>
@@ -1598,15 +1971,15 @@
           <div class="warehouse-side">
             <div class="warehouse-card reveal">
               <h3>Фото перед отправкой</h3>
-              <p>Показываем клиенту, что товар приехал на склад и соответствует заказу.</p>
+              <p>Показываем клиенту товар со склада и сверяем основные параметры заказа.</p>
             </div>
             <div class="warehouse-card reveal">
               <h3>Объединение заказов</h3>
-              <p>Несколько товаров можно собрать в одну посылку, чтобы логистика была выгоднее.</p>
+              <p>Несколько покупок можно собрать в одну посылку и отправить одним маршрутом.</p>
             </div>
             <div class="warehouse-card reveal">
-              <h3>Аккуратная упаковка</h3>
-              <p>Переупаковка и защита товара перед маршрутом Китай → РФ.</p>
+              <h3>Контроль маршрута</h3>
+              <p>Статус заказа связан с этапами: выкуп, склад, транзит, Россия и выдача.</p>
             </div>
           </div>
         </div>
@@ -1665,8 +2038,11 @@
       </svg>
     </a><a class="floating-plus" href="#quote" aria-label="Заявка">+</a></div>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     const TELEGRAM_USERNAME = "onyxgroup";
+    const MANAGER_PIN = "2026";
+    const TRACKING_API_BASE = (document.querySelector('meta[name="tracking-api"]')?.content || "").trim();
 
     const products = [
       {
@@ -2587,10 +2963,41 @@
       };
     }
 
-    function saveTrackingOrder(order) {
+    async function fetchTrackingOrder(code) {
+      if (TRACKING_API_BASE) {
+        try {
+          const response = await fetch(`${TRACKING_API_BASE}/${encodeURIComponent(code)}`);
+          if (response.ok) return await response.json();
+          if (response.status === 404) return null;
+        } catch (error) {
+          console.warn("Tracking API unavailable, using browser storage", error);
+        }
+      }
+      return getAllTrackingOrders()[code] || null;
+    }
+
+    async function saveTrackingOrder(order) {
+      if (TRACKING_API_BASE) {
+        try {
+          const response = await fetch(TRACKING_API_BASE, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Admin-Key": MANAGER_PIN
+            },
+            body: JSON.stringify(order)
+          });
+          if (!response.ok) throw new Error("API save failed");
+          return await response.json();
+        } catch (error) {
+          console.warn("Tracking API save unavailable, using browser storage", error);
+        }
+      }
+
       const stored = getStoredTrackingOrders();
       stored[order.code] = order;
       localStorage.setItem("onyx_group_tracking_orders", JSON.stringify(stored));
+      return order;
     }
 
     function updateTrackingView(order) {
@@ -2609,6 +3016,7 @@
       if ($("trackingPackage")) $("trackingPackage").style.left = progress + "%";
       if ($("trackingMapTitle")) $("trackingMapTitle").textContent = order.code;
       if ($("trackingMapStatus")) $("trackingMapStatus").textContent = order.status;
+      setMapPackageByStep(step);
     }
 
     function renderTrackingResult(order) {
@@ -2640,12 +3048,12 @@
       `;
     }
 
-    function submitTrackForm(event) {
+    async function submitTrackForm(event) {
       event.preventDefault();
 
       const raw = $("trackInput").value.trim().toUpperCase();
       const code = raw || "ONYX-2406";
-      const order = getAllTrackingOrders()[code];
+      const order = await fetchTrackingOrder(code);
 
       if (!order) {
         const demo = {
@@ -2668,7 +3076,7 @@
       showToast("Статус заказа обновлён");
     }
 
-    function submitManagerTrackForm(event) {
+    async function submitManagerTrackForm(event) {
       event.preventDefault();
 
       const code = $("managerTrackCode").value.trim().toUpperCase();
@@ -2684,7 +3092,7 @@
         eta: $("managerTrackEta").value.trim() || "уточняется"
       };
 
-      saveTrackingOrder(order);
+      await saveTrackingOrder(order);
 
       if ($("trackInput")) $("trackInput").value = code;
 
@@ -2693,6 +3101,128 @@
       showToast("Статус сохранён");
 
       event.target.reset();
+    }
+
+    let routeMap = null;
+    let routePackageMarker = null;
+    let routeAnimationFrame = null;
+
+    function interpolateRoute(points, t) {
+      const segments = points.length - 1;
+      const scaled = Math.max(0, Math.min(0.999999, t)) * segments;
+      const index = Math.floor(scaled);
+      const local = scaled - index;
+      const a = points[index];
+      const b = points[index + 1];
+      return [
+        a[0] + (b[0] - a[0]) * local,
+        a[1] + (b[1] - a[1]) * local
+      ];
+    }
+
+    function initRealRouteMap() {
+      const mapElement = $("realRouteMap");
+      const shell = $("realMapShell");
+      if (!mapElement || !window.L) return;
+
+      const guangzhou = [23.1291, 113.2644];
+      const almaty = [43.2389, 76.8897];
+      const moscow = [55.7558, 37.6173];
+      const routePoints = [guangzhou, almaty, moscow];
+
+      routeMap = L.map(mapElement, {
+        zoomControl: true,
+        scrollWheelZoom: false,
+        attributionControl: true,
+        preferCanvas: true
+      });
+
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+        maxZoom: 19,
+        attribution: "&copy; OpenStreetMap &copy; CARTO"
+      }).addTo(routeMap);
+
+      const bounds = L.latLngBounds(routePoints);
+      routeMap.fitBounds(bounds, { padding: [54, 54] });
+
+      const markerIcon = (kind) => L.divIcon({
+        className: "onyx-city-marker",
+        html: `<div class="onyx-pin ${kind}"></div>`,
+        iconSize: [22, 22],
+        iconAnchor: [11, 11]
+      });
+
+      const packageIcon = L.divIcon({
+        className: "onyx-package-marker",
+        html: `<div class="onyx-package">📦</div>`,
+        iconSize: [44, 44],
+        iconAnchor: [22, 22]
+      });
+
+      const popup = (title, text) => `<div class="map-popup-title">${title}</div><div class="map-popup-text">${text}</div>`;
+
+      L.marker(guangzhou, { icon: markerIcon("cn") }).addTo(routeMap)
+        .bindPopup(popup("Гуанчжоу", "Склад ONYX: приём, фото и проверка"), { className: "onyx-map-popup" });
+      L.marker(almaty, { icon: markerIcon("transit") }).addTo(routeMap)
+        .bindPopup(popup("Транзитный хаб", "Перегрузка и движение по карго-маршруту"), { className: "onyx-map-popup" });
+      L.marker(moscow, { icon: markerIcon("ru") }).addTo(routeMap)
+        .bindPopup(popup("Москва", "Прибытие в Россию и передача клиенту"), { className: "onyx-map-popup" });
+
+      L.polyline(routePoints, {
+        color: "#ffffff",
+        opacity: .72,
+        weight: 12,
+        lineCap: "round"
+      }).addTo(routeMap);
+
+      L.polyline(routePoints, {
+        color: "#f4532d",
+        opacity: .95,
+        weight: 5,
+        dashArray: "14 12",
+        lineCap: "round"
+      }).addTo(routeMap);
+
+      routePackageMarker = L.marker(guangzhou, { icon: packageIcon, interactive: false, zIndexOffset: 1000 }).addTo(routeMap);
+
+      let start = performance.now();
+      const animate = (now) => {
+        const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const duration = reduced ? 1 : 9000;
+        const t = reduced ? .55 : ((now - start) % duration) / duration;
+        const point = interpolateRoute(routePoints, t);
+        if (routePackageMarker) routePackageMarker.setLatLng(point);
+        routeAnimationFrame = requestAnimationFrame(animate);
+      };
+      routeAnimationFrame = requestAnimationFrame(animate);
+
+      shell?.classList.add("map-ready");
+      setTimeout(() => routeMap.invalidateSize(), 250);
+    }
+
+    function setMapPackageByStep(step) {
+      if (!routePackageMarker) return;
+      const points = [
+        [23.1291, 113.2644],
+        [28.5, 104.0],
+        [36.2, 89.5],
+        [43.2389, 76.8897],
+        [55.7558, 37.6173]
+      ];
+      routePackageMarker.setLatLng(points[Math.max(0, Math.min(4, Number(step) - 1))]);
+    }
+
+    function unlockManagerPanel() {
+      const pin = $("managerPin")?.value.trim();
+      const form = $("managerTrackForm");
+      const box = $("managerUnlockBox");
+      if (pin !== MANAGER_PIN) {
+        showToast("Неверный PIN менеджера");
+        return;
+      }
+      if (form) form.hidden = false;
+      if (box) box.hidden = true;
+      showToast("Панель менеджера открыта");
     }
 
     function submitNewsletter(event) {
@@ -2915,9 +3445,25 @@
 
       if ($("quoteForm")) $("quoteForm").addEventListener("submit", submitQuoteForm);
       if ($("checkoutForm")) $("checkoutForm").addEventListener("submit", submitCheckoutForm);
+      document.querySelectorAll("[data-demo-track]").forEach(button => {
+        button.addEventListener("click", async () => {
+          const code = button.dataset.demoTrack;
+          if ($("trackInput")) $("trackInput").value = code;
+          const order = await fetchTrackingOrder(code);
+          if (order) {
+            updateTrackingView(order);
+            renderTrackingResult(order);
+            showToast(`Показан заказ ${code}`);
+          }
+        });
+      });
+
+      if ($("unlockManagerBtn")) $("unlockManagerBtn").addEventListener("click", unlockManagerPanel);
       if ($("trackForm")) $("trackForm").addEventListener("submit", submitTrackForm);
       if ($("managerTrackForm")) $("managerTrackForm").addEventListener("submit", submitManagerTrackForm);
       if ($("newsletterForm")) $("newsletterForm").addEventListener("submit", submitNewsletter);
+
+      window.addEventListener("resize", () => routeMap && routeMap.invalidateSize());
 
       document.addEventListener("keydown", event => {
         if (event.key === "Escape") {
@@ -2935,7 +3481,9 @@
     renderProducts();
     renderCart();
     calculatePrice();
+    initRealRouteMap();
     updateTrackingView(getAllTrackingOrders()["ONYX-2406"]);
+    renderTrackingResult(getAllTrackingOrders()["ONYX-2406"]);
     bindEvents();
     applyReveal();
   </script>
