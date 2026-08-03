@@ -774,66 +774,13 @@
     }
 
     .calc-note,
-    .manager-track-note,
     .newsletter-explain {
       margin-top: 14px;
       color: var(--muted);
       line-height: 1.5;
       font-size: .92rem;
     }
-
-    .manager-track-box {
-      margin-top: 18px;
-      padding: 18px;
-      border-radius: 24px;
-      border: 1px solid rgba(255,90,31,.20);
-      background:
-        radial-gradient(circle at 18% 20%, rgba(255,90,31,.12), transparent 34%),
-        rgba(255,255,255,.04);
-    }
-
-    .manager-track-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .manager-track-head strong {
-      font-size: 1.05rem;
-      letter-spacing: -.03em;
-    }
-
-    .manager-track-head span {
-      color: var(--muted);
-      font-size: .86rem;
-    }
-
-    .manager-track-form {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .manager-track-form input,
-    .manager-track-form select {
-      min-width: 0;
-      width: 100%;
-      background: rgba(255,255,255,.045);
-      color: #fff;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 13px 14px;
-      outline: none;
-    }
-
-    .manager-track-form button {
-      grid-column: 1 / -1;
-      justify-content: center;
-    }
-
-    .tracking-map {
+.tracking-map {
       margin-top: 16px;
       padding: 18px;
       border-radius: 24px;
@@ -1136,7 +1083,6 @@
 
     @media (max-width: 1020px) {
       .auto-rate-panel,
-      .manager-track-form,
       .route-map-caption {
         grid-template-columns: 1fr;
       }
@@ -1481,62 +1427,7 @@
       color: var(--muted);
       margin-bottom: 4px;
     }
-
-    .manager-track-details {
-      margin-top: 18px;
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 22px;
-      background: rgba(255,255,255,.035);
-      overflow: hidden;
-    }
-
-    .manager-track-details summary {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-      padding: 16px 18px;
-      cursor: pointer;
-      list-style: none;
-    }
-    .manager-track-details summary::-webkit-details-marker { display:none; }
-    .manager-track-details summary span { font-weight: 800; }
-    .manager-track-details summary small { color: var(--muted); }
-
-    .manager-unlock,
-    .manager-track-form {
-      padding: 0 18px 18px;
-    }
-
-    .manager-unlock {
-      display: grid;
-      grid-template-columns: minmax(0,1fr) auto;
-      gap: 10px;
-      align-items: center;
-    }
-    .manager-unlock small { grid-column: 1/-1; color: var(--muted); }
-
-    .manager-unlock input,
-    .manager-track-form input,
-    .manager-track-form select {
-      width: 100%;
-      min-width: 0;
-      padding: 13px 14px;
-      border-radius: 15px;
-      background: rgba(255,255,255,.055);
-      border: 1px solid var(--line);
-      color: #fff;
-      outline: none;
-    }
-
-    .manager-track-form {
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 10px;
-    }
-    .manager-track-form button { grid-column: 1/-1; justify-content: center; }
-    .manager-track-note { padding: 0 18px 18px; margin: 0; color: var(--muted); line-height: 1.45; font-size: .86rem; }
-
-    @media (max-width: 1020px) {
+@media (max-width: 1020px) {
       .route-map-header,
       .client-tracking-head { flex-direction: column; }
       .map-route-legend { grid-template-columns: 1fr; right: auto; max-width: 280px; }
@@ -1544,11 +1435,7 @@
     }
 
     @media (max-width: 720px) {
-      .final-track-form,
-      .manager-unlock,
-      .manager-track-form { grid-template-columns: 1fr; }
-      .manager-unlock small,
-      .manager-track-form button { grid-column: auto; }
+      .final-track-form { grid-template-columns: 1fr; }
       .real-map-shell, .real-route-map { min-height: 600px; }
       .map-route-legend { left: 10px; bottom: 10px; max-width: calc(100% - 20px); }
       .banner-panel::after { left: 16px !important; font-size: clamp(2.4rem, 15vw, 5rem) !important; }
@@ -2137,7 +2024,7 @@
             <div class="client-tracking-head">
               <div>
                 <h3>Трекинг для клиента</h3>
-                <p>Попробуй демо-коды или введи созданный менеджером код.</p>
+                <p>Попробуй демо-коды или введи номер своего заказа.</p>
               </div>
               <div class="tracking-online"><span></span> система активна</div>
             </div>
@@ -2177,38 +2064,7 @@
             </div>
 
             <div class="calc-result tracking-result-card" id="trackResult"></div>
-
-            <details class="manager-track-details" id="managerTrackDetails">
-              <summary>
-                <span>Панель менеджера</span>
-                <small>создать или обновить трек-код</small>
-              </summary>
-
-              <div class="manager-unlock" id="managerUnlockBox">
-                <input type="password" id="managerPin" placeholder="PIN менеджера">
-                <button type="button" class="secondary-btn" id="unlockManagerBtn">Открыть панель</button>
-                <small>Демо-PIN: 2026. Перед публикацией замени его в коде.</small>
-              </div>
-
-              <form class="manager-track-form" id="managerTrackForm" hidden>
-                <input type="text" id="managerTrackCode" placeholder="Код, например ONYX-9090" required>
-                <select id="managerTrackStep">
-                  <option value="1">1 — Заявка принята</option>
-                  <option value="2">2 — Товар выкуплен</option>
-                  <option value="3">3 — Склад в Китае</option>
-                  <option value="4">4 — В пути в РФ</option>
-                  <option value="5">5 — Готов к выдаче</option>
-                </select>
-                <input type="text" id="managerTrackLocation" placeholder="Локация или комментарий">
-                <input type="text" id="managerTrackEta" placeholder="Прогноз, например 8–12 дней">
-                <button class="primary-btn" type="submit">Сохранить статус заказа</button>
-              </form>
-
-              <p class="manager-track-note">
-                В одном HTML статусы сохраняются в браузере. В комплекте с сайтом приложен backend: после его подключения статусы будут общими для менеджера и клиентов на разных устройствах.
-              </p>
-            </details>
-          </div>
+</div>
 
           <div class="tracking-visual reveal" id="trackingSteps">
             <div class="tracking-step" data-step="1">
@@ -2411,8 +2267,7 @@
       pinduoduo: { name: "Pinduoduo", home: "https://www.pinduoduo.com/", search: null }
     };
     const SOURCE_TO_MARKETPLACE = { Alibaba: "alibaba", "1688": "1688", Taobao: "taobao", AliExpress: "aliexpress", Poizon: "poizon", Pinduoduo: "pinduoduo" };
-    const MANAGER_PIN = "2026";
-    const SITE_CONFIG = window.ONYX_CONFIG || {};
+const SITE_CONFIG = window.ONYX_CONFIG || {};
     const ONYX_API_BASE = String(localStorage.getItem("onyx_api_base") || SITE_CONFIG.API_BASE || "https://onyx-group-catalog.onyxgroupru26.workers.dev").trim().replace(/\/+$/, "");
     const TRACKING_API_BASE = (document.querySelector('meta[name="tracking-api"]')?.content || ONYX_API_BASE || "").trim().replace(/\/+$/, "");
     const USE_DEMO_CATALOG = Boolean(SITE_CONFIG.USE_DEMO_CATALOG);
@@ -3292,33 +3147,6 @@
       return getAllTrackingOrders()[code] || null;
     }
 
-    async function saveTrackingOrder(order) {
-      if (TRACKING_API_BASE) {
-        const adminToken = String(localStorage.getItem("onyx_admin_token") || "").trim();
-        if (adminToken) {
-          try {
-            const response = await fetch(`${TRACKING_API_BASE}/api/tracking/${encodeURIComponent(order.code)}`, {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${adminToken}`
-              },
-              body: JSON.stringify(order)
-            });
-            if (!response.ok) throw new Error("API save failed");
-            const data = await response.json();
-            return data.tracking || order;
-          } catch (error) {
-            console.warn("Tracking API save unavailable, using browser storage", error);
-          }
-        }
-      }
-
-      const stored = getStoredTrackingOrders();
-      stored[order.code] = order;
-      localStorage.setItem("onyx_group_tracking_orders", JSON.stringify(stored));
-      return order;
-    }
 
     function updateTrackingView(order) {
       const step = Number(order.step) || 1;
@@ -3396,32 +3224,6 @@
       showToast("Статус заказа обновлён");
     }
 
-    async function submitManagerTrackForm(event) {
-      event.preventDefault();
-
-      const code = $("managerTrackCode").value.trim().toUpperCase();
-      const step = Number($("managerTrackStep").value);
-      const base = getStatusByStep(step);
-
-      const order = {
-        code,
-        step,
-        status: base.status,
-        location: $("managerTrackLocation").value.trim() || base.location,
-        next: base.next,
-        eta: $("managerTrackEta").value.trim() || "уточняется"
-      };
-
-      await saveTrackingOrder(order);
-
-      if ($("trackInput")) $("trackInput").value = code;
-
-      updateTrackingView(order);
-      renderTrackingResult(order);
-      showToast("Статус сохранён");
-
-      event.target.reset();
-    }
 
     let routeMap = null;
     let routePackageMarker = null;
@@ -3532,18 +3334,6 @@
       routePackageMarker.setLatLng(points[Math.max(0, Math.min(4, Number(step) - 1))]);
     }
 
-    function unlockManagerPanel() {
-      const pin = $("managerPin")?.value.trim();
-      const form = $("managerTrackForm");
-      const box = $("managerUnlockBox");
-      if (pin !== MANAGER_PIN) {
-        showToast("Неверный PIN менеджера");
-        return;
-      }
-      if (form) form.hidden = false;
-      if (box) box.hidden = true;
-      showToast("Панель менеджера открыта");
-    }
 
     function submitNewsletter(event) {
       event.preventDefault();
@@ -3864,10 +3654,7 @@
           }
         });
       });
-
-      if ($("unlockManagerBtn")) $("unlockManagerBtn").addEventListener("click", unlockManagerPanel);
       if ($("trackForm")) $("trackForm").addEventListener("submit", submitTrackForm);
-      if ($("managerTrackForm")) $("managerTrackForm").addEventListener("submit", submitManagerTrackForm);
       if ($("newsletterForm")) $("newsletterForm").addEventListener("submit", submitNewsletter);
 
       window.addEventListener("resize", () => routeMap && routeMap.invalidateSize());
