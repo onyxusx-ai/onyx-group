@@ -1744,6 +1744,24 @@
     @media(max-width:1020px){.marketplace-browser,.individual-order-layout{grid-template-columns:1fr}.telegram-order-card{position:relative;top:auto}.marketplace-search-form{grid-template-columns:1fr 1fr}.marketplace-search-form .primary-btn{grid-column:1/-1}.restored-modal-actions{grid-template-columns:1fr 1fr}.restored-modal-actions .ghost-btn{grid-column:1/-1}}
     @media(max-width:720px){.marketplace-search-form,.telegram-handoff-actions,.restored-modal-actions{grid-template-columns:1fr}.marketplace-search-form .primary-btn,.telegram-handoff-actions .ghost-btn,.restored-modal-actions .ghost-btn{grid-column:auto}.floating-actions{right:10px;bottom:10px}.floating-tg,.floating-plus{width:46px!important;height:46px!important}}
 
+
+    /* ===== V9: real marketplace product previews ===== */
+    .fake-product-visual{padding:0;display:block}
+    .product-photo-shell{position:relative;width:100%;height:100%;overflow:hidden;background:linear-gradient(145deg,#171717,#080808);isolation:isolate}
+    .product-photo{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s ease,filter .35s ease;background:#111}
+    .product-card:hover .product-photo{transform:scale(1.045)}
+    .product-photo-shell::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.03),transparent 58%,rgba(0,0,0,.34));}
+    .product-photo-note{position:absolute;left:14px;right:14px;bottom:13px;z-index:4;width:max-content;max-width:calc(100% - 28px);padding:7px 10px;border-radius:999px;background:rgba(5,5,5,.64);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px);font-size:.72rem;color:rgba(255,255,255,.82);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .product-photo-fallback{position:absolute;inset:0;z-index:1;display:none;place-items:center;align-content:center;gap:9px;padding:24px;text-align:center;background:radial-gradient(circle at 30% 18%,rgba(255,255,255,.18),transparent 24%),linear-gradient(145deg,rgba(255,90,31,.34),rgba(18,18,18,.96) 52%,rgba(255,255,255,.05))}
+    .product-photo-fallback span{font-weight:950;font-size:clamp(1.1rem,2vw,1.55rem);line-height:.95;letter-spacing:-.055em;color:#fff}
+    .product-photo-fallback small{color:rgba(255,255,255,.66);line-height:1.4;max-width:230px}
+    .product-photo-shell.is-fallback .product-photo-fallback{display:grid}
+    .product-photo-shell--modal{min-height:520px;border-radius:24px}
+    .product-photo-shell--modal .product-photo{object-fit:contain;padding:18px;background:radial-gradient(circle at center,rgba(255,90,31,.10),transparent 44%),#0b0b0b}
+    .product-source-title{margin:0 0 11px;color:#c9c9cf;font-size:.82rem;line-height:1.38;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .product-chips .chip{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    @media(max-width:760px){.product-photo-shell--modal{min-height:320px}.product-photo-note{font-size:.66rem}}
+
 </style>
 
   <meta name="tracking-api" content="" />
@@ -2058,8 +2076,8 @@
             </div>
             <h3>Менеджер заказов</h3>
             <p>После отправки формы текст заявки будет скопирован. Останется открыть чат и отправить его администратору.</p>
-            <img class="telegram-order-qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAAFoAQAAAABSnlx4AAACy0lEQVR4nO2bzW4jMQyDycW8/ytzD5TkyWJ7KOBJpcZNm2Qy34FwDZn6CYVv/Pz5DnzoQ/84DeUGFwTlJ/7FeucbfXRPpS/EetILTIiC6PcU14qzk+7RNEkAoAgJIAiBseN1I5rpnk0TlNdVACOceJ3frORDaDmURLhWPPML+kklv5e+gHUg0sHEAZve5srrp5V8Bv2vP/n/I9E+uqfS19rdAHxmEjYoEdJvRB/dU2k6XjAW2OG6LhBOxXfUSPdU+rLnBhVLLoAU/J+IpY//QifdU2kfkbnoAOQdH64krt6h5GNoyk6QkFQrL8nJD5GPZrqn0qJoFxiRJJN7v8rB5uTzW2jmobhCi4soEOtduZQ+uifTXOkNFBmmopYiyiFFZ3/voPMwtD9ZPiUu7tjxg5toghlYGHmmAJEg/ZlP0266J9KV7wAVx725E0gL/rSSz6FJKorey4LTRW++lAl76Z5Ku4sGMEJ3PHxGplM8/nsLbROoTCfhflqenCjD6Lt9dE+lfTT6T8qk0j1LVdvYH5167CaaUDbOqkPsuqy7x8gieDPdQ2n3cVSuEDaCitxHke4cP7iBdo1qRY34zDfWSEq48j66J9Oxv0lFFA9nGEMSrh6e/b2FvpW6ATBnIVYaVG0IHn+yiXasyEmTVZ1ajYhI55vpnkjnAbmaZmm/AbuTKp48rOQzaFZikwMnMddWwL2n1kf3YNqOjzG9RvLUTx6mGVklK6d8qZ/g9C+30VeNmNzGjrN+AuUAEHH6DVvoqwbrsyjFrIAzl1xpFBvpnkpfuPvvsCc5EoHlUOwL++ieSr98vyH7O7mzKeXu1+nPb6FRS5o1kvUct/2KMx+7g77WW/lQdEUwF7zst079ZDftsrcL4PGNHiAitz1KT93jaNdkwRyIuMVxAGHD36Lk19P3Udia+F7j36/ty0a6p9K3YeMfVnLoQ++n/wJD7bJxjvk/OwAAAABJRU5ErkJggg==" alt="QR-код Telegram @onyxshopadmin">
-            <a class="secondary-btn telegram-manager-link" href="https://t.me/onyxshopadmin" target="_blank" rel="noopener noreferrer">Открыть @onyxshopadmin</a>
+            <img class="telegram-order-qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASgAAAEoAQAAAADDfFG0AAABrUlEQVR4nO2ay25DMQhEZ6r8/y9PFjzse9tUWUSGSLCIXOdIGSGDAZfCG/bzDjTUUEMNdZR6AABtLYq+gNZuia6u1AOA+QSE1mLbLdHVnCIJgCBByBaxW6mrNyUCFEhQr6nzuvpSSj/pH+qTv/hllOUv9w5FgZb3qc1nXdVX+YvbjvKPtdtV/Xnqlqgo5lkr1dWaIuw2dCfR0j4Y3/RWX0BZ2hJFK8LMU8rg7K3+OCXAXQU7XYC5jR6VrdUfpShkQU9ET5R9kap09aZEIOKPkCBrjTT90F+U4KGnuByzlpj8dbUtHulzCdiYQn5JznxiN64hhK3E9N0q8Luqr6q/JEmEZ3q7Kb0fmvz1m9pGElTWX0AWF63VH6VivhrlfI4NBWu653xdLNtEyr0jAvIENvnrbp7dzUPppZxMeMXaVX3xfCJfOOyw2WmbemK3y/uQf1Ke+iceX1CSFCWEv3fsz0PN1Z+kfB695fYsJbCOWFf19VR0kdZzR6TW62pJUT7PIf22nPrrZlZPRH5f/xlgN+PMv+52eR9i1FtcE7GpJy52ex868ItDDTXUUJ+hnmacplsKwzqaAAAAAElFTkSuQmCC" alt="QR-код Telegram @onyxgroupadmin">
+            <a class="secondary-btn telegram-manager-link" href="https://t.me/onyxgroupadmin" target="_blank" rel="noopener noreferrer">Открыть @onyxgroupadmin</a>
             <small>Новости и подборки: <a href="https://t.me/onyxgrouptg" target="_blank" rel="noopener noreferrer">@onyxgrouptg</a></small>
           </aside>
         </div>
@@ -2279,7 +2297,7 @@
 
     <section class="section" id="blog"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">GUIDES</div><h2>Гайды для клиентов</h2><p>Информационные карточки, чтобы сайт выглядел не пусто и повышал доверие.</p></div></div><div class="blog-grid"><article class="blog-card reveal"><div><small>Guide</small><strong>Почему 1688 дешевле обычных магазинов</strong><p>Короткое объяснение разницы между оптом, розницей и перепродажей.</p></div><a class="mini-action" href="#quote">Заказать поиск</a></article><article class="blog-card reveal"><div><small>Safety</small><strong>Как не попасть на плохого продавца</strong><p>Рейтинг, отзывы, фото покупателей и опыт менеджера помогают снизить риск.</p></div><a class="mini-action" href="#insurance">Подробнее</a></article><article class="blog-card reveal"><div><small>Delivery</small><strong>Когда выгодно объединять посылки</strong><p>Если товаров несколько, объединение на складе может сделать маршрут удобнее.</p></div><a class="mini-action" href="#warehouse">Склад</a></article></div></div></section>
 
-    <section class="section" id="contacts"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">CONTACTS</div><h2>Связь с ONYX GROUP</h2><p>Заменишь контакты на свои — и сайт готов под реальный запуск.</p></div></div><div class="contact-grid"><a class="contact-card reveal" href="https://t.me/onyxgrouptg" target="_blank" rel="noopener noreferrer"><span>Telegram</span><strong>@onyxgrouptg</strong></a><a class="contact-card reveal" href="https://instagram.com/onyxgroup" target="_blank" rel="noopener noreferrer"><span>Instagram</span><strong>@onyxgroup</strong></a><a class="contact-card reveal" href="mailto:orders@onyx-group.ru"><span>Email</span><strong>orders@onyx-group.ru</strong></a><a class="contact-card reveal" href="#quote"><span>Заявка</span><strong>Через сайт</strong></a></div></div></section>
+    <section class="section" id="contacts"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">CONTACTS</div><h2>Связь с ONYX GROUP</h2><p>Канал с подборками, менеджер для заказов и рабочая электронная почта.</p></div></div><div class="contact-grid"><a class="contact-card reveal" href="https://t.me/onyxgrouptg" target="_blank" rel="noopener noreferrer"><span>Telegram-канал</span><strong>@onyxgrouptg</strong></a><a class="contact-card reveal" href="https://t.me/onyxgroupadmin" target="_blank" rel="noopener noreferrer"><span>Telegram-менеджер</span><strong>@onyxgroupadmin</strong></a><a class="contact-card reveal" href="mailto:onyxshopmail@gmail.com"><span>Email</span><strong>onyxshopmail@gmail.com</strong></a><a class="contact-card reveal" href="#quote"><span>Индивидуальный заказ</span><strong>Оставить заявку</strong></a></div></div></section>
 
     <section class="section tight"><div class="container"><div class="support-grid"><div class="support-card reveal"><div class="eyebrow">SUPPORT</div><h2 style="margin:14px 0 10px;letter-spacing:-.06em;line-height:.96;">Поддержка до и после заказа</h2><p style="color:var(--muted);line-height:1.55;margin:0;">Клиенту важно не просто нажать кнопку, а понимать, где заказ и что происходит.</p><div class="support-list"><div class="support-row"><i>💬</i><div><strong>Менеджер в Telegram</strong><span>Уточнение размера, цвета, модели и адреса доставки.</span></div></div><div class="support-row"><i>📦</i><div><strong>Статусы заказа</strong><span>Выкуплен, на складе, в пути, прибыл в РФ.</span></div></div><div class="support-row"><i>🧾</i><div><strong>Прозрачный расчёт</strong><span>Понятная структура итоговой стоимости.</span></div></div></div></div><div class="support-card reveal"><div class="eyebrow">NEWSLETTER</div><h2 style="margin:14px 0 10px;letter-spacing:-.06em;line-height:.96;">Подборки и тренды из Китая</h2><p style="color:var(--muted);line-height:1.55;margin:0;">Можно использовать как форму подписки или сбор заявок на подборки.</p><form class="newsletter-form final-newsletter-form" id="newsletterForm">
               <input type="text" id="newsletterInput" placeholder="Telegram или email для подборок" required>
@@ -2331,12 +2349,12 @@
     <div class="telegram-handoff-card">
       <button class="telegram-handoff-close" id="telegramHandoffClose" type="button" aria-label="Закрыть">×</button>
       <div class="telegram-handoff-title">Заявка подготовлена</div>
-      <p>Текст заявки скопирован. Отправь его менеджеру <strong>@onyxshopadmin</strong>.</p>
+      <p>Текст заявки скопирован. Отправь его менеджеру <strong>@onyxgroupadmin</strong>.</p>
       <textarea id="telegramHandoffText" readonly></textarea>
       <div class="telegram-handoff-actions">
         <button class="secondary-btn" id="copyTelegramOrderBtn" type="button">Скопировать ещё раз</button>
         <a class="primary-btn" id="shareTelegramOrderBtn" href="#" target="_blank" rel="noopener noreferrer">Передать через Telegram</a>
-        <a class="ghost-btn" href="https://t.me/onyxshopadmin" target="_blank" rel="noopener noreferrer">Открыть чат менеджера</a>
+        <a class="ghost-btn" href="https://t.me/onyxgroupadmin" target="_blank" rel="noopener noreferrer">Открыть чат менеджера</a>
       </div>
     </div>
   </div>
@@ -2344,8 +2362,8 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     const PUBLIC_TELEGRAM_URL = "https://t.me/onyxgrouptg";
-    const ORDER_TELEGRAM_USERNAME = "onyxshopadmin";
-    const ORDER_TELEGRAM_URL = "https://t.me/onyxshopadmin";
+    const ORDER_TELEGRAM_USERNAME = "onyxgroupadmin";
+    const ORDER_TELEGRAM_URL = "https://t.me/onyxgroupadmin";
     const MARKETPLACES = {
       alibaba: { name: "Alibaba", home: "https://www.alibaba.com/", search: query => `https://www.alibaba.com/trade/search?SearchText=${encodeURIComponent(query)}` },
       "1688": { name: "1688", home: "https://www.1688.com/", search: query => `https://s.1688.com/selloffer/offer_search.htm?keywords=${encodeURIComponent(query)}` },
@@ -2358,312 +2376,391 @@
     const MANAGER_PIN = "2026";
     const TRACKING_API_BASE = (document.querySelector('meta[name="tracking-api"]')?.content || "").trim();
 
-    const products = [
-      {
-        id: 1,
-        name: "Techwear Utility Jacket",
-        category: "clothes",
-        source: "1688",
-        type: "Одежда",
-        priceCny: 188,
-        priceRub: 3890,
-        badge: "HOT",
-        rating: 4.8,
-        orders: 2400,
-        deliveryDays: "12–18",
-        description: "Плотная techwear-куртка с карманами, свободной посадкой и визуалом под городские образы.",
-        tags: ["techwear", "jacket", "factory"],
-        sizes: ["S", "M", "L", "XL", "2XL"],
-        colors: ["Чёрный", "Серый", "Хаки"],
-        quick: ["hot", "fast"],
-        visual: "TECH JACKET"
-      },
-      {
-        id: 2,
-        name: "Minimal Runner Sneakers",
-        category: "shoes",
-        source: "Taobao",
-        type: "Обувь",
-        priceCny: 235,
-        priceRub: 4990,
-        badge: "TREND",
-        rating: 4.7,
-        orders: 5300,
-        deliveryDays: "14–22",
-        description: "Лёгкие городские кроссовки с минималистичным силуэтом. Подходят под streetwear и casual.",
-        tags: ["sneakers", "кроссовки", "minimal", "daily"],
-        sizes: ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45"],
-        colors: ["Белый", "Чёрный", "Серый"],
-        quick: ["hot", "premium"],
-        visual: "RUNNER"
-      },
-      {
-        id: 3,
-        name: "Smart LED Ambient Lamp",
-        category: "electronics",
-        source: "AliExpress",
-        type: "Электроника",
-        priceCny: 96,
-        priceRub: 2190,
-        badge: "FAST",
-        rating: 4.6,
-        orders: 8700,
-        deliveryDays: "7–15",
-        description: "Атмосферная LED-лампа для комнаты, студии или рабочего стола. Несколько режимов свечения.",
-        tags: ["LED", "room", "smart", "электроника"],
-        sizes: [],
-        colors: ["Black", "White"],
-        quick: ["fast", "low"],
-        visual: "LED"
-      },
-      {
-        id: 4,
-        name: "iPhone Premium Case Pack",
-        category: "accessories",
-        source: "Pinduoduo",
-        type: "Аксессуары",
-        priceCny: 42,
-        priceRub: 990,
-        badge: "LOW PRICE",
-        rating: 4.5,
-        orders: 11200,
-        deliveryDays: "10–18",
-        description: "Набор чехлов для iPhone в clean-эстетике. Хороший вариант для перепродажи или личного использования.",
-        tags: ["iPhone", "case", "pack", "чехол"],
-        sizes: [],
-        colors: ["iPhone 11", "iPhone 12", "iPhone 13", "iPhone 14", "iPhone 15", "iPhone 16"],
-        quick: ["low", "hot"],
-        visual: "CASE"
-      },
-      {
-        id: 5,
-        name: "Cargo Bag Modular",
-        category: "accessories",
-        source: "1688",
-        type: "Аксессуары",
-        priceCny: 118,
-        priceRub: 2690,
-        badge: "UTILITY",
-        rating: 4.8,
-        orders: 1800,
-        deliveryDays: "12–20",
-        description: "Модульная сумка в cargo-стиле: много карманов, плотная ткань, городской вайб.",
-        tags: ["bag", "cargo", "utility", "сумка"],
-        sizes: ["One size"],
-        colors: ["Чёрный", "Оливковый", "Песочный"],
-        quick: ["low", "hot"],
-        visual: "CARGO BAG"
-      },
-      {
-        id: 6,
-        name: "Home Storage System",
-        category: "home",
-        source: "Taobao",
-        type: "Дом",
-        priceCny: 156,
-        priceRub: 3490,
-        badge: "HOME",
-        rating: 4.7,
-        orders: 3900,
-        deliveryDays: "15–24",
-        description: "Система хранения для комнаты, гардероба или студии. Удобная модульная конструкция.",
-        tags: ["home", "storage", "modular", "дом"],
-        sizes: ["S", "M", "L"],
-        colors: ["Белый", "Серый", "Прозрачный"],
-        quick: ["premium"],
-        visual: "STORAGE"
-      },
-      {
-        id: 7,
-        name: "Auto Interior Detail Kit",
-        category: "auto",
-        source: "AliExpress",
-        type: "Авто",
-        priceCny: 82,
-        priceRub: 1890,
-        badge: "AUTO",
-        rating: 4.6,
-        orders: 6400,
-        deliveryDays: "8–16",
-        description: "Набор аксессуаров для ухода за салоном авто: щётки, микрофибра, органайзер и мелкие инструменты.",
-        tags: ["auto", "авто", "detail", "kit"],
-        sizes: [],
-        colors: ["Комплект"],
-        quick: ["fast", "low"],
-        visual: "AUTO KIT"
-      },
-      {
-        id: 8,
-        name: "Oversized Washed Hoodie",
-        category: "clothes",
-        source: "1688",
-        type: "Одежда",
-        priceCny: 132,
-        priceRub: 2990,
-        badge: "STREET",
-        rating: 4.8,
-        orders: 7600,
-        deliveryDays: "12–19",
-        description: "Плотное washed-худи свободного кроя. Хорошая база под streetwear-луки.",
-        tags: ["hoodie", "washed", "oversize", "одежда"],
-        sizes: ["S", "M", "L", "XL", "2XL"],
-        colors: ["Графит", "Чёрный", "Кремовый"],
-        quick: ["hot", "low"],
-        visual: "HOODIE"
-      },
-      {
-        id: 9,
-        name: "Poizon Basketball Sneakers",
-        category: "shoes",
-        source: "Poizon",
-        type: "Обувь",
-        priceCny: 520,
-        priceRub: 10990,
-        badge: "PREMIUM",
-        rating: 4.9,
-        orders: 3100,
-        deliveryDays: "14–24",
-        description: "Пара из Poizon для тех, кому нужна более сильная обувь с проверкой источника.",
-        tags: ["poizon", "sneakers", "premium", "кроссовки"],
-        sizes: ["38", "39", "40", "41", "42", "43", "44", "45"],
-        colors: ["White/Blue", "Black/Red"],
-        quick: ["premium", "hot"],
-        visual: "POIZON"
-      },
-      {
-        id: 10,
-        name: "Desk Setup Accessories",
-        category: "electronics",
-        source: "Taobao",
-        type: "Электроника",
-        priceCny: 178,
-        priceRub: 3990,
-        badge: "SETUP",
-        rating: 4.7,
-        orders: 4500,
-        deliveryDays: "13–21",
-        description: "Набор аксессуаров для рабочего стола: подставка, кабель-менеджмент, подсветка, органайзер.",
-        tags: ["desk", "setup", "work", "электроника"],
-        sizes: ["Set"],
-        colors: ["Black", "White", "Silver"],
-        quick: ["premium"],
-        visual: "SETUP"
-      },
-      {
-        id: 11,
-        name: "Travel Vacuum Backpack",
-        category: "accessories",
-        source: "1688",
-        type: "Аксессуары",
-        priceCny: 248,
-        priceRub: 5390,
-        badge: "TRAVEL",
-        rating: 4.8,
-        orders: 2900,
-        deliveryDays: "12–20",
-        description: "Рюкзак для путешествий с вакуумным отсеком, плотной спинкой и большим объёмом.",
-        tags: ["travel", "backpack", "vacuum", "сумка"],
-        sizes: ["20L", "30L", "40L"],
-        colors: ["Чёрный", "Серый"],
-        quick: ["premium", "hot"],
-        visual: "BACKPACK"
-      },
-      {
-        id: 12,
-        name: "Kitchen Smart Scale",
-        category: "home",
-        source: "Pinduoduo",
-        type: "Дом",
-        priceCny: 38,
-        priceRub: 890,
-        badge: "DEAL",
-        rating: 4.4,
-        orders: 15600,
-        deliveryDays: "9–17",
-        description: "Компактные кухонные весы с точным измерением. Хороший бюджетный товар для быта.",
-        tags: ["kitchen", "scale", "cheap", "дом"],
-        sizes: [],
-        colors: ["White", "Black"],
-        quick: ["low", "fast"],
-        visual: "SCALE"
-      },
-      {
-        id: 13,
-        name: "Baggy Denim Pants",
-        category: "clothes",
-        source: "Taobao",
-        type: "Одежда",
-        priceCny: 168,
-        priceRub: 3690,
-        badge: "TREND",
-        rating: 4.7,
-        orders: 5100,
-        deliveryDays: "13–20",
-        description: "Свободные джинсы baggy fit с плотным денимом и трендовой посадкой.",
-        tags: ["jeans", "baggy", "denim", "одежда"],
-        sizes: ["S", "M", "L", "XL", "2XL"],
-        colors: ["Blue", "Black", "Grey"],
-        quick: ["hot"],
-        visual: "DENIM"
-      },
-      {
-        id: 14,
-        name: "Car Ambient Light Kit",
-        category: "auto",
-        source: "AliExpress",
-        type: "Авто",
-        priceCny: 124,
-        priceRub: 2790,
-        badge: "FAST",
-        rating: 4.6,
-        orders: 7200,
-        deliveryDays: "7–14",
-        description: "Комплект ambient-подсветки для салона автомобиля с несколькими режимами.",
-        tags: ["car", "ambient", "light", "авто"],
-        sizes: ["Universal"],
-        colors: ["RGB"],
-        quick: ["fast", "low"],
-        visual: "RGB AUTO"
-      },
-      {
-        id: 15,
-        name: "Premium Minimal Watch",
-        category: "accessories",
-        source: "Taobao",
-        type: "Аксессуары",
-        priceCny: 298,
-        priceRub: 6490,
-        badge: "PREMIUM",
-        rating: 4.8,
-        orders: 2100,
-        deliveryDays: "14–22",
-        description: "Минималистичные часы с чистым дизайном. Подходят под casual и smart-casual.",
-        tags: ["watch", "minimal", "premium"],
-        sizes: ["One size"],
-        colors: ["Silver", "Black", "Gold"],
-        quick: ["premium"],
-        visual: "WATCH"
-      },
-      {
-        id: 16,
-        name: "Studio Microphone Arm",
-        category: "electronics",
-        source: "1688",
-        type: "Электроника",
-        priceCny: 108,
-        priceRub: 2490,
-        badge: "CONTENT",
-        rating: 4.7,
-        orders: 3300,
-        deliveryDays: "12–19",
-        description: "Пантограф для микрофона, удобный для стримов, записи голоса и домашней студии.",
-        tags: ["studio", "mic", "content", "электроника"],
-        sizes: ["Standard"],
-        colors: ["Black", "White"],
-        quick: ["low"],
-        visual: "MIC ARM"
-      }
-    ];
+    const products = [{
+      "id": 1,
+      "name": "Utility Workwear Jacket",
+      "category": "clothes",
+      "source": "AliExpress",
+      "type": "Одежда",
+      "priceCny": 188,
+      "priceRub": 3890,
+      "badge": "UTILITY",
+      "deliveryDays": "20–25",
+      "description": "Мужская oversized-куртка в workwear-стиле: лёгкая конструкция, водоотталкивающий материал и утилитарные карманы.",
+      "tags": ["workwear", "oversized", "utility"],
+      "sizes": ["S", "M", "L", "XL", "2XL"],
+      "colors": ["Чёрный", "Коричневый", "Хаки"],
+      "quick": ["hot", "premium"],
+      "visual": "UTILITY JACKET",
+      "sourceTitle": "Men American Style PU Jacket Workwear Coat Lightweight Water-Resistant Oversized Streetwear",
+      "sourcePriceText": "Цена меняется на площадке",
+      "productId": "1005009566810709",
+      "sourceUrl": "https://www.aliexpress.com/item/1005009566810709.html",
+      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005009566810709",
+      "sourceSearchQuery": "Men American Style PU Jacket Workwear Coat Lightweight Water-Resistant Oversized Streetwear",
+      "rating": null,
+      "orders": null
+    }, {
+      "id": 2,
+      "name": "Minimal Mesh Runner Sneakers",
+      "category": "shoes",
+      "source": "AliExpress",
+      "type": "Обувь",
+      "priceCny": 235,
+      "priceRub": 4990,
+      "badge": "RUNNER",
+      "deliveryDays": "20–25",
+      "description": "Лёгкие сетчатые кроссовки для ходьбы, тренировок и ежедневной носки. Дышащий верх и нескользящая подошва.",
+      "tags": ["sneakers", "mesh", "daily"],
+      "sizes": ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47"],
+      "colors": ["Белый", "Чёрный", "Серый"],
+      "quick": ["hot", "premium"],
+      "visual": "RUNNER",
+      "sourceTitle": "Men Running Shoes Lace Up Sneakers Fashion Lightweight Male Casual Shoes Mesh",
+      "sourcePriceText": "Цена меняется на площадке",
+      "productId": "1005008853938655",
+      "sourceUrl": "https://www.aliexpress.com/item/1005008853938655.html",
+      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005008853938655",
+      "sourceSearchQuery": "Men Running Shoes Lace Up Sneakers Fashion Lightweight Male Casual Shoes Mesh",
+      "rating": null,
+      "orders": null
+    }, {
+      "id": 3,
+      "name": "LED Desk Lamp + Wireless Charger",
+      "category": "electronics",
+      "source": "AliExpress",
+      "type": "Электроника",
+      "priceCny": 73,
+      "priceRub": 1890,
+      "badge": "SMART",
+      "deliveryDays": "20–25",
+      "description": "Настольная LED-лампа с беспроводной зарядкой, USB-портом, сенсорным управлением и регулировкой яркости.",
+      "tags": ["LED", "wireless charge", "desk"],
+      "sizes": [],
+      "colors": ["Чёрный", "Белый"],
+      "quick": ["fast", "low"],
+      "visual": "SMART LAMP",
+      "sourceTitle": "LED Desk Lamp with Wireless Charger and USB Plug in Port",
+      "sourcePriceText": "Около $10.20 на момент проверки",
+      "productId": "1005007493710730",
+      "sourceUrl": "https://www.aliexpress.com/item/1005007493710730.html",
+      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005007493710730",
+      "sourceSearchQuery": "LED Desk Lamp with Wireless Charger and USB Plug in Port",
+      "rating": null,
+      "orders": null
+    }, {
+      "id": 4,
+      "name": "Luxury iPhone Case",
+      "category": "accessories",
+      "source": "AliExpress",
+      "type": "Аксессуары",
+      "priceCny": 30,
+      "priceRub": 790,
+      "badge": "CASE",
+      "deliveryDays": "20–25",
+      "description": "Защитный силиконовый чехол для популярных моделей iPhone. Плотная посадка, защита камеры и декоративный дизайн.",
+      "tags": ["iPhone", "case", "silicone"],
+      "sizes": [],
+      "colors": ["iPhone 11", "iPhone 12", "iPhone 13", "iPhone 14", "iPhone 15"],
+      "quick": ["low", "hot"],
+      "visual": "IPHONE CASE",
+      "sourceTitle": "Luxury Phone Case For Apple iPhone 11 15 14 Pro MAX 12 13",
+      "sourcePriceText": "Около $4.17 на момент проверки",
+      "productId": "1005007188676237",
+      "sourceUrl": "https://www.aliexpress.com/item/1005007188676237.html",
+      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005007188676237",
+      "sourceSearchQuery": "Luxury Phone Case For Apple iPhone 11 15 14 Pro MAX 12 13",
+      "rating": null,
+      "orders": null
+    }, {
+      "id": 5,
+      "name": "Tactical Modular Shoulder Bag",
+      "category": "accessories",
+      "source": "AliExpress",
+      "type": "Аксессуары",
+      "priceCny": 118,
+      "priceRub": 2690,
+      "badge": "CARGO",
+      "deliveryDays": "20–25",
+      "description": "Тактическая сумка через плечо из ткани Oxford: Molle-система, регулируемый ремень и несколько отделений.",
+      "tags": ["cargo", "Molle", "shoulder bag"],
+      "sizes": ["One size"],
+      "colors": ["Чёрный", "Оливковый", "Песочный"],
+      "quick": ["low", "hot"],
+      "visual": "CARGO BAG",
+      "sourceTitle": "Tactical Men Shoulder Bag Outdoor Travel Sports Hiking Crossbody Bag",
+      "sourcePriceText": "Цена меняется на площадке",
+      "productId": "1005009481322407",
+      "sourceUrl": "https://www.aliexpress.com/item/1005009481322407.html",
+      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005009481322407",
+      "sourceSearchQuery": "Tactical Men Shoulder Bag Outdoor Travel Sports Hiking Crossbody Bag",
+      "rating": null,
+      "orders": null
+    }, {
+      "id": 6,
+      "name": "Modular Drawer Storage Cabinet",
+      "category": "home",
+      "source": "AliExpress",
+      "type": "Дом",
+      "priceCny": 76,
+      "priceRub": 1990,
+      "badge": "STORAGE",
+      "deliveryDays": "20–25",
+      "description": "Модульный органайзер с прозрачными выдвижными ящиками для инструментов, комплектующих и домашних мелочей.",
+      "tags": ["storage", "drawers", "organizer"],
+      "sizes": ["30 ячеек", "60 ячеек"],
+      "colors": ["Прозрачный/чёрный"],
+      "quick": ["premium"],
+      "visual": "STORAGE",
+      "sourceTitle": "Modular Drawer Storage Cabinet, Small Parts Organizer with Clear Bins",
+      "sourcePriceText": "Около $10.82 на момент проверки",
+      "productId": "1005010483487402",
+      "sourceUrl": "https://www.aliexpress.com/item/1005010483487402.html",
+      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005010483487402",
+      "sourceSearchQuery": "Modular Drawer Storage Cabinet, Small Parts Organizer with Clear Bins",
+      "rating": null,
+      "orders": null
+    }, {
+      "id": 7,
+      "name": "Auto Interior Removal Tool Kit",
+      "category": "auto",
+      "source": "AliExpress",
+      "type": "Авто",
+      "priceCny": 51,
+      "priceRub": 1390,
+      "badge": "AUTO",
+      "deliveryDays": "20–25",
+      "description": "Набор пластиковых съёмников для дверных карт, клипс, панелей, магнитолы и элементов салона автомобиля.",
+      "tags": ["auto", "trim tools", "repair"],
+      "sizes": ["Комплект"],
+      "colors": ["Красный", "Синий"],
+      "quick": ["fast", "low"],
+      "visual": "AUTO TOOL KIT",
+      "sourceTitle": "Auto Interior Disassembly Kit Car Plastic Trim Removal Tool",
+      "sourcePriceText": "Около $7.10 на момент проверки",
+      "productId": "1005005117021512",
+      "sourceUrl": "https://www.aliexpress.com/item/1005005117021512.html",
+      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005005117021512",
+      "sourceSearchQuery": "Auto Interior Disassembly Kit Car Plastic Trim Removal Tool",
+      "rating": null,
+      "orders": null
+    }, {
+      "id": 8,
+      "name": "Oversized Embroidered Hoodie",
+      "category": "clothes",
+      "source": "AliExpress",
+      "type": "Одежда",
+      "priceCny": 132,
+      "priceRub": 2990,
+      "badge": "STREET",
+      "deliveryDays": "20–25",
+      "description": "Oversized-худи в streetwear-эстетике с вышивкой, свободной посадкой и длинным рукавом.",
+      "tags": ["hoodie", "oversized", "streetwear"],
+      "sizes": ["S", "M", "L", "XL", "2XL"],
+      "colors": ["Чёрный", "Серый", "Кремовый"],
+      "quick": ["hot", "low"],
+      "visual": "HOODIE",
+      "sourceTitle": "American Retro Embroidered Oversized Hoodie Men Harajuku Loose Sweatshirt",
+      "sourcePriceText": "Цена меняется на площадке",
+      "productId": "1005010760642422",
+      "sourceUrl": "https://www.aliexpress.com/item/1005010760642422.html",
+      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005010760642422",
+      "sourceSearchQuery": "American Retro Embroidered Oversized Hoodie Men Harajuku Loose Sweatshirt",
+      "rating": null,
+      "orders": null
+    }, {
+      "id": 9,
+      "name": "Li-Ning WADE 808 5 Ultra",
+      "category": "shoes",
+      "source": "AliExpress",
+      "type": "Обувь",
+      "priceCny": 520,
+      "priceRub": 10990,
+      "badge": "BASKETBALL",
+      "deliveryDays": "20–25",
+      "description": "Профессиональные баскетбольные кроссовки Li-Ning WADE 808 5 Ultra с амортизацией SUPER BOOM.",
+      "tags": ["Li-Ning", "basketball", "BOOM"],
+      "sizes": ["39", "40", "41", "42", "43", "44", "45"],
+      "colors": ["По карточке товара"],
+      "quick": ["premium", "hot"],
+      "visual": "WADE 808",
+      "sourceTitle": "Li-Ning Men's WADE 808 5 ULTRA Professional Basketball Shoes SUPER BOOM",
+      "sourcePriceText": "Цена меняется на площадке",
+      "productId": "3256808362520729",
+      "sourceUrl": "https://www.aliexpress.com/item/3256808362520729.html",
+      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/3256808362520729",
+      "sourceSearchQuery": "Li-Ning Men's WADE 808 5 ULTRA Professional Basketball Shoes SUPER BOOM",
+      "rating": null,
+      "orders": null
+    }, {
+      "id": 10,
+      "name": "Under-Desk Cable Management Rack",
+      "category": "electronics",
+      "source": "AliExpress",
+      "type": "Электроника",
+      "priceCny": 178,
+      "priceRub": 3990,
+      "badge": "SETUP",
+      "deliveryDays": "20–25",
+      "description": "Металлическая полка-органайзер под стол для сетевых фильтров, проводов, зарядных блоков и кабелей.",
+      "tags": ["desk setup", "cable management", "rack"],
+      "sizes": ["Стандарт"],
+      "colors": ["Чёрный", "Белый"],
+      "quick": ["premium"],
+      "visual": "DESK SETUP",
+      "sourceTitle": "Cable Management Box Under Desk Cable Organizer Storage Shelf",
+      "sourcePriceText": "Цена меняется на площадке",
+      "productId": "1005009384491264",
+      "sourceUrl": "https://www.aliexpress.com/item/1005009384491264.html",
+      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005009384491264",
+      "sourceSearchQuery": "Cable Management Box Under Desk Cable Organizer Storage Shelf",
+      "rating": null,
+      "orders": null
+    }, {
+      "id": 11,
+      "name": "Vacuum Compression Travel Backpack",
+      "category": "accessories",
+      "source": "AliExpress",
+      "type": "Аксессуары",
+      "priceCny": 248,
+      "priceRub": 5390,
+      "badge": "TRAVEL",
+      "deliveryDays": "20–25",
+      "description": "Рюкзак для путешествий с вакуумным компрессионным отсеком, отделением для ноутбука 17″ и расширяемым объёмом.",
+      "tags": ["travel", "vacuum", "17 inch"],
+      "sizes": ["Расширяемый"],
+      "colors": ["Чёрный", "Серый"],
+      "quick": ["premium", "hot"],
+      "visual": "VACUUM BAG",
+      "sourceTitle": "Men Travel Backpack 17 inch Vacuum Compression Laptop Backpack Extended Large Capacity",
+      "sourcePriceText": "Цена меняется на площадке",
+      "productId": "1005007748290778",
+      "sourceUrl": "https://www.aliexpress.com/item/1005007748290778.html",
+      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005007748290778",
+      "sourceSearchQuery": "Men Travel Backpack 17 inch Vacuum Compression Laptop Backpack Extended Large Capacity",
+      "rating": null,
+      "orders": null
+    }, {
+      "id": 12,
+      "name": "Stainless Digital Kitchen Scale",
+      "category": "home",
+      "source": "AliExpress",
+      "type": "Дом",
+      "priceCny": 38,
+      "priceRub": 890,
+      "badge": "KITCHEN",
+      "deliveryDays": "20–25",
+      "description": "Цифровые кухонные весы из нержавеющей стали с LCD-дисплеем для продуктов, кофе и выпечки.",
+      "tags": ["kitchen", "digital scale", "LCD"],
+      "sizes": ["До 5 кг"],
+      "colors": ["Silver"],
+      "quick": ["low", "fast"],
+      "visual": "SMART SCALE",
+      "sourceTitle": "Digital Kitchen Scale Stainless Steel LCD Electronic Food Scale",
+      "sourcePriceText": "Цена меняется на площадке",
+      "productId": "1005009304127006",
+      "sourceUrl": "https://www.aliexpress.com/item/1005009304127006.html",
+      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005009304127006",
+      "sourceSearchQuery": "Digital Kitchen Scale Stainless Steel LCD Electronic Food Scale",
+      "rating": null,
+      "orders": null
+    }, {
+      "id": 13,
+      "name": "Wide-Leg Baggy Denim",
+      "category": "clothes",
+      "source": "AliExpress",
+      "type": "Одежда",
+      "priceCny": 168,
+      "priceRub": 3690,
+      "badge": "DENIM",
+      "deliveryDays": "20–25",
+      "description": "Мужские широкие baggy-джинсы из washed-денима: свободная посадка, четыре кармана и большие размеры.",
+      "tags": ["baggy", "denim", "wide leg"],
+      "sizes": ["M", "L", "XL", "2XL", "3XL", "4XL"],
+      "colors": ["Синий", "Чёрный"],
+      "quick": ["hot"],
+      "visual": "BAGGY DENIM",
+      "sourceTitle": "Men's Summer Jeans Lightweight Cotton Washed Straight Denim Pants Wide Leg Baggy",
+      "sourcePriceText": "Цена меняется на площадке",
+      "productId": "1005008815020323",
+      "sourceUrl": "https://www.aliexpress.com/item/1005008815020323.html",
+      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005008815020323",
+      "sourceSearchQuery": "Men's Summer Jeans Lightweight Cotton Washed Straight Denim Pants Wide Leg Baggy",
+      "rating": null,
+      "orders": null
+    }, {
+      "id": 14,
+      "name": "18-in-1 RGB Car Ambient Light",
+      "category": "auto",
+      "source": "AliExpress",
+      "type": "Авто",
+      "priceCny": 143,
+      "priceRub": 3290,
+      "badge": "RGB AUTO",
+      "deliveryDays": "20–25",
+      "description": "Комплект атмосферной подсветки салона: 64 цвета, акриловые световоды, управление через приложение и синхронизация с музыкой.",
+      "tags": ["RGB", "car light", "APP control"],
+      "sizes": ["18 в 1"],
+      "colors": ["64 цвета"],
+      "quick": ["fast", "low"],
+      "visual": "RGB AUTO",
+      "sourceTitle": "18 in 1 64 Color RGB Symphony Car Ambient Light Interior Acrylic Guide",
+      "sourcePriceText": "Около $19.95 на момент проверки",
+      "productId": "1005006574618290",
+      "sourceUrl": "https://www.aliexpress.com/item/1005006574618290.html",
+      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005006574618290",
+      "sourceSearchQuery": "18 in 1 64 Color RGB Symphony Car Ambient Light Interior Acrylic Guide",
+      "rating": null,
+      "orders": null
+    }, {
+      "id": 15,
+      "name": "Minimal Automatic Watch",
+      "category": "accessories",
+      "source": "AliExpress",
+      "type": "Аксессуары",
+      "priceCny": 298,
+      "priceRub": 6490,
+      "badge": "WATCH",
+      "deliveryDays": "20–25",
+      "description": "Механические часы в деловом минималистичном стиле: чёрный циферблат, календарь и ремешок из нержавеющей стали или кожи.",
+      "tags": ["automatic", "minimal", "watch"],
+      "sizes": ["One size"],
+      "colors": ["Чёрный", "Серебристый"],
+      "quick": ["premium"],
+      "visual": "WATCH",
+      "sourceTitle": "WINNER Business Automatic Watch for Men Black Minimalist Dial Mechanical Watch",
+      "sourcePriceText": "Цена меняется на площадке",
+      "productId": "1005010256960952",
+      "sourceUrl": "https://www.aliexpress.com/item/1005010256960952.html",
+      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005010256960952",
+      "sourceSearchQuery": "WINNER Business Automatic Watch for Men Black Minimalist Dial Mechanical Watch",
+      "rating": null,
+      "orders": null
+    }, {
+      "id": 16,
+      "name": "FIFINE Adjustable Microphone Arm",
+      "category": "electronics",
+      "source": "AliExpress",
+      "type": "Электроника",
+      "priceCny": 176,
+      "priceRub": 4190,
+      "badge": "STUDIO",
+      "deliveryDays": "20–25",
+      "description": "Настольный регулируемый пантограф FIFINE для микрофонов K688, K669, K670, K658 и других моделей.",
+      "tags": ["FIFINE", "boom arm", "studio"],
+      "sizes": ["Standard"],
+      "colors": ["Чёрный"],
+      "quick": ["low"],
+      "visual": "MIC ARM",
+      "sourceTitle": "FIFINE Adjustable Microphone Suspension Boom Scissor Arm Stand",
+      "sourcePriceText": "Около $24.64 на момент проверки",
+      "productId": "1005007010568302",
+      "sourceUrl": "https://www.aliexpress.com/item/1005007010568302.html",
+      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005007010568302",
+      "sourceSearchQuery": "FIFINE Adjustable Microphone Suspension Boom Scissor Arm Stand",
+      "rating": null,
+      "orders": null
+    }];
 
     const deliveryRates = {
       standard: { title: "Стандарт", perKg: 650, days: "20–25", base: 350 },
@@ -2762,21 +2859,66 @@
       return cart.reduce((sum, item) => sum + item.priceRub * item.qty, 0);
     }
 
+    function getProductImageCandidates(product) {
+      const previewTarget = product.previewUrl || product.sourceUrl;
+      const sourceTarget = product.sourceUrl || previewTarget;
+      return [
+        product.image,
+        previewTarget ? `https://api.microlink.io/?url=${encodeURIComponent(previewTarget)}&embed=image.url` : "",
+        sourceTarget ? `https://api.microlink.io/?url=${encodeURIComponent(sourceTarget)}&embed=image.url` : "",
+        sourceTarget ? `https://image.thum.io/get/width/900/crop/900/noanimate/${sourceTarget}` : ""
+      ].filter(Boolean);
+    }
+
+    function handleProductImageError(img) {
+      const productId = Number(img.dataset.productId);
+      const product = products.find(item => item.id === productId);
+      if (!product) return;
+
+      const candidates = getProductImageCandidates(product);
+      const currentIndex = Number(img.dataset.imageIndex || 0);
+      const nextIndex = currentIndex + 1;
+
+      if (nextIndex < candidates.length) {
+        img.dataset.imageIndex = String(nextIndex);
+        img.src = candidates[nextIndex];
+        return;
+      }
+
+      img.hidden = true;
+      const shell = img.closest(".product-photo-shell");
+      if (shell) shell.classList.add("is-fallback");
+    }
+
     function makeVisualHTML(product, size = "card") {
-      const text = product.visual || product.name;
+      const candidates = getProductImageCandidates(product);
+      const firstImage = candidates[0] || "";
+      const label = product.visual || product.name;
       return `
-        <div class="${size === "modal" ? "modal-visual" : "visual-object"}">
-          <span>${text}</span>
+        <div class="product-photo-shell ${size === "modal" ? "product-photo-shell--modal" : ""}">
+          <img
+            class="product-photo"
+            src="${firstImage}"
+            alt="${product.name} — фото из карточки ${product.source}"
+            loading="${size === "modal" ? "eager" : "lazy"}"
+            decoding="async"
+            referrerpolicy="no-referrer"
+            data-product-id="${product.id}"
+            data-image-index="0"
+            onerror="handleProductImageError(this)"
+          >
+          <div class="product-photo-fallback"><span>${label}</span><small>Открой источник, чтобы посмотреть все фото</small></div>
+          <div class="product-photo-note">Фото-превью карточки источника</div>
         </div>
       `;
     }
 
     function makeProductCard(product) {
       const chips = [
+        product.sourcePriceText,
         `${product.deliveryDays} дней`,
-        `★ ${product.rating}`,
-        `${product.orders}+ заказов`
-      ].map(item => `<span class="chip">${item}</span>`).join("");
+        "Карточка источника"
+      ].filter(Boolean).map(item => `<span class="chip">${item}</span>`).join("");
 
       return `
         <article class="product-card reveal">
@@ -2789,19 +2931,20 @@
           <div class="product-body">
             <div class="product-meta">
               <span>${product.type}</span>
-              <span>${formatCny(product.priceCny)}</span>
+              <span>ориентир ${formatCny(product.priceCny)}</span>
             </div>
             <h3 class="product-title">${product.name}</h3>
+            <p class="product-source-title">${product.sourceTitle}</p>
             <p class="product-desc">${product.description}</p>
             <div class="product-chips">${chips}</div>
 
             <div class="price-area">
               <div class="price-row">
                 <strong class="price-main">${formatRub(product.priceRub)}</strong>
-                <span class="price-cny">из ${product.source}</span>
+                <span class="price-cny">примерно с сервисом</span>
               </div>
 
-              <button class="product-source-link" type="button" onclick="openProductSource(${product.id})">Открыть на ${product.source} ↗</button>
+              <button class="product-source-link" type="button" onclick="openProductSource(${product.id})">Открыть карточку на ${product.source} ↗</button>
               <div class="product-actions">
                 <button class="secondary-btn" onclick="openProductModal(${product.id})">Подробнее</button>
                 <button class="primary-btn" onclick="startOnyxOrder(${product.id})">В заявку</button>
@@ -2897,9 +3040,9 @@
       selectedColor = "";
 
       $("modalMedia").innerHTML = makeVisualHTML(product, "modal");
-      $("modalMeta").textContent = `${product.type} · ${product.source} · ★ ${product.rating} · ${product.orders}+ заказов`;
+      $("modalMeta").textContent = `${product.type} · ${product.source} · реальная карточка источника`;
       $("modalTitle").textContent = product.name;
-      $("modalPrice").textContent = `${formatRub(product.priceRub)} · ${formatCny(product.priceCny)}`;
+      $("modalPrice").textContent = `${formatRub(product.priceRub)} · ориентир ${formatCny(product.priceCny)}`;
       $("modalDesc").textContent = product.description;
       $("modalChips").innerHTML = (product.tags || []).map(tag => `<span class="chip">${tag}</span>`).join("");
 
@@ -2909,15 +3052,19 @@
           <strong>${product.source}</strong>
         </div>
         <div class="calc-result-row">
-          <span>Срок</span>
-          <strong>${product.deliveryDays} дней</strong>
+          <span>Карточка источника</span>
+          <strong>${product.sourceTitle}</strong>
         </div>
         <div class="calc-result-row">
-          <span>Цена в Китае</span>
-          <strong>${formatCny(product.priceCny)}</strong>
+          <span>Цена источника</span>
+          <strong>${product.sourcePriceText}</strong>
+        </div>
+        <div class="calc-result-row">
+          <span>Расчётный срок ONYX</span>
+          <strong>${product.deliveryDays} дней</strong>
         </div>
         <div class="calc-result-row total">
-          <span>Примерно к оплате</span>
+          <span>Предварительный итог</span>
           <strong>${formatRub(product.priceRub)}</strong>
         </div>
       `;
@@ -3979,6 +4126,7 @@
       });
     }
 
+    window.handleProductImageError = handleProductImageError;
     window.openProductModal = openProductModal;
     window.openProductSource = openProductSource;
     window.startOnyxOrder = startOnyxOrder;
