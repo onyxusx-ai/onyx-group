@@ -2027,7 +2027,7 @@
 
     <section class="section" id="categories"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">CATEGORIES</div><h2>Что можно привезти</h2><p>Одежда, обувь, техника, аксессуары, товары для дома, авто и любые позиции под запрос.</p></div></div><div class="category-grid"><button class="category-card reveal" data-category-jump="clothes"><div class="category-icon">👕</div><strong>Одежда</strong><span>худи, куртки, джинсы, костюмы, дропы</span></button><button class="category-card reveal" data-category-jump="shoes"><div class="category-icon">👟</div><strong>Обувь</strong><span>кроссовки, ботинки, slides, пары под заказ</span></button><button class="category-card reveal" data-category-jump="electronics"><div class="category-icon">🎧</div><strong>Электроника</strong><span>гаджеты, аксессуары, свет, девайсы</span></button><button class="category-card reveal" data-category-jump="accessories"><div class="category-icon">👜</div><strong>Аксессуары</strong><span>сумки, чехлы, кошельки, ремни</span></button><button class="category-card reveal" data-category-jump="home"><div class="category-icon">🏠</div><strong>Дом</strong><span>декор, хранение, мебель, полезные вещи</span></button><button class="category-card reveal" data-category-jump="auto"><div class="category-icon">🚗</div><strong>Авто</strong><span>обвесы, аксессуары, уход, детали</span></button></div></div></section>
 
-    <section class="section" id="catalog"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">CATALOG</div><h2>Витрина находок</h2><p>Товары выглядят как единый каталог ONYX, но логика — поиск, выкуп и доставка из Китая.</p></div><div class="section-actions reveal"><button class="secondary-btn" id="resetFiltersBtn">Сбросить фильтры</button><button class="primary-btn" id="scrollQuoteBtn">Заказать по ссылке</button></div></div><div class="catalog-toolbar reveal"><div class="filter-pills" id="quickFilters"><button class="filter-pill active" data-quick="all">Все</button><button class="filter-pill" data-quick="hot">Хиты</button><button class="filter-pill" data-quick="fast">Быстрая доставка</button><button class="filter-pill" data-quick="low">До 3000 ₽</button><button class="filter-pill" data-quick="premium">Premium</button></div><div class="toolbar-selects"><select id="sortFilter"><option value="default">По умолчанию</option><option value="priceAsc">Цена ↑</option><option value="priceDesc">Цена ↓</option><option value="ratingDesc">Рейтинг</option><option value="ordersDesc">Заказы</option></select></div></div><p class="catalog-image-note" id="catalogConnectionStatus">Витрина загружает точные фотографии объявлений из хранилища ONYX. Добавление товаров выполняется через импортёр без ручного скачивания.</p>
+    <section class="section" id="catalog"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">CATALOG</div><h2>Витрина находок</h2><p>Товары выглядят как единый каталог ONYX, но логика — поиск, выкуп и доставка из Китая.</p></div><div class="section-actions reveal"><button class="secondary-btn" id="resetFiltersBtn">Сбросить фильтры</button><button class="primary-btn" id="scrollQuoteBtn">Заказать по ссылке</button></div></div><div class="catalog-toolbar reveal"><div class="filter-pills" id="quickFilters"><button class="filter-pill active" data-quick="all">Все</button><button class="filter-pill" data-quick="hot">Хиты</button><button class="filter-pill" data-quick="fast">Быстрая доставка</button><button class="filter-pill" data-quick="low">До 3000 ₽</button><button class="filter-pill" data-quick="premium">Premium</button></div><div class="toolbar-selects"><select id="sortFilter"><option value="default">По умолчанию</option><option value="priceAsc">Цена ↑</option><option value="priceDesc">Цена ↓</option><option value="ratingDesc">Рейтинг</option><option value="ordersDesc">Заказы</option></select></div></div><p class="catalog-image-note" id="catalogConnectionStatus">Каталог обновляется автоматически. Цены и наличие подтверждаются перед выкупом.</p>
         <div class="product-grid" id="productGrid"></div></div></section>
 
     <section class="section tight"><div class="container"><div class="banner-panel reveal"><div class="banner-grid"><div><div class="eyebrow">FULL SERVICE</div><h2>Не нужно разбираться в китайских сайтах.</h2><p>Клиенту не надо переводить карточки, писать поставщику, считать доставку и спорить о размерах. ONYX GROUP берёт на себя коммуникацию, выкуп, проверку, склад и логистику.</p></div><div class="banner-cards"><div class="banner-card"><strong>🔎 Найдём аналог по фото</strong><span>Можно отправить фото товара, а не ссылку.</span></div><div class="banner-card"><strong>📸 Фото перед отправкой</strong><span>Проверка товара на складе в Китае.</span></div><div class="banner-card"><strong>📦 Объединение посылок</strong><span>Несколько товаров можно собрать в одну отправку.</span></div></div></div></div></div></section>
@@ -2413,7 +2413,7 @@
     const SOURCE_TO_MARKETPLACE = { Alibaba: "alibaba", "1688": "1688", Taobao: "taobao", AliExpress: "aliexpress", Poizon: "poizon", Pinduoduo: "pinduoduo" };
     const MANAGER_PIN = "2026";
     const SITE_CONFIG = window.ONYX_CONFIG || {};
-    const ONYX_API_BASE = String(localStorage.getItem("onyx_api_base") || SITE_CONFIG.API_BASE || "").trim().replace(/\/+$/, "");
+    const ONYX_API_BASE = String(localStorage.getItem("onyx_api_base") || SITE_CONFIG.API_BASE || "https://onyx-group-catalog.onyxgroupru26.workers.dev").trim().replace(/\/+$/, "");
     const TRACKING_API_BASE = (document.querySelector('meta[name="tracking-api"]')?.content || ONYX_API_BASE || "").trim().replace(/\/+$/, "");
     const USE_DEMO_CATALOG = Boolean(SITE_CONFIG.USE_DEMO_CATALOG);
 
@@ -2476,12 +2476,12 @@
 
     async function loadLiveCatalog() {
       catalogLoadState = "loading";
-      setCatalogStatus("Подключаю живую витрину ONYX…", "loading");
+      setCatalogStatus("Обновляем каталог ONYX…", "loading");
 
       if (!ONYX_API_BASE) {
         products = USE_DEMO_CATALOG ? STATIC_PRODUCTS : [];
         catalogLoadState = "unconfigured";
-        setCatalogStatus("Живая витрина ещё не подключена. Открой admin.html, укажи Worker URL и импортируй объявления — их точные фотографии появятся здесь автоматически.", "unconfigured");
+        setCatalogStatus("Каталог временно обновляется. Нужен конкретный товар — отправь ссылку или фото, и мы найдём его в Китае.", "unconfigured");
         return;
       }
 
@@ -2492,12 +2492,12 @@
         products = (data.products || []).map(mapLiveProduct);
         catalogLoadState = "ready";
         setCatalogStatus(products.length
-          ? `Живая витрина подключена. Товаров: ${products.length}. Фотографии скопированы непосредственно из объявлений.`
-          : "Живая витрина подключена, но пока пуста. Добавь первое объявление через расширение или admin.html.", "ready");
+          ? `В каталоге ${products.length} товаров. Цены и наличие уточняются перед выкупом.`
+          : "Новые находки скоро появятся. Уже сейчас можно заказать любой товар по ссылке или фотографии.", "ready");
       } catch (error) {
         products = USE_DEMO_CATALOG ? STATIC_PRODUCTS : [];
         catalogLoadState = "error";
-        setCatalogStatus(`Не удалось подключить витрину: ${error.message}. Проверь Worker URL в admin.html.`, "error");
+        setCatalogStatus("Каталог временно обновляется. Оставь заявку по ссылке или фотографии — менеджер найдёт товар вручную.", "error");
       }
     }
 
@@ -2750,9 +2750,9 @@
 
       if (!list.length) {
         productGrid.innerHTML = `<div class="empty-state live-catalog-empty" style="grid-column:1/-1;">
-          <strong>${catalogLoadState === "ready" ? "Витрина пока пуста" : "Товары не найдены"}</strong>
-          <span>${catalogLoadState === "ready" ? "Добавь объявление через импортёр — точные фотографии и данные появятся автоматически." : "Проверь подключение Worker или измени фильтры."}</span>
-          <a class="primary-btn" href="admin.html">Открыть управление витриной</a>
+          <strong>${catalogLoadState === "ready" ? "Новые находки скоро появятся" : "Каталог обновляется"}</strong>
+          <span>${catalogLoadState === "ready" ? "Нужен конкретный товар? Отправь ссылку или фотографию — мы найдём, проверим и рассчитаем доставку." : "Можно оставить заявку по ссылке или фотографии — менеджер подберёт подходящий вариант."}</span>
+          <a class="primary-btn" href="#quote">Заказать по ссылке</a>
         </div>`;
         return;
       }
