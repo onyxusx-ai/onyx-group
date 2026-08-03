@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ONYX GROUP — управление витриной</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="admin.css">
+  <script src="config.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="wordmark" href="index.html"><b>ONYX</b><span>GROUP</span></a>
+    <nav><a href="index.html">Открыть сайт</a><a href="#import">Импорт</a><a href="#catalog">Каталог</a></nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <span class="eyebrow">ADMIN / LIVE CATALOG</span>
+      <h1>Точные фотографии<br>из объявления — автоматически.</h1>
+      <p>Импортёр считывает открытое объявление, а Worker сам копирует исходные фотографии в хранилище ONYX. Ручное скачивание не требуется.</p>
+    </section>
+
+    <section class="panel settings-panel">
+      <div>
+        <span class="eyebrow">ПОДКЛЮЧЕНИЕ</span>
+        <h2>Worker и доступ</h2>
+      </div>
+      <div class="settings-grid">
+        <label>Worker URL<input id="apiBase" placeholder="https://onyx-group-catalog....workers.dev"></label>
+        <label>Admin token<input id="adminToken" type="password" placeholder="Токен из Cloudflare secret"></label>
+      </div>
+      <div class="actions"><button id="saveSettings" class="primary">Сохранить и проверить</button><span id="connectionStatus" class="status">Не подключено</span></div>
+    </section>
+
+    <section class="panel bookmarklet-panel">
+      <div>
+        <span class="eyebrow">SAFARI / CHROME / OPERA</span>
+        <h2>Закладка «Добавить в ONYX»</h2>
+        <p>Перетащи кнопку на панель закладок. Затем открой карточку товара и нажми закладку. Данные и точные ссылки фотографий перейдут сюда.</p>
+      </div>
+      <a id="bookmarkletLink" class="bookmarklet" href="#">＋ Добавить товар в ONYX</a>
+    </section>
+
+    <section class="panel" id="import">
+      <div class="section-head">
+        <div><span class="eyebrow">IMPORT</span><h2>Проверка объявления</h2></div>
+        <button id="clearImport" class="ghost">Очистить</button>
+      </div>
+
+      <form id="importForm">
+        <div class="grid two">
+          <label>Ссылка объявления<input id="sourceUrl" type="url" required placeholder="https://..."></label>
+          <label>Площадка<input id="platform" required placeholder="1688 / Taobao / AliExpress"></label>
+        </div>
+        <label>Название<input id="title" required></label>
+        <label>Описание<textarea id="description"></textarea></label>
+        <div class="grid three">
+          <label>Цена на площадке<input id="priceText" placeholder="¥188"></label>
+          <label>Цена, ¥<input id="priceCny" inputmode="decimal"></label>
+          <label>Цена с сервисом, ₽<input id="priceRub" inputmode="numeric"></label>
+        </div>
+        <div class="grid three">
+          <label>Категория<select id="category"><option value="clothes">Одежда</option><option value="shoes">Обувь</option><option value="electronics">Электроника</option><option value="accessories" selected>Аксессуары</option><option value="home">Дом</option><option value="auto">Авто</option></select></label>
+          <label>Тип<input id="type" value="Товар"></label>
+          <label>Плашка<input id="badge" value="LIVE"></label>
+        </div>
+        <label>Ссылки фотографий объявления<textarea id="images" required placeholder="Каждая ссылка с новой строки"></textarea></label>
+        <div id="imagePreview" class="image-preview"></div>
+        <button id="importButton" class="primary wide" type="submit">Скопировать фотографии и добавить товар</button>
+      </form>
+      <p id="importStatus" class="status"></p>
+    </section>
+
+    <section class="panel" id="catalog">
+      <div class="section-head">
+        <div><span class="eyebrow">CATALOG</span><h2>Товары в витрине</h2></div>
+        <button id="reloadCatalog" class="ghost">Обновить</button>
+      </div>
+      <div id="catalogGrid" class="catalog-grid"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <script src="admin.js"></script>
+</body>
+</html>

@@ -1794,12 +1794,17 @@
       border-color:rgba(255,255,255,.16);
     }
 
+
+    .catalog-image-note[data-state="ready"]{color:#9de2b8}.catalog-image-note[data-state="error"]{color:#ff9e86}.catalog-image-note[data-state="loading"]{animation:pulse 1.4s ease-in-out infinite}.live-catalog-empty{display:grid;justify-items:center;gap:12px;min-height:260px;align-content:center}.live-catalog-empty strong{font-size:1.5rem;color:#fff}.live-catalog-empty span{max-width:620px;line-height:1.5}.live-catalog-empty .primary-btn{display:inline-flex;width:auto}
+
+    .product-photo-shell--modal .product-photo{padding-bottom:104px!important}.product-photo-shell--modal .product-photo-note{display:none}.modal-photo-thumbs{position:absolute;left:14px;right:14px;bottom:14px;z-index:6;display:flex;gap:9px;overflow-x:auto;padding:8px;border-radius:18px;background:rgba(10,12,16,.76);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.12)}.modal-photo-thumb{width:68px;height:68px;min-width:68px;padding:0;border-radius:12px;overflow:hidden;border:2px solid transparent;background:#fff;cursor:pointer;opacity:.68}.modal-photo-thumb.active{border-color:#ff5a1f;opacity:1}.modal-photo-thumb img{width:100%;height:100%;object-fit:cover;display:block}@media(max-width:760px){.modal-photo-thumb{width:56px;height:56px;min-width:56px}.product-photo-shell--modal .product-photo{padding-bottom:88px!important}}
 </style>
 
   <meta name="tracking-api" content="" />
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="preconnect" href="https://a.basemaps.cartocdn.com" crossorigin>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="config.js"></script>
 </head>
 <body id="top">
   <div class="intro-overlay" id="introOverlay" hidden aria-hidden="true">
@@ -2022,7 +2027,7 @@
 
     <section class="section" id="categories"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">CATEGORIES</div><h2>Что можно привезти</h2><p>Одежда, обувь, техника, аксессуары, товары для дома, авто и любые позиции под запрос.</p></div></div><div class="category-grid"><button class="category-card reveal" data-category-jump="clothes"><div class="category-icon">👕</div><strong>Одежда</strong><span>худи, куртки, джинсы, костюмы, дропы</span></button><button class="category-card reveal" data-category-jump="shoes"><div class="category-icon">👟</div><strong>Обувь</strong><span>кроссовки, ботинки, slides, пары под заказ</span></button><button class="category-card reveal" data-category-jump="electronics"><div class="category-icon">🎧</div><strong>Электроника</strong><span>гаджеты, аксессуары, свет, девайсы</span></button><button class="category-card reveal" data-category-jump="accessories"><div class="category-icon">👜</div><strong>Аксессуары</strong><span>сумки, чехлы, кошельки, ремни</span></button><button class="category-card reveal" data-category-jump="home"><div class="category-icon">🏠</div><strong>Дом</strong><span>декор, хранение, мебель, полезные вещи</span></button><button class="category-card reveal" data-category-jump="auto"><div class="category-icon">🚗</div><strong>Авто</strong><span>обвесы, аксессуары, уход, детали</span></button></div></div></section>
 
-    <section class="section" id="catalog"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">CATALOG</div><h2>Витрина находок</h2><p>Товары выглядят как единый каталог ONYX, но логика — поиск, выкуп и доставка из Китая.</p></div><div class="section-actions reveal"><button class="secondary-btn" id="resetFiltersBtn">Сбросить фильтры</button><button class="primary-btn" id="scrollQuoteBtn">Заказать по ссылке</button></div></div><div class="catalog-toolbar reveal"><div class="filter-pills" id="quickFilters"><button class="filter-pill active" data-quick="all">Все</button><button class="filter-pill" data-quick="hot">Хиты</button><button class="filter-pill" data-quick="fast">Быстрая доставка</button><button class="filter-pill" data-quick="low">До 3000 ₽</button><button class="filter-pill" data-quick="premium">Premium</button></div><div class="toolbar-selects"><select id="sortFilter"><option value="default">По умолчанию</option><option value="priceAsc">Цена ↑</option><option value="priceDesc">Цена ↓</option><option value="ratingDesc">Рейтинг</option><option value="ordersDesc">Заказы</option></select></div></div><p class="catalog-image-note">Превью хранятся внутри сайта и всегда загружаются. Актуальные фотографии продавца открываются по кнопке «Открыть источник».</p>
+    <section class="section" id="catalog"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">CATALOG</div><h2>Витрина находок</h2><p>Товары выглядят как единый каталог ONYX, но логика — поиск, выкуп и доставка из Китая.</p></div><div class="section-actions reveal"><button class="secondary-btn" id="resetFiltersBtn">Сбросить фильтры</button><button class="primary-btn" id="scrollQuoteBtn">Заказать по ссылке</button></div></div><div class="catalog-toolbar reveal"><div class="filter-pills" id="quickFilters"><button class="filter-pill active" data-quick="all">Все</button><button class="filter-pill" data-quick="hot">Хиты</button><button class="filter-pill" data-quick="fast">Быстрая доставка</button><button class="filter-pill" data-quick="low">До 3000 ₽</button><button class="filter-pill" data-quick="premium">Premium</button></div><div class="toolbar-selects"><select id="sortFilter"><option value="default">По умолчанию</option><option value="priceAsc">Цена ↑</option><option value="priceDesc">Цена ↓</option><option value="ratingDesc">Рейтинг</option><option value="ordersDesc">Заказы</option></select></div></div><p class="catalog-image-note" id="catalogConnectionStatus">Витрина загружает точные фотографии объявлений из хранилища ONYX. Добавление товаров выполняется через импортёр без ручного скачивания.</p>
         <div class="product-grid" id="productGrid"></div></div></section>
 
     <section class="section tight"><div class="container"><div class="banner-panel reveal"><div class="banner-grid"><div><div class="eyebrow">FULL SERVICE</div><h2>Не нужно разбираться в китайских сайтах.</h2><p>Клиенту не надо переводить карточки, писать поставщику, считать доставку и спорить о размерах. ONYX GROUP берёт на себя коммуникацию, выкуп, проверку, склад и логистику.</p></div><div class="banner-cards"><div class="banner-card"><strong>🔎 Найдём аналог по фото</strong><span>Можно отправить фото товара, а не ссылку.</span></div><div class="banner-card"><strong>📸 Фото перед отправкой</strong><span>Проверка товара на складе в Китае.</span></div><div class="banner-card"><strong>📦 Объединение посылок</strong><span>Несколько товаров можно собрать в одну отправку.</span></div></div></div></div></div></section>
@@ -2407,674 +2412,94 @@
     };
     const SOURCE_TO_MARKETPLACE = { Alibaba: "alibaba", "1688": "1688", Taobao: "taobao", AliExpress: "aliexpress", Poizon: "poizon", Pinduoduo: "pinduoduo" };
     const MANAGER_PIN = "2026";
-    const TRACKING_API_BASE = (document.querySelector('meta[name="tracking-api"]')?.content || "").trim();
+    const SITE_CONFIG = window.ONYX_CONFIG || {};
+    const ONYX_API_BASE = String(localStorage.getItem("onyx_api_base") || SITE_CONFIG.API_BASE || "").trim().replace(/\/+$/, "");
+    const TRACKING_API_BASE = (document.querySelector('meta[name="tracking-api"]')?.content || ONYX_API_BASE || "").trim().replace(/\/+$/, "");
+    const USE_DEMO_CATALOG = Boolean(SITE_CONFIG.USE_DEMO_CATALOG);
 
-    const products = [
-      {
-            "id": 1,
-            "name": "Utility Workwear Jacket",
-            "category": "clothes",
-            "source": "AliExpress",
-            "type": "Одежда",
-            "priceCny": 188,
-            "priceRub": 3890,
-            "badge": "UTILITY",
-            "deliveryDays": "20–25",
-            "description": "Мужская oversized-куртка в workwear-стиле: лёгкая конструкция, водоотталкивающий материал и утилитарные карманы.",
-            "tags": [
-                  "workwear",
-                  "oversized",
-                  "utility"
-            ],
-            "sizes": [
-                  "S",
-                  "M",
-                  "L",
-                  "XL",
-                  "2XL"
-            ],
-            "colors": [
-                  "Чёрный",
-                  "Коричневый",
-                  "Хаки"
-            ],
-            "quick": [
-                  "hot",
-                  "premium"
-            ],
-            "visual": "UTILITY JACKET",
-            "image": "https://i.ebayimg.com/thumbs/images/g/L9AAAOSwuC5n65zD/s-l500.jpg",
-            "sourceTitle": "Men American Style PU Jacket Workwear Coat Lightweight Water-Resistant Oversized Streetwear",
-            "sourcePriceText": "Цена меняется на площадке",
-            "productId": "1005009566810709",
-            "sourceUrl": "https://www.aliexpress.com/item/1005009566810709.html",
-            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005009566810709",
-            "sourceSearchQuery": "Men American Style PU Jacket Workwear Coat Lightweight Water-Resistant Oversized Streetwear",
-            "rating": null,
-            "orders": null,
-            "photoPage": "https://www.ebay.com/sch/i.html?_nkw=utility+workwear+jacket",
-            "imageKind": "real-product-photo"
-      },
-      {
-            "id": 2,
-            "name": "Minimal Mesh Runner Sneakers",
-            "category": "shoes",
-            "source": "AliExpress",
-            "type": "Обувь",
-            "priceCny": 235,
-            "priceRub": 4990,
-            "badge": "RUNNER",
-            "deliveryDays": "20–25",
-            "description": "Лёгкие сетчатые кроссовки для ходьбы, тренировок и ежедневной носки. Дышащий верх и нескользящая подошва.",
-            "tags": [
-                  "sneakers",
-                  "mesh",
-                  "daily"
-            ],
-            "sizes": [
-                  "36",
-                  "37",
-                  "38",
-                  "39",
-                  "40",
-                  "41",
-                  "42",
-                  "43",
-                  "44",
-                  "45",
-                  "46",
-                  "47"
-            ],
-            "colors": [
-                  "Белый",
-                  "Чёрный",
-                  "Серый"
-            ],
-            "quick": [
-                  "hot",
-                  "premium"
-            ],
-            "visual": "RUNNER",
-            "image": "https://s.alicdn.com/@sc04/kf/Hf1bac4fabcd340879791133e17841a81c.png",
-            "sourceTitle": "Men Running Shoes Lace Up Sneakers Fashion Lightweight Male Casual Shoes Mesh",
-            "sourcePriceText": "Цена меняется на площадке",
-            "productId": "1005008853938655",
-            "sourceUrl": "https://www.aliexpress.com/item/1005008853938655.html",
-            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005008853938655",
-            "sourceSearchQuery": "Men Running Shoes Lace Up Sneakers Fashion Lightweight Male Casual Shoes Mesh",
-            "rating": null,
-            "orders": null,
-            "photoPage": "https://www.alibaba.com/showroom/mesh-running-shoes-men.html",
-            "imageKind": "real-product-photo"
-      },
-      {
-            "id": 3,
-            "name": "LED Desk Lamp + Wireless Charger",
-            "category": "electronics",
-            "source": "AliExpress",
-            "type": "Электроника",
-            "priceCny": 73,
-            "priceRub": 1890,
-            "badge": "SMART",
-            "deliveryDays": "20–25",
-            "description": "Настольная LED-лампа с беспроводной зарядкой, USB-портом, сенсорным управлением и регулировкой яркости.",
-            "tags": [
-                  "LED",
-                  "wireless charge",
-                  "desk"
-            ],
-            "sizes": [],
-            "colors": [
-                  "Чёрный",
-                  "Белый"
-            ],
-            "quick": [
-                  "fast",
-                  "low"
-            ],
-            "visual": "SMART LAMP",
-            "image": "https://www.mount-it.com/cdn/shop/files/led-desk-lamp-with-wireless-charging-mount-it-ts-7009-39685541167259.jpg?v=1763606567&width=1200",
-            "sourceTitle": "LED Desk Lamp with Wireless Charger and USB Plug in Port",
-            "sourcePriceText": "Около $10.20 на момент проверки",
-            "productId": "1005007493710730",
-            "sourceUrl": "https://www.aliexpress.com/item/1005007493710730.html",
-            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005007493710730",
-            "sourceSearchQuery": "LED Desk Lamp with Wireless Charger and USB Plug in Port",
-            "rating": null,
-            "orders": null,
-            "photoPage": "https://www.mount-it.com/products/led-desk-lamp-with-wireless-charging",
-            "imageKind": "real-product-photo"
-      },
-      {
-            "id": 4,
-            "name": "Luxury iPhone Case",
-            "category": "accessories",
-            "source": "AliExpress",
-            "type": "Аксессуары",
-            "priceCny": 30,
-            "priceRub": 790,
-            "badge": "CASE",
-            "deliveryDays": "20–25",
-            "description": "Защитный силиконовый чехол для популярных моделей iPhone. Плотная посадка, защита камеры и декоративный дизайн.",
-            "tags": [
-                  "iPhone",
-                  "case",
-                  "silicone"
-            ],
-            "sizes": [],
-            "colors": [
-                  "iPhone 11",
-                  "iPhone 12",
-                  "iPhone 13",
-                  "iPhone 14",
-                  "iPhone 15"
-            ],
-            "quick": [
-                  "low",
-                  "hot"
-            ],
-            "visual": "IPHONE CASE",
-            "image": "https://afcase.com/cdn/shop/products/Haa304fc2aa7949c39c7e57a29cb2be60B.jpg?v=1661502016&width=1200",
-            "sourceTitle": "Luxury Phone Case For Apple iPhone 11 15 14 Pro MAX 12 13",
-            "sourcePriceText": "Около $4.17 на момент проверки",
-            "productId": "1005007188676237",
-            "sourceUrl": "https://www.aliexpress.com/item/1005007188676237.html",
-            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005007188676237",
-            "sourceSearchQuery": "Luxury Phone Case For Apple iPhone 11 15 14 Pro MAX 12 13",
-            "rating": null,
-            "orders": null,
-            "photoPage": "https://afcase.com/",
-            "imageKind": "real-product-photo"
-      },
-      {
-            "id": 5,
-            "name": "Tactical Modular Shoulder Bag",
-            "category": "accessories",
-            "source": "AliExpress",
-            "type": "Аксессуары",
-            "priceCny": 118,
-            "priceRub": 2690,
-            "badge": "CARGO",
-            "deliveryDays": "20–25",
-            "description": "Тактическая сумка через плечо из ткани Oxford: Molle-система, регулируемый ремень и несколько отделений.",
-            "tags": [
-                  "cargo",
-                  "Molle",
-                  "shoulder bag"
-            ],
-            "sizes": [
-                  "One size"
-            ],
-            "colors": [
-                  "Чёрный",
-                  "Оливковый",
-                  "Песочный"
-            ],
-            "quick": [
-                  "low",
-                  "hot"
-            ],
-            "visual": "CARGO BAG",
-            "image": "https://hitadouble.com/cdn/shop/files/rothco-compact-tactisling-shoulder-bag-hit-a-double-606_large.webp?v=1755930140",
-            "sourceTitle": "Tactical Men Shoulder Bag Outdoor Travel Sports Hiking Crossbody Bag",
-            "sourcePriceText": "Цена меняется на площадке",
-            "productId": "1005009481322407",
-            "sourceUrl": "https://www.aliexpress.com/item/1005009481322407.html",
-            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005009481322407",
-            "sourceSearchQuery": "Tactical Men Shoulder Bag Outdoor Travel Sports Hiking Crossbody Bag",
-            "rating": null,
-            "orders": null,
-            "photoPage": "https://hitadouble.com/products/rothco-compact-tactisling-shoulder-bag",
-            "imageKind": "real-product-photo"
-      },
-      {
-            "id": 6,
-            "name": "Modular Drawer Storage Cabinet",
-            "category": "home",
-            "source": "AliExpress",
-            "type": "Дом",
-            "priceCny": 76,
-            "priceRub": 1990,
-            "badge": "STORAGE",
-            "deliveryDays": "20–25",
-            "description": "Модульный органайзер с прозрачными выдвижными ящиками для инструментов, комплектующих и домашних мелочей.",
-            "tags": [
-                  "storage",
-                  "drawers",
-                  "organizer"
-            ],
-            "sizes": [
-                  "30 ячеек",
-                  "60 ячеек"
-            ],
-            "colors": [
-                  "Прозрачный/чёрный"
-            ],
-            "quick": [
-                  "premium"
-            ],
-            "visual": "STORAGE",
-            "image": "https://www.opulancia.com/cdn/shop/files/ClosetMaid-Modular-Storage-4-Drawer-Unit_f3ec007b-9449-44d4-a6a1-eb33daaf09a1.jpg",
-            "sourceTitle": "Modular Drawer Storage Cabinet, Small Parts Organizer with Clear Bins",
-            "sourcePriceText": "Около $10.82 на момент проверки",
-            "productId": "1005010483487402",
-            "sourceUrl": "https://www.aliexpress.com/item/1005010483487402.html",
-            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005010483487402",
-            "sourceSearchQuery": "Modular Drawer Storage Cabinet, Small Parts Organizer with Clear Bins",
-            "rating": null,
-            "orders": null,
-            "photoPage": "https://www.opulancia.com/products/modular-storage-4-drawer-unit",
-            "imageKind": "real-product-photo"
-      },
-      {
-            "id": 7,
-            "name": "Auto Interior Removal Tool Kit",
-            "category": "auto",
-            "source": "AliExpress",
-            "type": "Авто",
-            "priceCny": 51,
-            "priceRub": 1390,
-            "badge": "AUTO",
-            "deliveryDays": "20–25",
-            "description": "Набор пластиковых съёмников для дверных карт, клипс, панелей, магнитолы и элементов салона автомобиля.",
-            "tags": [
-                  "auto",
-                  "trim tools",
-                  "repair"
-            ],
-            "sizes": [
-                  "Комплект"
-            ],
-            "colors": [
-                  "Красный",
-                  "Синий"
-            ],
-            "quick": [
-                  "fast",
-                  "low"
-            ],
-            "visual": "AUTO TOOL KIT",
-            "image": "https://aussieoffroad.com.au/cdn/shop/files/envato-labs-image-edit-2025-11-07T143619.344.png?v=1762486617",
-            "sourceTitle": "Auto Interior Disassembly Kit Car Plastic Trim Removal Tool",
-            "sourcePriceText": "Около $7.10 на момент проверки",
-            "productId": "1005005117021512",
-            "sourceUrl": "https://www.aliexpress.com/item/1005005117021512.html",
-            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005005117021512",
-            "sourceSearchQuery": "Auto Interior Disassembly Kit Car Plastic Trim Removal Tool",
-            "rating": null,
-            "orders": null,
-            "photoPage": "https://aussieoffroad.com.au/products/trim-remover-tool-kit",
-            "imageKind": "real-product-photo"
-      },
-      {
-            "id": 8,
-            "name": "Oversized Embroidered Hoodie",
-            "category": "clothes",
-            "source": "AliExpress",
-            "type": "Одежда",
-            "priceCny": 132,
-            "priceRub": 2990,
-            "badge": "STREET",
-            "deliveryDays": "20–25",
-            "description": "Oversized-худи в streetwear-эстетике с вышивкой, свободной посадкой и длинным рукавом.",
-            "tags": [
-                  "hoodie",
-                  "oversized",
-                  "streetwear"
-            ],
-            "sizes": [
-                  "S",
-                  "M",
-                  "L",
-                  "XL",
-                  "2XL"
-            ],
-            "colors": [
-                  "Чёрный",
-                  "Серый",
-                  "Кремовый"
-            ],
-            "quick": [
-                  "hot",
-                  "low"
-            ],
-            "visual": "HOODIE",
-            "image": "https://www.ohpolly.com/cdn/shop/files/BT02578-GreyMarl_Alumna_082.jpg?v=1778768399",
-            "sourceTitle": "American Retro Embroidered Oversized Hoodie Men Harajuku Loose Sweatshirt",
-            "sourcePriceText": "Цена меняется на площадке",
-            "productId": "1005010760642422",
-            "sourceUrl": "https://www.aliexpress.com/item/1005010760642422.html",
-            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005010760642422",
-            "sourceSearchQuery": "American Retro Embroidered Oversized Hoodie Men Harajuku Loose Sweatshirt",
-            "rating": null,
-            "orders": null,
-            "photoPage": "https://www.ohpolly.com/products/embroidered-oversized-applique-hoodie-in-grey-marl",
-            "imageKind": "real-product-photo"
-      },
-      {
-            "id": 9,
-            "name": "Li-Ning WADE 808 5 Ultra",
-            "category": "shoes",
-            "source": "AliExpress",
-            "type": "Обувь",
-            "priceCny": 520,
-            "priceRub": 10990,
-            "badge": "BASKETBALL",
-            "deliveryDays": "20–25",
-            "description": "Профессиональные баскетбольные кроссовки Li-Ning WADE 808 5 Ultra с амортизацией SUPER BOOM.",
-            "tags": [
-                  "Li-Ning",
-                  "basketball",
-                  "BOOM"
-            ],
-            "sizes": [
-                  "39",
-                  "40",
-                  "41",
-                  "42",
-                  "43",
-                  "44",
-                  "45"
-            ],
-            "colors": [
-                  "По карточке товара"
-            ],
-            "quick": [
-                  "premium",
-                  "hot"
-            ],
-            "visual": "WADE 808",
-            "image": "https://widefitshoes.com/cdn/shop/files/e2e1e95e_42e3_4006_999f_cef4bf89855f.jpg?v=1782122501",
-            "sourceTitle": "Li-Ning Men's WADE 808 5 ULTRA Professional Basketball Shoes SUPER BOOM",
-            "sourcePriceText": "Цена меняется на площадке",
-            "productId": "3256808362520729",
-            "sourceUrl": "https://www.aliexpress.com/item/3256808362520729.html",
-            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/3256808362520729",
-            "sourceSearchQuery": "Li-Ning Men's WADE 808 5 ULTRA Professional Basketball Shoes SUPER BOOM",
-            "rating": null,
-            "orders": null,
-            "photoPage": "https://widefitshoes.com/products/mens-wide-fit-nike-fb2599-105-g-t-cut-academy-basketball-sneakers",
-            "imageKind": "real-product-photo"
-      },
-      {
-            "id": 10,
-            "name": "Under-Desk Cable Management Rack",
-            "category": "electronics",
-            "source": "AliExpress",
-            "type": "Электроника",
-            "priceCny": 178,
-            "priceRub": 3990,
-            "badge": "SETUP",
-            "deliveryDays": "20–25",
-            "description": "Металлическая полка-органайзер под стол для сетевых фильтров, проводов, зарядных блоков и кабелей.",
-            "tags": [
-                  "desk setup",
-                  "cable management",
-                  "rack"
-            ],
-            "sizes": [
-                  "Стандарт"
-            ],
-            "colors": [
-                  "Чёрный",
-                  "Белый"
-            ],
-            "quick": [
-                  "premium"
-            ],
-            "visual": "DESK SETUP",
-            "image": "https://deskspace.de/cdn/shop/files/DESKSPACE_WRAP_Cable_Tray_Black.png?v=1773287204",
-            "sourceTitle": "Cable Management Box Under Desk Cable Organizer Storage Shelf",
-            "sourcePriceText": "Цена меняется на площадке",
-            "productId": "1005009384491264",
-            "sourceUrl": "https://www.aliexpress.com/item/1005009384491264.html",
-            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005009384491264",
-            "sourceSearchQuery": "Cable Management Box Under Desk Cable Organizer Storage Shelf",
-            "rating": null,
-            "orders": null,
-            "photoPage": "https://deskspace.de/products/kabelwanne",
-            "imageKind": "real-product-photo"
-      },
-      {
-            "id": 11,
-            "name": "Vacuum Compression Travel Backpack",
-            "category": "accessories",
-            "source": "AliExpress",
-            "type": "Аксессуары",
-            "priceCny": 248,
-            "priceRub": 5390,
-            "badge": "TRAVEL",
-            "deliveryDays": "20–25",
-            "description": "Рюкзак для путешествий с вакуумным компрессионным отсеком, отделением для ноутбука 17″ и расширяемым объёмом.",
-            "tags": [
-                  "travel",
-                  "vacuum",
-                  "17 inch"
-            ],
-            "sizes": [
-                  "Расширяемый"
-            ],
-            "colors": [
-                  "Чёрный",
-                  "Серый"
-            ],
-            "quick": [
-                  "premium",
-                  "hot"
-            ],
-            "visual": "VACUUM BAG",
-            "image": "https://bowlift.com/cdn/shop/files/VacuPro-Pack-duurzame-en-waterdichte-reisrugzak.jpg?v=1760768805",
-            "sourceTitle": "Men Travel Backpack 17 inch Vacuum Compression Laptop Backpack Extended Large Capacity",
-            "sourcePriceText": "Цена меняется на площадке",
-            "productId": "1005007748290778",
-            "sourceUrl": "https://www.aliexpress.com/item/1005007748290778.html",
-            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005007748290778",
-            "sourceSearchQuery": "Men Travel Backpack 17 inch Vacuum Compression Laptop Backpack Extended Large Capacity",
-            "rating": null,
-            "orders": null,
-            "photoPage": "https://bowlift.com/products/bowlift-vacupro-compression-travel-backpack-with-built-in-vacuum-system-space-saving-cabin-bag",
-            "imageKind": "real-product-photo"
-      },
-      {
-            "id": 12,
-            "name": "Stainless Digital Kitchen Scale",
-            "category": "home",
-            "source": "AliExpress",
-            "type": "Дом",
-            "priceCny": 38,
-            "priceRub": 890,
-            "badge": "KITCHEN",
-            "deliveryDays": "20–25",
-            "description": "Цифровые кухонные весы из нержавеющей стали с LCD-дисплеем для продуктов, кофе и выпечки.",
-            "tags": [
-                  "kitchen",
-                  "digital scale",
-                  "LCD"
-            ],
-            "sizes": [
-                  "До 5 кг"
-            ],
-            "colors": [
-                  "Silver"
-            ],
-            "quick": [
-                  "low",
-                  "fast"
-            ],
-            "visual": "SMART SCALE",
-            "image": "https://www.mcelhinneys.com/cdn/shop/files/MARY-BERRY-DIGITAL-SCALES-SKU_MBAHDSCALE_1.jpg?v=1698146002",
-            "sourceTitle": "Digital Kitchen Scale Stainless Steel LCD Electronic Food Scale",
-            "sourcePriceText": "Цена меняется на площадке",
-            "productId": "1005009304127006",
-            "sourceUrl": "https://www.aliexpress.com/item/1005009304127006.html",
-            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005009304127006",
-            "sourceSearchQuery": "Digital Kitchen Scale Stainless Steel LCD Electronic Food Scale",
-            "rating": null,
-            "orders": null,
-            "photoPage": "https://www.mcelhinneys.com/products/mb-at-home-digital-scale-mbahdscale",
-            "imageKind": "real-product-photo"
-      },
-      {
-            "id": 13,
-            "name": "Wide-Leg Baggy Denim",
-            "category": "clothes",
-            "source": "AliExpress",
-            "type": "Одежда",
-            "priceCny": 168,
-            "priceRub": 3690,
-            "badge": "DENIM",
-            "deliveryDays": "20–25",
-            "description": "Мужские широкие baggy-джинсы из washed-денима: свободная посадка, четыре кармана и большие размеры.",
-            "tags": [
-                  "baggy",
-                  "denim",
-                  "wide leg"
-            ],
-            "sizes": [
-                  "M",
-                  "L",
-                  "XL",
-                  "2XL",
-                  "3XL",
-                  "4XL"
-            ],
-            "colors": [
-                  "Синий",
-                  "Чёрный"
-            ],
-            "quick": [
-                  "hot"
-            ],
-            "visual": "BAGGY DENIM",
-            "image": "https://www.routeone.co.uk/cdn/shop/files/001161149_1.jpg?v=1741093743",
-            "sourceTitle": "Men's Summer Jeans Lightweight Cotton Washed Straight Denim Pants Wide Leg Baggy",
-            "sourcePriceText": "Цена меняется на площадке",
-            "productId": "1005008815020323",
-            "sourceUrl": "https://www.aliexpress.com/item/1005008815020323.html",
-            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005008815020323",
-            "sourceSearchQuery": "Men's Summer Jeans Lightweight Cotton Washed Straight Denim Pants Wide Leg Baggy",
-            "rating": null,
-            "orders": null,
-            "photoPage": "https://www.routeone.co.uk/products/butter-goods-baggy-denim-jean-washed-indigo-001161149",
-            "imageKind": "real-product-photo"
-      },
-      {
-            "id": 14,
-            "name": "18-in-1 RGB Car Ambient Light",
-            "category": "auto",
-            "source": "AliExpress",
-            "type": "Авто",
-            "priceCny": 143,
-            "priceRub": 3290,
-            "badge": "RGB AUTO",
-            "deliveryDays": "20–25",
-            "description": "Комплект атмосферной подсветки салона: 64 цвета, акриловые световоды, управление через приложение и синхронизация с музыкой.",
-            "tags": [
-                  "RGB",
-                  "car light",
-                  "APP control"
-            ],
-            "sizes": [
-                  "18 в 1"
-            ],
-            "colors": [
-                  "64 цвета"
-            ],
-            "quick": [
-                  "fast",
-                  "low"
-            ],
-            "visual": "RGB AUTO",
-            "image": "https://viraloot.store/cdn/shop/files/1559956450126.jpg",
-            "sourceTitle": "18 in 1 64 Color RGB Symphony Car Ambient Light Interior Acrylic Guide",
-            "sourcePriceText": "Около $19.95 на момент проверки",
-            "productId": "1005006574618290",
-            "sourceUrl": "https://www.aliexpress.com/item/1005006574618290.html",
-            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005006574618290",
-            "sourceSearchQuery": "18 in 1 64 Color RGB Symphony Car Ambient Light Interior Acrylic Guide",
-            "rating": null,
-            "orders": null,
-            "photoPage": "https://viraloot.store/",
-            "imageKind": "real-product-photo"
-      },
-      {
-            "id": 15,
-            "name": "Minimal Automatic Watch",
-            "category": "accessories",
-            "source": "AliExpress",
-            "type": "Аксессуары",
-            "priceCny": 298,
-            "priceRub": 6490,
-            "badge": "WATCH",
-            "deliveryDays": "20–25",
-            "description": "Механические часы в деловом минималистичном стиле: чёрный циферблат, календарь и ремешок из нержавеющей стали или кожи.",
-            "tags": [
-                  "automatic",
-                  "minimal",
-                  "watch"
-            ],
-            "sizes": [
-                  "One size"
-            ],
-            "colors": [
-                  "Чёрный",
-                  "Серебристый"
-            ],
-            "quick": [
-                  "premium"
-            ],
-            "visual": "WATCH",
-            "image": "https://unimaticwatches.com/cdn/shop/files/U1_Classic_01_1800x1800.jpg?v=1695123456",
-            "sourceTitle": "WINNER Business Automatic Watch for Men Black Minimalist Dial Mechanical Watch",
-            "sourcePriceText": "Цена меняется на площадке",
-            "productId": "1005010256960952",
-            "sourceUrl": "https://www.aliexpress.com/item/1005010256960952.html",
-            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005010256960952",
-            "sourceSearchQuery": "WINNER Business Automatic Watch for Men Black Minimalist Dial Mechanical Watch",
-            "rating": null,
-            "orders": null,
-            "photoPage": "https://www.unimaticwatches.com/products/u1-classic",
-            "imageKind": "real-product-photo"
-      },
-      {
-            "id": 16,
-            "name": "FIFINE Adjustable Microphone Arm",
-            "category": "electronics",
-            "source": "AliExpress",
-            "type": "Электроника",
-            "priceCny": 176,
-            "priceRub": 4190,
-            "badge": "STUDIO",
-            "deliveryDays": "20–25",
-            "description": "Настольный регулируемый пантограф FIFINE для микрофонов K688, K669, K670, K658 и других моделей.",
-            "tags": [
-                  "FIFINE",
-                  "boom arm",
-                  "studio"
-            ],
-            "sizes": [
-                  "Standard"
-            ],
-            "colors": [
-                  "Чёрный"
-            ],
-            "quick": [
-                  "low"
-            ],
-            "visual": "MIC ARM",
-            "image": "https://fifineaudio.shop/images/fifineaudio.shop/images/product/fifine-bm88-microphone-boom-arm-stand-offical-1.png",
-            "sourceTitle": "FIFINE Adjustable Microphone Suspension Boom Scissor Arm Stand",
-            "sourcePriceText": "Около $24.64 на момент проверки",
-            "productId": "1005007010568302",
-            "sourceUrl": "https://www.aliexpress.com/item/1005007010568302.html",
-            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005007010568302",
-            "sourceSearchQuery": "FIFINE Adjustable Microphone Suspension Boom Scissor Arm Stand",
-            "rating": null,
-            "orders": null,
-            "photoPage": "https://fifineaudio.shop/products/fifine-bm88-microphone-boom-arm-stand",
-            "imageKind": "real-product-photo"
+    const STATIC_PRODUCTS = [];
+
+
+    let products = [];
+    let catalogLoadState = "idle";
+
+    function calculateLivePriceRub(priceCny) {
+      const itemRub = Math.max(0, Number(priceCny || 0)) * 13;
+      const commission = itemRub >= 150000 ? itemRub * 0.07 : itemRub >= 50000 ? itemRub * 0.10 : itemRub * 0.20;
+      return Math.round(itemRub + Math.max(350, commission) + 900);
+    }
+
+    function absoluteApiUrl(value) {
+      if (!value || !ONYX_API_BASE) return value || "";
+      try {
+        return new URL(value, `${ONYX_API_BASE}/`).href;
+      } catch {
+        return value;
       }
-];
+    }
+
+    function mapLiveProduct(raw) {
+      const images = Array.isArray(raw.images) ? raw.images.map(absoluteApiUrl).filter(Boolean) : [];
+      const priceCny = Number(raw.priceCny || 0);
+      return {
+        id: String(raw.id),
+        name: raw.title || raw.name || "Товар из Китая",
+        category: raw.category || "accessories",
+        source: raw.platform || raw.source || "Marketplace",
+        type: raw.type || "Товар",
+        priceCny,
+        priceRub: Number(raw.priceRub || 0) || calculateLivePriceRub(priceCny),
+        badge: raw.badge || "LIVE",
+        deliveryDays: raw.deliveryDays || "20–25",
+        description: raw.description || "",
+        tags: Array.isArray(raw.tags) ? raw.tags : [],
+        sizes: Array.isArray(raw.sizes) ? raw.sizes : [],
+        colors: Array.isArray(raw.colors) ? raw.colors : [],
+        quick: Array.isArray(raw.quick) ? raw.quick : ["hot"],
+        visual: raw.title || raw.name || "ONYX PRODUCT",
+        image: images[0] || "",
+        images,
+        sourceTitle: raw.sourceTitle || raw.title || raw.name || "",
+        sourcePriceText: raw.priceText || "Цена на площадке",
+        sourceUrl: raw.sourceUrl || "",
+        imageKind: "marketplace-listing-exact",
+        createdAt: raw.createdAt || ""
+      };
+    }
+
+    function setCatalogStatus(text, kind = "") {
+      const element = document.getElementById("catalogConnectionStatus");
+      if (!element) return;
+      element.textContent = text;
+      element.dataset.state = kind;
+    }
+
+    async function loadLiveCatalog() {
+      catalogLoadState = "loading";
+      setCatalogStatus("Подключаю живую витрину ONYX…", "loading");
+
+      if (!ONYX_API_BASE) {
+        products = USE_DEMO_CATALOG ? STATIC_PRODUCTS : [];
+        catalogLoadState = "unconfigured";
+        setCatalogStatus("Живая витрина ещё не подключена. Открой admin.html, укажи Worker URL и импортируй объявления — их точные фотографии появятся здесь автоматически.", "unconfigured");
+        return;
+      }
+
+      try {
+        const response = await fetch(`${ONYX_API_BASE}/api/products`, { headers: { accept: "application/json" } });
+        const data = await response.json();
+        if (!response.ok || !data.ok) throw new Error(data.error || `Ошибка ${response.status}`);
+        products = (data.products || []).map(mapLiveProduct);
+        catalogLoadState = "ready";
+        setCatalogStatus(products.length
+          ? `Живая витрина подключена. Товаров: ${products.length}. Фотографии скопированы непосредственно из объявлений.`
+          : "Живая витрина подключена, но пока пуста. Добавь первое объявление через расширение или admin.html.", "ready");
+      } catch (error) {
+        products = USE_DEMO_CATALOG ? STATIC_PRODUCTS : [];
+        catalogLoadState = "error";
+        setCatalogStatus(`Не удалось подключить витрину: ${error.message}. Проверь Worker URL в admin.html.`, "error");
+      }
+    }
 
     const deliveryRates = {
       standard: { title: "Стандарт", perKg: 650, days: "20–25", base: 350 },
@@ -3174,13 +2599,12 @@
     }
 
     function getProductImageCandidates(product) {
-      // Direct product-photo CDN links: no screenshot pages, anti-bot frames or drawn SVG placeholders.
-      return [product.image].filter(Boolean);
+      return [...new Set([...(Array.isArray(product.images) ? product.images : []), product.image].filter(Boolean))];
     }
 
     function handleProductImageError(img) {
-      const productId = Number(img.dataset.productId);
-      const product = products.find(item => item.id === productId);
+      const productId = decodeURIComponent(img.dataset.productId || "");
+      const product = products.find(item => String(item.id) === String(productId));
       if (!product) return;
 
       const candidates = getProductImageCandidates(product);
@@ -3202,26 +2626,38 @@
       const candidates = getProductImageCandidates(product);
       const firstImage = candidates[0] || "";
       const label = product.visual || product.name;
+      const thumbnails = size === "modal" && candidates.length > 1
+        ? `<div class="modal-photo-thumbs">${candidates.map((url, index) => `<button type="button" class="modal-photo-thumb ${index === 0 ? "active" : ""}" onclick="switchProductPhoto(this, '${encodeURIComponent(url)}')"><img src="${url}" alt="Фото ${index + 1}" loading="lazy"></button>`).join("")}</div>`
+        : "";
       return `
         <div class="product-photo-shell ${size === "modal" ? "product-photo-shell--modal" : ""}">
           <img
             class="product-photo"
             src="${firstImage}"
-            alt="${product.name} — реальное фото товара"
+            alt="${product.name} — точное фото объявления"
             loading="${size === "modal" ? "eager" : "lazy"}"
             decoding="async"
-            referrerpolicy="no-referrer"
-            data-product-id="${product.id}"
+            data-product-id="${encodeURIComponent(String(product.id))}"
             data-image-index="0"
             onerror="handleProductImageError(this)"
           >
           <div class="product-photo-fallback"><span>${label}</span><small>Фото временно недоступно — открой карточку источника</small></div>
-          <div class="product-photo-note">Реальное фото товара</div>
+          <div class="product-photo-note">Фото из конкретного объявления</div>
+          ${thumbnails}
         </div>
       `;
     }
 
+    function switchProductPhoto(button, encodedUrl) {
+      const shell = button.closest(".product-photo-shell");
+      const mainImage = shell?.querySelector(".product-photo");
+      if (!mainImage) return;
+      mainImage.src = decodeURIComponent(encodedUrl);
+      shell.querySelectorAll(".modal-photo-thumb").forEach(item => item.classList.toggle("active", item === button));
+    }
+
     function makeProductCard(product) {
+      const encodedProductId = encodeURIComponent(String(product.id));
       const chips = [
         product.sourcePriceText,
         `${product.deliveryDays} дней`,
@@ -3252,10 +2688,10 @@
                 <span class="price-cny">примерно с сервисом</span>
               </div>
 
-              <button class="product-source-link" type="button" onclick="openProductSource(${product.id})">Открыть карточку на ${product.source} ↗</button>
+              <button class="product-source-link" type="button" onclick="openProductSource(decodeURIComponent('${encodedProductId}'))">Открыть карточку на ${product.source} ↗</button>
               <div class="product-actions">
-                <button class="secondary-btn" onclick="openProductModal(${product.id})">Подробнее</button>
-                <button class="primary-btn" onclick="startOnyxOrder(${product.id})">В заявку</button>
+                <button class="secondary-btn" onclick="openProductModal(decodeURIComponent('${encodedProductId}'))">Подробнее</button>
+                <button class="primary-btn" onclick="startOnyxOrder(decodeURIComponent('${encodedProductId}'))">В заявку</button>
               </div>
             </div>
           </div>
@@ -3313,7 +2749,11 @@
       const list = getFilteredProducts();
 
       if (!list.length) {
-        productGrid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">Ничего не найдено. Попробуй другой запрос, площадку или категорию.</div>`;
+        productGrid.innerHTML = `<div class="empty-state live-catalog-empty" style="grid-column:1/-1;">
+          <strong>${catalogLoadState === "ready" ? "Витрина пока пуста" : "Товары не найдены"}</strong>
+          <span>${catalogLoadState === "ready" ? "Добавь объявление через импортёр — точные фотографии и данные появятся автоматически." : "Проверь подключение Worker или измени фильтры."}</span>
+          <a class="primary-btn" href="admin.html">Открыть управление витриной</a>
+        </div>`;
         return;
       }
 
@@ -3340,7 +2780,7 @@
     }
 
     function openProductModal(id) {
-      const product = products.find(item => item.id === id);
+      const product = products.find(item => String(item.id) === String(id));
       if (!product || !productModal || !overlay) return;
 
       currentProduct = product;
@@ -3438,7 +2878,7 @@
     }
 
     function quickAdd(id) {
-      const product = products.find(item => item.id === id);
+      const product = products.find(item => String(item.id) === String(id));
       if (!product) return;
       addProductToCart(product);
       openDrawer();
@@ -3570,9 +3010,9 @@
     }
 
     async function persistOrderRequest(payload) {
-      if (location.protocol === "file:") return null;
+      if (!ONYX_API_BASE) return null;
       try {
-        const response = await fetch("/api/order-requests", {
+        const response = await fetch(`${ONYX_API_BASE}/api/orders`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
@@ -3616,13 +3056,13 @@
     }
 
     function openProductSource(id) {
-      const product = products.find(item => item.id === id);
+      const product = products.find(item => String(item.id) === String(id));
       if (!product) return;
       window.open(getProductSourceUrl(product), "_blank", "noopener,noreferrer");
     }
 
     function startOnyxOrder(id) {
-      const product = products.find(item => item.id === id);
+      const product = products.find(item => String(item.id) === String(id));
       if (!product) return;
       if ($("quoteLink")) $("quoteLink").value = getProductSourceUrl(product);
       if ($("quoteText")) $("quoteText").value = `Товар из витрины: ${product.name}\nПлощадка: ${product.source}\nЦена в Китае: ${formatCny(product.priceCny)}\nОриентир с доставкой: ${formatRub(product.priceRub)}\nНужны проверка, выкуп и доставка через ONYX GROUP.`;
@@ -3839,8 +3279,11 @@
     async function fetchTrackingOrder(code) {
       if (TRACKING_API_BASE) {
         try {
-          const response = await fetch(`${TRACKING_API_BASE}/${encodeURIComponent(code)}`);
-          if (response.ok) return await response.json();
+          const response = await fetch(`${TRACKING_API_BASE}/api/tracking/${encodeURIComponent(code)}`);
+          if (response.ok) {
+            const data = await response.json();
+            return data.tracking || null;
+          }
           if (response.status === 404) return null;
         } catch (error) {
           console.warn("Tracking API unavailable, using browser storage", error);
@@ -3851,19 +3294,23 @@
 
     async function saveTrackingOrder(order) {
       if (TRACKING_API_BASE) {
-        try {
-          const response = await fetch(TRACKING_API_BASE, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "X-Admin-Key": MANAGER_PIN
-            },
-            body: JSON.stringify(order)
-          });
-          if (!response.ok) throw new Error("API save failed");
-          return await response.json();
-        } catch (error) {
-          console.warn("Tracking API save unavailable, using browser storage", error);
+        const adminToken = String(localStorage.getItem("onyx_admin_token") || "").trim();
+        if (adminToken) {
+          try {
+            const response = await fetch(`${TRACKING_API_BASE}/api/tracking/${encodeURIComponent(order.code)}`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${adminToken}`
+              },
+              body: JSON.stringify(order)
+            });
+            if (!response.ok) throw new Error("API save failed");
+            const data = await response.json();
+            return data.tracking || order;
+          } catch (error) {
+            console.warn("Tracking API save unavailable, using browser storage", error);
+          }
         }
       }
 
@@ -4435,6 +3882,7 @@
     }
 
     window.handleProductImageError = handleProductImageError;
+    window.switchProductPhoto = switchProductPhoto;
     window.openProductModal = openProductModal;
     window.openProductSource = openProductSource;
     window.startOnyxOrder = startOnyxOrder;
@@ -4442,15 +3890,20 @@
     window.changeQty = changeQty;
     window.removeCartItem = removeCartItem;
 
-    renderProducts();
-    renderCart();
-    calculatePrice();
-    initRealRouteMap();
-    updateTrackingView(getAllTrackingOrders()["ONYX-2406"]);
-    renderTrackingResult(getAllTrackingOrders()["ONYX-2406"]);
-    bindEvents();
-    applyReveal();
-    setTimeout(() => playIntro(false), 120);
+    async function bootstrapOnyxSite() {
+      await loadLiveCatalog();
+      renderProducts();
+      renderCart();
+      calculatePrice();
+      initRealRouteMap();
+      updateTrackingView(getAllTrackingOrders()["ONYX-2406"]);
+      renderTrackingResult(getAllTrackingOrders()["ONYX-2406"]);
+      bindEvents();
+      applyReveal();
+      setTimeout(() => playIntro(false), 120);
+    }
+
+    bootstrapOnyxSite();
   </script>
 </body>
 </html>
