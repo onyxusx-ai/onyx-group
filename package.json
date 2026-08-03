@@ -1,15 +1,12 @@
 {
-  "name": "onyx-group-final",
-  "version": "1.0.0",
+  "name": "onyx-group-marketplace",
+  "version": "2.0.0",
   "private": true,
-  "description": "ONYX GROUP buyer, cargo and tracking website",
+  "description": "ONYX GROUP buyer, cargo, marketplace search and tracking website",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
-  },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.21.2"
+    "dev": "node server.js",
+    "test": "node --test tests/site-smoke.test.js"
   }
 }
