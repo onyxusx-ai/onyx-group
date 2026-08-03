@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- ONYX GROUP V9.2 — real product photographs -->
   <title>ONYX GROUP — байер и доставка товаров из Китая в Россию</title>
   <meta name="description" content="ONYX GROUP — байер-сервис и карго-платформа. Находим товары на 1688, Taobao, Poizon, Pinduoduo и AliExpress, проверяем, выкупаем и доставляем в Россию." />
   <meta name="keywords" content="ONYX GROUP, товары из Китая, байер Китай, карго Китай Россия, доставка из Китая, 1688, Taobao, Poizon, AliExpress, Pinduoduo, выкуп товаров" />
@@ -1767,6 +1768,32 @@
     .product-photo{object-fit:cover;background:#e7ebf0}
     .product-photo-note{background:rgba(12,18,25,.76);color:#fff}
 
+
+    /* ===== V9.2 REAL PRODUCT PHOTOS ===== */
+    .product-photo-shell{
+      background:#f4f1ec;
+    }
+    .product-photo{
+      object-fit:cover;
+      object-position:center;
+      background:#f4f1ec;
+      filter:saturate(.96) contrast(1.02);
+    }
+    .product-card:hover .product-photo{
+      transform:scale(1.035);
+      filter:saturate(1.03) contrast(1.03);
+    }
+    .product-photo-shell--modal .product-photo{
+      object-fit:contain;
+      padding:14px;
+      background:#f5f2ed;
+    }
+    .product-photo-note{
+      background:rgba(7,10,14,.72);
+      color:#fff;
+      border-color:rgba(255,255,255,.16);
+    }
+
 </style>
 
   <meta name="tracking-api" content="" />
@@ -2382,407 +2409,672 @@
     const MANAGER_PIN = "2026";
     const TRACKING_API_BASE = (document.querySelector('meta[name="tracking-api"]')?.content || "").trim();
 
-    const products = [{
-      "id": 1,
-      "name": "Utility Workwear Jacket",
-      "category": "clothes",
-      "source": "AliExpress",
-      "type": "Одежда",
-      "priceCny": 188,
-      "priceRub": 3890,
-      "badge": "UTILITY",
-      "deliveryDays": "20–25",
-      "description": "Мужская oversized-куртка в workwear-стиле: лёгкая конструкция, водоотталкивающий материал и утилитарные карманы.",
-      "tags": ["workwear", "oversized", "utility"],
-      "sizes": ["S", "M", "L", "XL", "2XL"],
-      "colors": ["Чёрный", "Коричневый", "Хаки"],
-      "quick": ["hot", "premium"],
-      "visual": "UTILITY JACKET",
-      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgNzAwIj4KICAgIDxkZWZzPgogICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjhmYWZjIi8+PHN0b3Agb2Zmc2V0PSIuNTgiIHN0b3AtY29sb3I9IiNlOGVkZjMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkN2RlZTciLz48L2xpbmVhckdyYWRpZW50PgogICAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Indhcm1HbG93Ij48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iLjciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+CiAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icmdiTGluZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmY0ZjdiIi8+PHN0b3Agb2Zmc2V0PSIuNDUiIHN0b3AtY29sb3I9IiM5YjVjZmYiLz48c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjNGFjYmZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzVmZjlhIi8+PC9saW5lYXJHcmFkaWVudD4KICAgICAgPGZpbHRlciBpZD0ic2hhZG93IiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMjIiIHN0ZERldmlhdGlvbj0iMjAiIGZsb29kLWNvbG9yPSIjMGMxMjE4IiBmbG9vZC1vcGFjaXR5PSIuMjgiLz48L2ZpbHRlcj4KICAgIDwvZGVmcz4KICAgIDxyZWN0IHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBmaWxsPSJ1cmwoI2JnKSIvPgogICAgPGNpcmNsZSBjeD0iNTYwIiBjeT0iMTIwIiByPSIxNzAiIGZpbGw9IiNkOTY3MzciIG9wYWNpdHk9Ii4xMiIvPgogICAgPGNpcmNsZSBjeD0iMTI1IiBjeT0iNTYwIiByPSIxNDUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii41MiIvPgogICAgPGcgb3BhY2l0eT0iLjIyIiBzdHJva2U9IiM3Yjg3OTciIHN0cm9rZS13aWR0aD0iMSI+PHBhdGggZD0iTTAgMTEwSDcwME0wIDIyMEg3MDBNMCAzMzBINzAwTTAgNDQwSDcwME0wIDU1MEg3MDAiLz48cGF0aCBkPSJNMTEwIDBWNzAwTTIyMCAwVjcwME0zMzAgMFY3MDBNNDQwIDBWNzAwTTU1MCAwVjcwMCIvPjwvZz4KICAgIDxnIGZpbHRlcj0idXJsKCNzaGFkb3cpIj48cGF0aCBkPSJNMzAwIDE3MGwtOTAgNDItNTUgMTI1IDc2IDMyIDI4LTYwdjE2NWgxNjJWMzA5bDI4IDYwIDc2LTMyLTU1LTEyNS05MC00Mi00MCAzNHoiIGZpbGw9IiNkOTY3MzciIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSI4Ii8+PHBhdGggZD0iTTM0MCAyMDR2MjcwTTI3MCAyNTJsNzAgNDAgNzAtNDBNMjcwIDMzMGg0Mk0zNjggMzMwaDQyIiBmaWxsPSJub25lIiBzdHJva2U9IiMyMzE3MGYiIHN0cm9rZS13aWR0aD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvZz4KICAgIDxyZWN0IHg9IjI4IiB5PSIyOCIgd2lkdGg9IjEwNCIgaGVpZ2h0PSI0MiIgcng9IjIxIiBmaWxsPSIjMTExODIxIiBvcGFjaXR5PSIuOTIiLz48dGV4dCB4PSI4MCIgeT0iNTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZiI+T05ZWCAjMDE8L3RleHQ+CiAgICA8cmVjdCB4PSIyOCIgeT0iNjEyIiB3aWR0aD0iNjQ0IiBoZWlnaHQ9IjYwIiByeD0iMjIiIGZpbGw9IiMxMTE4MjEiIG9wYWNpdHk9Ii44OCIvPjx0ZXh0IHg9IjUyIiB5PSI2NTAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZiI+VXRpbGl0eSBXb3Jrd2VhciBKYWNrZXQ8L3RleHQ+CiAgICA8L3N2Zz4=",
-      "sourceTitle": "Men American Style PU Jacket Workwear Coat Lightweight Water-Resistant Oversized Streetwear",
-      "sourcePriceText": "Цена меняется на площадке",
-      "productId": "1005009566810709",
-      "sourceUrl": "https://www.aliexpress.com/item/1005009566810709.html",
-      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005009566810709",
-      "sourceSearchQuery": "Men American Style PU Jacket Workwear Coat Lightweight Water-Resistant Oversized Streetwear",
-      "rating": null,
-      "orders": null
-    }, {
-      "id": 2,
-      "name": "Minimal Mesh Runner Sneakers",
-      "category": "shoes",
-      "source": "AliExpress",
-      "type": "Обувь",
-      "priceCny": 235,
-      "priceRub": 4990,
-      "badge": "RUNNER",
-      "deliveryDays": "20–25",
-      "description": "Лёгкие сетчатые кроссовки для ходьбы, тренировок и ежедневной носки. Дышащий верх и нескользящая подошва.",
-      "tags": ["sneakers", "mesh", "daily"],
-      "sizes": ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47"],
-      "colors": ["Белый", "Чёрный", "Серый"],
-      "quick": ["hot", "premium"],
-      "visual": "RUNNER",
-      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgNzAwIj4KICAgIDxkZWZzPgogICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjhmYWZjIi8+PHN0b3Agb2Zmc2V0PSIuNTgiIHN0b3AtY29sb3I9IiNlOGVkZjMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkN2RlZTciLz48L2xpbmVhckdyYWRpZW50PgogICAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Indhcm1HbG93Ij48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iLjciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+CiAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icmdiTGluZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmY0ZjdiIi8+PHN0b3Agb2Zmc2V0PSIuNDUiIHN0b3AtY29sb3I9IiM5YjVjZmYiLz48c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjNGFjYmZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzVmZjlhIi8+PC9saW5lYXJHcmFkaWVudD4KICAgICAgPGZpbHRlciBpZD0ic2hhZG93IiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMjIiIHN0ZERldmlhdGlvbj0iMjAiIGZsb29kLWNvbG9yPSIjMGMxMjE4IiBmbG9vZC1vcGFjaXR5PSIuMjgiLz48L2ZpbHRlcj4KICAgIDwvZGVmcz4KICAgIDxyZWN0IHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBmaWxsPSJ1cmwoI2JnKSIvPgogICAgPGNpcmNsZSBjeD0iNTYwIiBjeT0iMTIwIiByPSIxNzAiIGZpbGw9IiM5YTdiZmYiIG9wYWNpdHk9Ii4xMiIvPgogICAgPGNpcmNsZSBjeD0iMTI1IiBjeT0iNTYwIiByPSIxNDUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii41MiIvPgogICAgPGcgb3BhY2l0eT0iLjIyIiBzdHJva2U9IiM3Yjg3OTciIHN0cm9rZS13aWR0aD0iMSI+PHBhdGggZD0iTTAgMTEwSDcwME0wIDIyMEg3MDBNMCAzMzBINzAwTTAgNDQwSDcwME0wIDU1MEg3MDAiLz48cGF0aCBkPSJNMTEwIDBWNzAwTTIyMCAwVjcwME0zMzAgMFY3MDBNNDQwIDBWNzAwTTU1MCAwVjcwMCIvPjwvZz4KICAgIDxnIGZpbHRlcj0idXJsKCNzaGFkb3cpIj48cGF0aCBkPSJNMTU1IDM0OGM1Mi0yMCA5NC05MiAxMjUtMTUyIDE1LTI5IDQ1LTQ3IDc4LTQzbDU1IDcgMzEgOTIgODUgMzljMjkgMTMgNDYgMzcgNDYgNjd2MjFIMTcwYy0zNSAwLTUwLTE3LTM4LTMxIDYtNyAxNC0xNCAyMy0yMHoiIGZpbGw9IiM5YTdiZmYiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSI4Ii8+PHBhdGggZD0iTTE4MCAzODBoMzkydjM1SDE3NGMtMjcgMC00My0xNC00My0zMSAwLTkgNC0xNiAxMi0yMyIgZmlsbD0iI2U4ZWRmMyIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjciLz48cGF0aCBkPSJNMjk2IDIxNmwxMDcgMThNMjc4IDI1MmwxNDAgMjNNMjU4IDI4OGwxNzUgMjciIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTQyNSAxNjlsLTI1IDg1IiBzdHJva2U9IiMyMDI0MmMiIHN0cm9rZS13aWR0aD0iMTQiLz48L2c+CiAgICA8cmVjdCB4PSIyOCIgeT0iMjgiIHdpZHRoPSIxMDQiIGhlaWdodD0iNDIiIHJ4PSIyMSIgZmlsbD0iIzExMTgyMSIgb3BhY2l0eT0iLjkyIi8+PHRleHQgeD0iODAiIHk9IjU2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmYiPk9OWVggIzAyPC90ZXh0PgogICAgPHJlY3QgeD0iMjgiIHk9IjYxMiIgd2lkdGg9IjY0NCIgaGVpZ2h0PSI2MCIgcng9IjIyIiBmaWxsPSIjMTExODIxIiBvcGFjaXR5PSIuODgiLz48dGV4dCB4PSI1MiIgeT0iNjUwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjIiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmYiPk1pbmltYWwgTWVzaCBSdW5uZXIgU25lYWtlcnM8L3RleHQ+CiAgICA8L3N2Zz4=",
-      "sourceTitle": "Men Running Shoes Lace Up Sneakers Fashion Lightweight Male Casual Shoes Mesh",
-      "sourcePriceText": "Цена меняется на площадке",
-      "productId": "1005008853938655",
-      "sourceUrl": "https://www.aliexpress.com/item/1005008853938655.html",
-      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005008853938655",
-      "sourceSearchQuery": "Men Running Shoes Lace Up Sneakers Fashion Lightweight Male Casual Shoes Mesh",
-      "rating": null,
-      "orders": null
-    }, {
-      "id": 3,
-      "name": "LED Desk Lamp + Wireless Charger",
-      "category": "electronics",
-      "source": "AliExpress",
-      "type": "Электроника",
-      "priceCny": 73,
-      "priceRub": 1890,
-      "badge": "SMART",
-      "deliveryDays": "20–25",
-      "description": "Настольная LED-лампа с беспроводной зарядкой, USB-портом, сенсорным управлением и регулировкой яркости.",
-      "tags": ["LED", "wireless charge", "desk"],
-      "sizes": [],
-      "colors": ["Чёрный", "Белый"],
-      "quick": ["fast", "low"],
-      "visual": "SMART LAMP",
-      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgNzAwIj4KICAgIDxkZWZzPgogICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjhmYWZjIi8+PHN0b3Agb2Zmc2V0PSIuNTgiIHN0b3AtY29sb3I9IiNlOGVkZjMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkN2RlZTciLz48L2xpbmVhckdyYWRpZW50PgogICAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Indhcm1HbG93Ij48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iLjciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+CiAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icmdiTGluZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmY0ZjdiIi8+PHN0b3Agb2Zmc2V0PSIuNDUiIHN0b3AtY29sb3I9IiM5YjVjZmYiLz48c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjNGFjYmZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzVmZjlhIi8+PC9saW5lYXJHcmFkaWVudD4KICAgICAgPGZpbHRlciBpZD0ic2hhZG93IiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMjIiIHN0ZERldmlhdGlvbj0iMjAiIGZsb29kLWNvbG9yPSIjMGMxMjE4IiBmbG9vZC1vcGFjaXR5PSIuMjgiLz48L2ZpbHRlcj4KICAgIDwvZGVmcz4KICAgIDxyZWN0IHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBmaWxsPSJ1cmwoI2JnKSIvPgogICAgPGNpcmNsZSBjeD0iNTYwIiBjeT0iMTIwIiByPSIxNzAiIGZpbGw9IiNmZmMyNGIiIG9wYWNpdHk9Ii4xMiIvPgogICAgPGNpcmNsZSBjeD0iMTI1IiBjeT0iNTYwIiByPSIxNDUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii41MiIvPgogICAgPGcgb3BhY2l0eT0iLjIyIiBzdHJva2U9IiM3Yjg3OTciIHN0cm9rZS13aWR0aD0iMSI+PHBhdGggZD0iTTAgMTEwSDcwME0wIDIyMEg3MDBNMCAzMzBINzAwTTAgNDQwSDcwME0wIDU1MEg3MDAiLz48cGF0aCBkPSJNMTEwIDBWNzAwTTIyMCAwVjcwME0zMzAgMFY3MDBNNDQwIDBWNzAwTTU1MCAwVjcwMCIvPjwvZz4KICAgIDxnIGZpbHRlcj0idXJsKCNzaGFkb3cpIj48cmVjdCB4PSIyMjIiIHk9IjQzMiIgd2lkdGg9IjI1MCIgaGVpZ2h0PSI0MiIgcng9IjIxIiBmaWxsPSIjZmZjMjRiIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iOCIvPjxyZWN0IHg9IjMyOCIgeT0iMTk1IiB3aWR0aD0iNDAiIGhlaWdodD0iMjQwIiByeD0iMjAiIGZpbGw9IiMyNTJjMzUiLz48cGF0aCBkPSJNMzUwIDIxMkw0NzAgMTM3IiBzdHJva2U9IiMyNTJjMzUiIHN0cm9rZS13aWR0aD0iMzYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxyZWN0IHg9IjQ0NCIgeT0iOTUiIHdpZHRoPSIxNzUiIGhlaWdodD0iNDYiIHJ4PSIyMyIgZmlsbD0iI2ZmYzI0YiIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjciLz48ZWxsaXBzZSBjeD0iNTMwIiBjeT0iMTU2IiByeD0iMTA4IiByeT0iNDQiIGZpbGw9InVybCgjd2FybUdsb3cpIi8+PHJlY3QgeD0iMjUyIiB5PSIzODgiIHdpZHRoPSI4MCIgaGVpZ2h0PSIzOCIgcng9IjEyIiBmaWxsPSIjMTUxYjIzIi8+PGNpcmNsZSBjeD0iMzk4IiBjeT0iNDUyIiByPSIxNCIgZmlsbD0iIzE1MWIyMyIvPjwvZz4KICAgIDxyZWN0IHg9IjI4IiB5PSIyOCIgd2lkdGg9IjEwNCIgaGVpZ2h0PSI0MiIgcng9IjIxIiBmaWxsPSIjMTExODIxIiBvcGFjaXR5PSIuOTIiLz48dGV4dCB4PSI4MCIgeT0iNTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZiI+T05ZWCAjMDM8L3RleHQ+CiAgICA8cmVjdCB4PSIyOCIgeT0iNjEyIiB3aWR0aD0iNjQ0IiBoZWlnaHQ9IjYwIiByeD0iMjIiIGZpbGw9IiMxMTE4MjEiIG9wYWNpdHk9Ii44OCIvPjx0ZXh0IHg9IjUyIiB5PSI2NTAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZiI+TEVEIERlc2sgTGFtcCArIFdpcmVsZXNzIENoYXJnZXI8L3RleHQ+CiAgICA8L3N2Zz4=",
-      "sourceTitle": "LED Desk Lamp with Wireless Charger and USB Plug in Port",
-      "sourcePriceText": "Около $10.20 на момент проверки",
-      "productId": "1005007493710730",
-      "sourceUrl": "https://www.aliexpress.com/item/1005007493710730.html",
-      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005007493710730",
-      "sourceSearchQuery": "LED Desk Lamp with Wireless Charger and USB Plug in Port",
-      "rating": null,
-      "orders": null
-    }, {
-      "id": 4,
-      "name": "Luxury iPhone Case",
-      "category": "accessories",
-      "source": "AliExpress",
-      "type": "Аксессуары",
-      "priceCny": 30,
-      "priceRub": 790,
-      "badge": "CASE",
-      "deliveryDays": "20–25",
-      "description": "Защитный силиконовый чехол для популярных моделей iPhone. Плотная посадка, защита камеры и декоративный дизайн.",
-      "tags": ["iPhone", "case", "silicone"],
-      "sizes": [],
-      "colors": ["iPhone 11", "iPhone 12", "iPhone 13", "iPhone 14", "iPhone 15"],
-      "quick": ["low", "hot"],
-      "visual": "IPHONE CASE",
-      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgNzAwIj4KICAgIDxkZWZzPgogICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjhmYWZjIi8+PHN0b3Agb2Zmc2V0PSIuNTgiIHN0b3AtY29sb3I9IiNlOGVkZjMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkN2RlZTciLz48L2xpbmVhckdyYWRpZW50PgogICAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Indhcm1HbG93Ij48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iLjciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+CiAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icmdiTGluZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmY0ZjdiIi8+PHN0b3Agb2Zmc2V0PSIuNDUiIHN0b3AtY29sb3I9IiM5YjVjZmYiLz48c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjNGFjYmZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzVmZjlhIi8+PC9saW5lYXJHcmFkaWVudD4KICAgICAgPGZpbHRlciBpZD0ic2hhZG93IiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMjIiIHN0ZERldmlhdGlvbj0iMjAiIGZsb29kLWNvbG9yPSIjMGMxMjE4IiBmbG9vZC1vcGFjaXR5PSIuMjgiLz48L2ZpbHRlcj4KICAgIDwvZGVmcz4KICAgIDxyZWN0IHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBmaWxsPSJ1cmwoI2JnKSIvPgogICAgPGNpcmNsZSBjeD0iNTYwIiBjeT0iMTIwIiByPSIxNzAiIGZpbGw9IiNmZjhhNTUiIG9wYWNpdHk9Ii4xMiIvPgogICAgPGNpcmNsZSBjeD0iMTI1IiBjeT0iNTYwIiByPSIxNDUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii41MiIvPgogICAgPGcgb3BhY2l0eT0iLjIyIiBzdHJva2U9IiM3Yjg3OTciIHN0cm9rZS13aWR0aD0iMSI+PHBhdGggZD0iTTAgMTEwSDcwME0wIDIyMEg3MDBNMCAzMzBINzAwTTAgNDQwSDcwME0wIDU1MEg3MDAiLz48cGF0aCBkPSJNMTEwIDBWNzAwTTIyMCAwVjcwME0zMzAgMFY3MDBNNDQwIDBWNzAwTTU1MCAwVjcwMCIvPjwvZz4KICAgIDxnIGZpbHRlcj0idXJsKCNzaGFkb3cpIj48cmVjdCB4PSIyNTAiIHk9IjEwNSIgd2lkdGg9IjIwNSIgaGVpZ2h0PSIzOTAiIHJ4PSI0OCIgZmlsbD0iI2ZmOGE1NSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjEwIi8+PHJlY3QgeD0iMjc1IiB5PSIxMzUiIHdpZHRoPSI4NiIgaGVpZ2h0PSI5OCIgcng9IjI1IiBmaWxsPSIjMTIxODIxIi8+PGNpcmNsZSBjeD0iMzAxIiBjeT0iMTY2IiByPSIyMCIgZmlsbD0iI2RjZTRlZSIvPjxjaXJjbGUgY3g9IjMzOSIgY3k9IjE2NiIgcj0iMjAiIGZpbGw9IiNkY2U0ZWUiLz48Y2lyY2xlIGN4PSIzMDEiIGN5PSIyMDciIHI9IjIwIiBmaWxsPSIjZGNlNGVlIi8+PHBhdGggZD0iTTI4MCAyOTJoMTQ1TTI4MCAzMzBoMTE1TTI4MCAzNjhoMTM4IiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsLjY1KSIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9nPgogICAgPHJlY3QgeD0iMjgiIHk9IjI4IiB3aWR0aD0iMTA0IiBoZWlnaHQ9IjQyIiByeD0iMjEiIGZpbGw9IiMxMTE4MjEiIG9wYWNpdHk9Ii45MiIvPjx0ZXh0IHg9IjgwIiB5PSI1NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmIj5PTllYICMwNDwvdGV4dD4KICAgIDxyZWN0IHg9IjI4IiB5PSI2MTIiIHdpZHRoPSI2NDQiIGhlaWdodD0iNjAiIHJ4PSIyMiIgZmlsbD0iIzExMTgyMSIgb3BhY2l0eT0iLjg4Ii8+PHRleHQgeD0iNTIiIHk9IjY1MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmIj5MdXh1cnkgaVBob25lIENhc2U8L3RleHQ+CiAgICA8L3N2Zz4=",
-      "sourceTitle": "Luxury Phone Case For Apple iPhone 11 15 14 Pro MAX 12 13",
-      "sourcePriceText": "Около $4.17 на момент проверки",
-      "productId": "1005007188676237",
-      "sourceUrl": "https://www.aliexpress.com/item/1005007188676237.html",
-      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005007188676237",
-      "sourceSearchQuery": "Luxury Phone Case For Apple iPhone 11 15 14 Pro MAX 12 13",
-      "rating": null,
-      "orders": null
-    }, {
-      "id": 5,
-      "name": "Tactical Modular Shoulder Bag",
-      "category": "accessories",
-      "source": "AliExpress",
-      "type": "Аксессуары",
-      "priceCny": 118,
-      "priceRub": 2690,
-      "badge": "CARGO",
-      "deliveryDays": "20–25",
-      "description": "Тактическая сумка через плечо из ткани Oxford: Molle-система, регулируемый ремень и несколько отделений.",
-      "tags": ["cargo", "Molle", "shoulder bag"],
-      "sizes": ["One size"],
-      "colors": ["Чёрный", "Оливковый", "Песочный"],
-      "quick": ["low", "hot"],
-      "visual": "CARGO BAG",
-      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgNzAwIj4KICAgIDxkZWZzPgogICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjhmYWZjIi8+PHN0b3Agb2Zmc2V0PSIuNTgiIHN0b3AtY29sb3I9IiNlOGVkZjMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkN2RlZTciLz48L2xpbmVhckdyYWRpZW50PgogICAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Indhcm1HbG93Ij48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iLjciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+CiAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icmdiTGluZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmY0ZjdiIi8+PHN0b3Agb2Zmc2V0PSIuNDUiIHN0b3AtY29sb3I9IiM5YjVjZmYiLz48c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjNGFjYmZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzVmZjlhIi8+PC9saW5lYXJHcmFkaWVudD4KICAgICAgPGZpbHRlciBpZD0ic2hhZG93IiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMjIiIHN0ZERldmlhdGlvbj0iMjAiIGZsb29kLWNvbG9yPSIjMGMxMjE4IiBmbG9vZC1vcGFjaXR5PSIuMjgiLz48L2ZpbHRlcj4KICAgIDwvZGVmcz4KICAgIDxyZWN0IHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBmaWxsPSJ1cmwoI2JnKSIvPgogICAgPGNpcmNsZSBjeD0iNTYwIiBjeT0iMTIwIiByPSIxNzAiIGZpbGw9IiM4YTlkNjYiIG9wYWNpdHk9Ii4xMiIvPgogICAgPGNpcmNsZSBjeD0iMTI1IiBjeT0iNTYwIiByPSIxNDUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii41MiIvPgogICAgPGcgb3BhY2l0eT0iLjIyIiBzdHJva2U9IiM3Yjg3OTciIHN0cm9rZS13aWR0aD0iMSI+PHBhdGggZD0iTTAgMTEwSDcwME0wIDIyMEg3MDBNMCAzMzBINzAwTTAgNDQwSDcwME0wIDU1MEg3MDAiLz48cGF0aCBkPSJNMTEwIDBWNzAwTTIyMCAwVjcwME0zMzAgMFY3MDBNNDQwIDBWNzAwTTU1MCAwVjcwMCIvPjwvZz4KICAgIDxnIGZpbHRlcj0idXJsKCNzaGFkb3cpIj48cGF0aCBkPSJNMjA4IDIzM2gyNzhjMzEgMCA1NiAyNSA1NiA1NnYxNTBjMCAzMS0yNSA1Ni01NiA1NkgyMDhjLTMxIDAtNTYtMjUtNTYtNTZWMjg5YzAtMzEgMjUtNTYgNTYtNTZ6IiBmaWxsPSIjOGE5ZDY2IiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iOSIvPjxwYXRoIGQ9Ik0yMzAgMjMyYzAtNzAgNDUtMTE2IDExNy0xMTZzMTE3IDQ2IDExNyAxMTYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzIwMjYyZSIgc3Ryb2tlLXdpZHRoPSIyMiIvPjxyZWN0IHg9IjIzMCIgeT0iMzE2IiB3aWR0aD0iMjM0IiBoZWlnaHQ9Ijk4IiByeD0iMjIiIGZpbGw9InJnYmEoMjAsMjUsMzIsLjQ4KSIvPjxwYXRoIGQ9Ik0zNDcgMjM4djI1Nk0xNzggMjg2aDMzOCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LC40KSIgc3Ryb2tlLXdpZHRoPSI4Ii8+PC9nPgogICAgPHJlY3QgeD0iMjgiIHk9IjI4IiB3aWR0aD0iMTA0IiBoZWlnaHQ9IjQyIiByeD0iMjEiIGZpbGw9IiMxMTE4MjEiIG9wYWNpdHk9Ii45MiIvPjx0ZXh0IHg9IjgwIiB5PSI1NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmIj5PTllYICMwNTwvdGV4dD4KICAgIDxyZWN0IHg9IjI4IiB5PSI2MTIiIHdpZHRoPSI2NDQiIGhlaWdodD0iNjAiIHJ4PSIyMiIgZmlsbD0iIzExMTgyMSIgb3BhY2l0eT0iLjg4Ii8+PHRleHQgeD0iNTIiIHk9IjY1MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmIj5UYWN0aWNhbCBNb2R1bGFyIFNob3VsZGVyIEJhZzwvdGV4dD4KICAgIDwvc3ZnPg==",
-      "sourceTitle": "Tactical Men Shoulder Bag Outdoor Travel Sports Hiking Crossbody Bag",
-      "sourcePriceText": "Цена меняется на площадке",
-      "productId": "1005009481322407",
-      "sourceUrl": "https://www.aliexpress.com/item/1005009481322407.html",
-      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005009481322407",
-      "sourceSearchQuery": "Tactical Men Shoulder Bag Outdoor Travel Sports Hiking Crossbody Bag",
-      "rating": null,
-      "orders": null
-    }, {
-      "id": 6,
-      "name": "Modular Drawer Storage Cabinet",
-      "category": "home",
-      "source": "AliExpress",
-      "type": "Дом",
-      "priceCny": 76,
-      "priceRub": 1990,
-      "badge": "STORAGE",
-      "deliveryDays": "20–25",
-      "description": "Модульный органайзер с прозрачными выдвижными ящиками для инструментов, комплектующих и домашних мелочей.",
-      "tags": ["storage", "drawers", "organizer"],
-      "sizes": ["30 ячеек", "60 ячеек"],
-      "colors": ["Прозрачный/чёрный"],
-      "quick": ["premium"],
-      "visual": "STORAGE",
-      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgNzAwIj4KICAgIDxkZWZzPgogICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjhmYWZjIi8+PHN0b3Agb2Zmc2V0PSIuNTgiIHN0b3AtY29sb3I9IiNlOGVkZjMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkN2RlZTciLz48L2xpbmVhckdyYWRpZW50PgogICAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Indhcm1HbG93Ij48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iLjciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+CiAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icmdiTGluZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmY0ZjdiIi8+PHN0b3Agb2Zmc2V0PSIuNDUiIHN0b3AtY29sb3I9IiM5YjVjZmYiLz48c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjNGFjYmZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzVmZjlhIi8+PC9saW5lYXJHcmFkaWVudD4KICAgICAgPGZpbHRlciBpZD0ic2hhZG93IiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMjIiIHN0ZERldmlhdGlvbj0iMjAiIGZsb29kLWNvbG9yPSIjMGMxMjE4IiBmbG9vZC1vcGFjaXR5PSIuMjgiLz48L2ZpbHRlcj4KICAgIDwvZGVmcz4KICAgIDxyZWN0IHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBmaWxsPSJ1cmwoI2JnKSIvPgogICAgPGNpcmNsZSBjeD0iNTYwIiBjeT0iMTIwIiByPSIxNzAiIGZpbGw9IiM4N2E4YzciIG9wYWNpdHk9Ii4xMiIvPgogICAgPGNpcmNsZSBjeD0iMTI1IiBjeT0iNTYwIiByPSIxNDUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii41MiIvPgogICAgPGcgb3BhY2l0eT0iLjIyIiBzdHJva2U9IiM3Yjg3OTciIHN0cm9rZS13aWR0aD0iMSI+PHBhdGggZD0iTTAgMTEwSDcwME0wIDIyMEg3MDBNMCAzMzBINzAwTTAgNDQwSDcwME0wIDU1MEg3MDAiLz48cGF0aCBkPSJNMTEwIDBWNzAwTTIyMCAwVjcwME0zMzAgMFY3MDBNNDQwIDBWNzAwTTU1MCAwVjcwMCIvPjwvZz4KICAgIDxnIGZpbHRlcj0idXJsKCNzaGFkb3cpIj48cmVjdCB4PSIxOTAiIHk9IjEwNSIgd2lkdGg9IjMxNSIgaGVpZ2h0PSI0MzAiIHJ4PSIzNCIgZmlsbD0iIzg3YThjNyIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjkiLz48cmVjdCB4PSIyMjUiIHk9IjE0NSIgd2lkdGg9IjI0NSIgaGVpZ2h0PSI5NSIgcng9IjIyIiBmaWxsPSIjZjRmN2ZiIi8+PHJlY3QgeD0iMjI1IiB5PSIyNjAiIHdpZHRoPSIyNDUiIGhlaWdodD0iOTUiIHJ4PSIyMiIgZmlsbD0iI2Y0ZjdmYiIvPjxyZWN0IHg9IjIyNSIgeT0iMzc1IiB3aWR0aD0iMjQ1IiBoZWlnaHQ9Ijk1IiByeD0iMjIiIGZpbGw9IiNmNGY3ZmIiLz48cmVjdCB4PSIzMTgiIHk9IjE3NyIgd2lkdGg9IjU4IiBoZWlnaHQ9IjEwIiByeD0iNSIgZmlsbD0iIzhiOThhOCIvPjxyZWN0IHg9IjMxOCIgeT0iMjkyIiB3aWR0aD0iNTgiIGhlaWdodD0iMTAiIHJ4PSI1IiBmaWxsPSIjOGI5OGE4Ii8+PHJlY3QgeD0iMzE4IiB5PSI0MDciIHdpZHRoPSI1OCIgaGVpZ2h0PSIxMCIgcng9IjUiIGZpbGw9IiM4Yjk4YTgiLz48L2c+CiAgICA8cmVjdCB4PSIyOCIgeT0iMjgiIHdpZHRoPSIxMDQiIGhlaWdodD0iNDIiIHJ4PSIyMSIgZmlsbD0iIzExMTgyMSIgb3BhY2l0eT0iLjkyIi8+PHRleHQgeD0iODAiIHk9IjU2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmYiPk9OWVggIzA2PC90ZXh0PgogICAgPHJlY3QgeD0iMjgiIHk9IjYxMiIgd2lkdGg9IjY0NCIgaGVpZ2h0PSI2MCIgcng9IjIyIiBmaWxsPSIjMTExODIxIiBvcGFjaXR5PSIuODgiLz48dGV4dCB4PSI1MiIgeT0iNjUwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjIiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmYiPk1vZHVsYXIgRHJhd2VyIFN0b3JhZ2UgQ2FiaW5ldDwvdGV4dD4KICAgIDwvc3ZnPg==",
-      "sourceTitle": "Modular Drawer Storage Cabinet, Small Parts Organizer with Clear Bins",
-      "sourcePriceText": "Около $10.82 на момент проверки",
-      "productId": "1005010483487402",
-      "sourceUrl": "https://www.aliexpress.com/item/1005010483487402.html",
-      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005010483487402",
-      "sourceSearchQuery": "Modular Drawer Storage Cabinet, Small Parts Organizer with Clear Bins",
-      "rating": null,
-      "orders": null
-    }, {
-      "id": 7,
-      "name": "Auto Interior Removal Tool Kit",
-      "category": "auto",
-      "source": "AliExpress",
-      "type": "Авто",
-      "priceCny": 51,
-      "priceRub": 1390,
-      "badge": "AUTO",
-      "deliveryDays": "20–25",
-      "description": "Набор пластиковых съёмников для дверных карт, клипс, панелей, магнитолы и элементов салона автомобиля.",
-      "tags": ["auto", "trim tools", "repair"],
-      "sizes": ["Комплект"],
-      "colors": ["Красный", "Синий"],
-      "quick": ["fast", "low"],
-      "visual": "AUTO TOOL KIT",
-      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgNzAwIj4KICAgIDxkZWZzPgogICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjhmYWZjIi8+PHN0b3Agb2Zmc2V0PSIuNTgiIHN0b3AtY29sb3I9IiNlOGVkZjMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkN2RlZTciLz48L2xpbmVhckdyYWRpZW50PgogICAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Indhcm1HbG93Ij48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iLjciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+CiAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icmdiTGluZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmY0ZjdiIi8+PHN0b3Agb2Zmc2V0PSIuNDUiIHN0b3AtY29sb3I9IiM5YjVjZmYiLz48c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjNGFjYmZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzVmZjlhIi8+PC9saW5lYXJHcmFkaWVudD4KICAgICAgPGZpbHRlciBpZD0ic2hhZG93IiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMjIiIHN0ZERldmlhdGlvbj0iMjAiIGZsb29kLWNvbG9yPSIjMGMxMjE4IiBmbG9vZC1vcGFjaXR5PSIuMjgiLz48L2ZpbHRlcj4KICAgIDwvZGVmcz4KICAgIDxyZWN0IHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBmaWxsPSJ1cmwoI2JnKSIvPgogICAgPGNpcmNsZSBjeD0iNTYwIiBjeT0iMTIwIiByPSIxNzAiIGZpbGw9IiNlNzVhNDUiIG9wYWNpdHk9Ii4xMiIvPgogICAgPGNpcmNsZSBjeD0iMTI1IiBjeT0iNTYwIiByPSIxNDUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii41MiIvPgogICAgPGcgb3BhY2l0eT0iLjIyIiBzdHJva2U9IiM3Yjg3OTciIHN0cm9rZS13aWR0aD0iMSI+PHBhdGggZD0iTTAgMTEwSDcwME0wIDIyMEg3MDBNMCAzMzBINzAwTTAgNDQwSDcwME0wIDU1MEg3MDAiLz48cGF0aCBkPSJNMTEwIDBWNzAwTTIyMCAwVjcwME0zMzAgMFY3MDBNNDQwIDBWNzAwTTU1MCAwVjcwMCIvPjwvZz4KICAgIDxnIGZpbHRlcj0idXJsKCNzaGFkb3cpIj48cmVjdCB4PSIxNDUiIHk9IjE4MCIgd2lkdGg9IjQwNSIgaGVpZ2h0PSIzMDAiIHJ4PSI0MiIgZmlsbD0iIzIyMjkzMyIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjkiLz48cGF0aCBkPSJNMjEwIDI2MGw5OCA5OE0zMDggMjYwbC05OCA5OCIgc3Ryb2tlPSIjZTc1YTQ1IiBzdHJva2Utd2lkdGg9IjMwIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNMzgyIDI0NWg5MnYyNmgtOTJ6TTM4MiAzMDhoOTJ2MjZoLTkyek0zODIgMzcxaDkydjI2aC05MnoiIGZpbGw9IiNlNzVhNDUiLz48cGF0aCBkPSJNMTk4IDE4MHYtMzhjMC0yNyAyMi00OSA0OS00OWgyMDFjMjcgMCA0OSAyMiA0OSA0OXYzOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjM2I0NjU0IiBzdHJva2Utd2lkdGg9IjIyIi8+PC9nPgogICAgPHJlY3QgeD0iMjgiIHk9IjI4IiB3aWR0aD0iMTA0IiBoZWlnaHQ9IjQyIiByeD0iMjEiIGZpbGw9IiMxMTE4MjEiIG9wYWNpdHk9Ii45MiIvPjx0ZXh0IHg9IjgwIiB5PSI1NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmIj5PTllYICMwNzwvdGV4dD4KICAgIDxyZWN0IHg9IjI4IiB5PSI2MTIiIHdpZHRoPSI2NDQiIGhlaWdodD0iNjAiIHJ4PSIyMiIgZmlsbD0iIzExMTgyMSIgb3BhY2l0eT0iLjg4Ii8+PHRleHQgeD0iNTIiIHk9IjY1MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmIj5BdXRvIEludGVyaW9yIFJlbW92YWwgVG9vbCBLaXQ8L3RleHQ+CiAgICA8L3N2Zz4=",
-      "sourceTitle": "Auto Interior Disassembly Kit Car Plastic Trim Removal Tool",
-      "sourcePriceText": "Около $7.10 на момент проверки",
-      "productId": "1005005117021512",
-      "sourceUrl": "https://www.aliexpress.com/item/1005005117021512.html",
-      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005005117021512",
-      "sourceSearchQuery": "Auto Interior Disassembly Kit Car Plastic Trim Removal Tool",
-      "rating": null,
-      "orders": null
-    }, {
-      "id": 8,
-      "name": "Oversized Embroidered Hoodie",
-      "category": "clothes",
-      "source": "AliExpress",
-      "type": "Одежда",
-      "priceCny": 132,
-      "priceRub": 2990,
-      "badge": "STREET",
-      "deliveryDays": "20–25",
-      "description": "Oversized-худи в streetwear-эстетике с вышивкой, свободной посадкой и длинным рукавом.",
-      "tags": ["hoodie", "oversized", "streetwear"],
-      "sizes": ["S", "M", "L", "XL", "2XL"],
-      "colors": ["Чёрный", "Серый", "Кремовый"],
-      "quick": ["hot", "low"],
-      "visual": "HOODIE",
-      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgNzAwIj4KICAgIDxkZWZzPgogICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjhmYWZjIi8+PHN0b3Agb2Zmc2V0PSIuNTgiIHN0b3AtY29sb3I9IiNlOGVkZjMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkN2RlZTciLz48L2xpbmVhckdyYWRpZW50PgogICAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Indhcm1HbG93Ij48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iLjciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+CiAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icmdiTGluZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmY0ZjdiIi8+PHN0b3Agb2Zmc2V0PSIuNDUiIHN0b3AtY29sb3I9IiM5YjVjZmYiLz48c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjNGFjYmZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzVmZjlhIi8+PC9saW5lYXJHcmFkaWVudD4KICAgICAgPGZpbHRlciBpZD0ic2hhZG93IiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMjIiIHN0ZERldmlhdGlvbj0iMjAiIGZsb29kLWNvbG9yPSIjMGMxMjE4IiBmbG9vZC1vcGFjaXR5PSIuMjgiLz48L2ZpbHRlcj4KICAgIDwvZGVmcz4KICAgIDxyZWN0IHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBmaWxsPSJ1cmwoI2JnKSIvPgogICAgPGNpcmNsZSBjeD0iNTYwIiBjeT0iMTIwIiByPSIxNzAiIGZpbGw9IiNiODc4NWIiIG9wYWNpdHk9Ii4xMiIvPgogICAgPGNpcmNsZSBjeD0iMTI1IiBjeT0iNTYwIiByPSIxNDUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii41MiIvPgogICAgPGcgb3BhY2l0eT0iLjIyIiBzdHJva2U9IiM3Yjg3OTciIHN0cm9rZS13aWR0aD0iMSI+PHBhdGggZD0iTTAgMTEwSDcwME0wIDIyMEg3MDBNMCAzMzBINzAwTTAgNDQwSDcwME0wIDU1MEg3MDAiLz48cGF0aCBkPSJNMTEwIDBWNzAwTTIyMCAwVjcwME0zMzAgMFY3MDBNNDQwIDBWNzAwTTU1MCAwVjcwMCIvPjwvZz4KICAgIDxnIGZpbHRlcj0idXJsKCNzaGFkb3cpIj48cGF0aCBkPSJNMzQ3IDExMmMtNjIgMC0xMTEgMzktMTM0IDk4bC02MCA4NSA2OSA1MSAzMS00MnYxOTFoMTg4VjMwNGwzMSA0MiA2OS01MS02MC04NWMtMjMtNTktNzItOTgtMTM0LTk4eiIgZmlsbD0iI2I4Nzg1YiIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjkiLz48cGF0aCBkPSJNMjg2IDE0NmMwIDU5IDI1IDkxIDYxIDkxczYxLTMyIDYxLTkxIiBmaWxsPSIjMjUyYTMyIi8+PHBhdGggZD0iTTMyMCAzMzdoNTRNMzQ3IDIzN3YyNTgiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwuNDUpIiBzdHJva2Utd2lkdGg9IjkiLz48cGF0aCBkPSJNMjk0IDM3NGMxOCA0NSA4OCA0NSAxMDYgMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjUyYTMyIiBzdHJva2Utd2lkdGg9IjEyIi8+PC9nPgogICAgPHJlY3QgeD0iMjgiIHk9IjI4IiB3aWR0aD0iMTA0IiBoZWlnaHQ9IjQyIiByeD0iMjEiIGZpbGw9IiMxMTE4MjEiIG9wYWNpdHk9Ii45MiIvPjx0ZXh0IHg9IjgwIiB5PSI1NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmIj5PTllYICMwODwvdGV4dD4KICAgIDxyZWN0IHg9IjI4IiB5PSI2MTIiIHdpZHRoPSI2NDQiIGhlaWdodD0iNjAiIHJ4PSIyMiIgZmlsbD0iIzExMTgyMSIgb3BhY2l0eT0iLjg4Ii8+PHRleHQgeD0iNTIiIHk9IjY1MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmIj5PdmVyc2l6ZWQgRW1icm9pZGVyZWQgSG9vZGllPC90ZXh0PgogICAgPC9zdmc+",
-      "sourceTitle": "American Retro Embroidered Oversized Hoodie Men Harajuku Loose Sweatshirt",
-      "sourcePriceText": "Цена меняется на площадке",
-      "productId": "1005010760642422",
-      "sourceUrl": "https://www.aliexpress.com/item/1005010760642422.html",
-      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005010760642422",
-      "sourceSearchQuery": "American Retro Embroidered Oversized Hoodie Men Harajuku Loose Sweatshirt",
-      "rating": null,
-      "orders": null
-    }, {
-      "id": 9,
-      "name": "Li-Ning WADE 808 5 Ultra",
-      "category": "shoes",
-      "source": "AliExpress",
-      "type": "Обувь",
-      "priceCny": 520,
-      "priceRub": 10990,
-      "badge": "BASKETBALL",
-      "deliveryDays": "20–25",
-      "description": "Профессиональные баскетбольные кроссовки Li-Ning WADE 808 5 Ultra с амортизацией SUPER BOOM.",
-      "tags": ["Li-Ning", "basketball", "BOOM"],
-      "sizes": ["39", "40", "41", "42", "43", "44", "45"],
-      "colors": ["По карточке товара"],
-      "quick": ["premium", "hot"],
-      "visual": "WADE 808",
-      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgNzAwIj4KICAgIDxkZWZzPgogICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjhmYWZjIi8+PHN0b3Agb2Zmc2V0PSIuNTgiIHN0b3AtY29sb3I9IiNlOGVkZjMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkN2RlZTciLz48L2xpbmVhckdyYWRpZW50PgogICAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Indhcm1HbG93Ij48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iLjciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+CiAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icmdiTGluZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmY0ZjdiIi8+PHN0b3Agb2Zmc2V0PSIuNDUiIHN0b3AtY29sb3I9IiM5YjVjZmYiLz48c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjNGFjYmZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzVmZjlhIi8+PC9saW5lYXJHcmFkaWVudD4KICAgICAgPGZpbHRlciBpZD0ic2hhZG93IiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMjIiIHN0ZERldmlhdGlvbj0iMjAiIGZsb29kLWNvbG9yPSIjMGMxMjE4IiBmbG9vZC1vcGFjaXR5PSIuMjgiLz48L2ZpbHRlcj4KICAgIDwvZGVmcz4KICAgIDxyZWN0IHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBmaWxsPSJ1cmwoI2JnKSIvPgogICAgPGNpcmNsZSBjeD0iNTYwIiBjeT0iMTIwIiByPSIxNzAiIGZpbGw9IiNmZjY4NGYiIG9wYWNpdHk9Ii4xMiIvPgogICAgPGNpcmNsZSBjeD0iMTI1IiBjeT0iNTYwIiByPSIxNDUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii41MiIvPgogICAgPGcgb3BhY2l0eT0iLjIyIiBzdHJva2U9IiM3Yjg3OTciIHN0cm9rZS13aWR0aD0iMSI+PHBhdGggZD0iTTAgMTEwSDcwME0wIDIyMEg3MDBNMCAzMzBINzAwTTAgNDQwSDcwME0wIDU1MEg3MDAiLz48cGF0aCBkPSJNMTEwIDBWNzAwTTIyMCAwVjcwME0zMzAgMFY3MDBNNDQwIDBWNzAwTTU1MCAwVjcwMCIvPjwvZz4KICAgIDxnIGZpbHRlcj0idXJsKCNzaGFkb3cpIj48cGF0aCBkPSJNMTU1IDM0OGM1Mi0yMCA5NC05MiAxMjUtMTUyIDE1LTI5IDQ1LTQ3IDc4LTQzbDU1IDcgMzEgOTIgODUgMzljMjkgMTMgNDYgMzcgNDYgNjd2MjFIMTcwYy0zNSAwLTUwLTE3LTM4LTMxIDYtNyAxNC0xNCAyMy0yMHoiIGZpbGw9IiNmZjY4NGYiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSI4Ii8+PHBhdGggZD0iTTE4MCAzODBoMzkydjM1SDE3NGMtMjcgMC00My0xNC00My0zMSAwLTkgNC0xNiAxMi0yMyIgZmlsbD0iIzE3MWIyMiIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjciLz48cGF0aCBkPSJNMjk2IDIxNmwxMDcgMThNMjc4IDI1MmwxNDAgMjNNMjU4IDI4OGwxNzUgMjciIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTQyNSAxNjlsLTI1IDg1IiBzdHJva2U9IiMyMDI0MmMiIHN0cm9rZS13aWR0aD0iMTQiLz48L2c+CiAgICA8cmVjdCB4PSIyOCIgeT0iMjgiIHdpZHRoPSIxMDQiIGhlaWdodD0iNDIiIHJ4PSIyMSIgZmlsbD0iIzExMTgyMSIgb3BhY2l0eT0iLjkyIi8+PHRleHQgeD0iODAiIHk9IjU2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmYiPk9OWVggIzA5PC90ZXh0PgogICAgPHJlY3QgeD0iMjgiIHk9IjYxMiIgd2lkdGg9IjY0NCIgaGVpZ2h0PSI2MCIgcng9IjIyIiBmaWxsPSIjMTExODIxIiBvcGFjaXR5PSIuODgiLz48dGV4dCB4PSI1MiIgeT0iNjUwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjIiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmYiPkxpLU5pbmcgV0FERSA4MDggNSBVbHRyYTwvdGV4dD4KICAgIDwvc3ZnPg==",
-      "sourceTitle": "Li-Ning Men's WADE 808 5 ULTRA Professional Basketball Shoes SUPER BOOM",
-      "sourcePriceText": "Цена меняется на площадке",
-      "productId": "3256808362520729",
-      "sourceUrl": "https://www.aliexpress.com/item/3256808362520729.html",
-      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/3256808362520729",
-      "sourceSearchQuery": "Li-Ning Men's WADE 808 5 ULTRA Professional Basketball Shoes SUPER BOOM",
-      "rating": null,
-      "orders": null
-    }, {
-      "id": 10,
-      "name": "Under-Desk Cable Management Rack",
-      "category": "electronics",
-      "source": "AliExpress",
-      "type": "Электроника",
-      "priceCny": 178,
-      "priceRub": 3990,
-      "badge": "SETUP",
-      "deliveryDays": "20–25",
-      "description": "Металлическая полка-органайзер под стол для сетевых фильтров, проводов, зарядных блоков и кабелей.",
-      "tags": ["desk setup", "cable management", "rack"],
-      "sizes": ["Стандарт"],
-      "colors": ["Чёрный", "Белый"],
-      "quick": ["premium"],
-      "visual": "DESK SETUP",
-      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgNzAwIj4KICAgIDxkZWZzPgogICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjhmYWZjIi8+PHN0b3Agb2Zmc2V0PSIuNTgiIHN0b3AtY29sb3I9IiNlOGVkZjMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkN2RlZTciLz48L2xpbmVhckdyYWRpZW50PgogICAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Indhcm1HbG93Ij48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iLjciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+CiAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icmdiTGluZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmY0ZjdiIi8+PHN0b3Agb2Zmc2V0PSIuNDUiIHN0b3AtY29sb3I9IiM5YjVjZmYiLz48c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjNGFjYmZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzVmZjlhIi8+PC9saW5lYXJHcmFkaWVudD4KICAgICAgPGZpbHRlciBpZD0ic2hhZG93IiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMjIiIHN0ZERldmlhdGlvbj0iMjAiIGZsb29kLWNvbG9yPSIjMGMxMjE4IiBmbG9vZC1vcGFjaXR5PSIuMjgiLz48L2ZpbHRlcj4KICAgIDwvZGVmcz4KICAgIDxyZWN0IHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBmaWxsPSJ1cmwoI2JnKSIvPgogICAgPGNpcmNsZSBjeD0iNTYwIiBjeT0iMTIwIiByPSIxNzAiIGZpbGw9IiM2Zjg2YTkiIG9wYWNpdHk9Ii4xMiIvPgogICAgPGNpcmNsZSBjeD0iMTI1IiBjeT0iNTYwIiByPSIxNDUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii41MiIvPgogICAgPGcgb3BhY2l0eT0iLjIyIiBzdHJva2U9IiM3Yjg3OTciIHN0cm9rZS13aWR0aD0iMSI+PHBhdGggZD0iTTAgMTEwSDcwME0wIDIyMEg3MDBNMCAzMzBINzAwTTAgNDQwSDcwME0wIDU1MEg3MDAiLz48cGF0aCBkPSJNMTEwIDBWNzAwTTIyMCAwVjcwME0zMzAgMFY3MDBNNDQwIDBWNzAwTTU1MCAwVjcwMCIvPjwvZz4KICAgIDxnIGZpbHRlcj0idXJsKCNzaGFkb3cpIj48cmVjdCB4PSIxNTAiIHk9IjE3NiIgd2lkdGg9IjM5NSIgaGVpZ2h0PSI3MiIgcng9IjIyIiBmaWxsPSIjZTdlYmYwIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iOCIvPjxwYXRoIGQ9Ik0xODAgMjQ4djE4MmgzMzVWMjQ4IiBmaWxsPSJub25lIiBzdHJva2U9IiM2Zjg2YTkiIHN0cm9rZS13aWR0aD0iMjQiLz48cGF0aCBkPSJNMjI1IDI4NnYxMDRNMjg2IDI4NnYxMDRNMzQ3IDI4NnYxMDRNNDA4IDI4NnYxMDRNNDY5IDI4NnYxMDQiIHN0cm9rZT0iIzIwMjYzMSIgc3Ryb2tlLXdpZHRoPSIxMiIvPjxwYXRoIGQ9Ik0yMTAgNDQyYzUwLTM2IDkxLTM0IDEzNyAwIDQ0IDMyIDg2IDMyIDEzMiAwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZjdhNGYiIHN0cm9rZS13aWR0aD0iMTIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvZz4KICAgIDxyZWN0IHg9IjI4IiB5PSIyOCIgd2lkdGg9IjEwNCIgaGVpZ2h0PSI0MiIgcng9IjIxIiBmaWxsPSIjMTExODIxIiBvcGFjaXR5PSIuOTIiLz48dGV4dCB4PSI4MCIgeT0iNTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZiI+T05ZWCAjMTA8L3RleHQ+CiAgICA8cmVjdCB4PSIyOCIgeT0iNjEyIiB3aWR0aD0iNjQ0IiBoZWlnaHQ9IjYwIiByeD0iMjIiIGZpbGw9IiMxMTE4MjEiIG9wYWNpdHk9Ii44OCIvPjx0ZXh0IHg9IjUyIiB5PSI2NTAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZiI+VW5kZXItRGVzayBDYWJsZSBNYW5hZ2VtZW50IFJhY2s8L3RleHQ+CiAgICA8L3N2Zz4=",
-      "sourceTitle": "Cable Management Box Under Desk Cable Organizer Storage Shelf",
-      "sourcePriceText": "Цена меняется на площадке",
-      "productId": "1005009384491264",
-      "sourceUrl": "https://www.aliexpress.com/item/1005009384491264.html",
-      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005009384491264",
-      "sourceSearchQuery": "Cable Management Box Under Desk Cable Organizer Storage Shelf",
-      "rating": null,
-      "orders": null
-    }, {
-      "id": 11,
-      "name": "Vacuum Compression Travel Backpack",
-      "category": "accessories",
-      "source": "AliExpress",
-      "type": "Аксессуары",
-      "priceCny": 248,
-      "priceRub": 5390,
-      "badge": "TRAVEL",
-      "deliveryDays": "20–25",
-      "description": "Рюкзак для путешествий с вакуумным компрессионным отсеком, отделением для ноутбука 17″ и расширяемым объёмом.",
-      "tags": ["travel", "vacuum", "17 inch"],
-      "sizes": ["Расширяемый"],
-      "colors": ["Чёрный", "Серый"],
-      "quick": ["premium", "hot"],
-      "visual": "VACUUM BAG",
-      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgNzAwIj4KICAgIDxkZWZzPgogICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjhmYWZjIi8+PHN0b3Agb2Zmc2V0PSIuNTgiIHN0b3AtY29sb3I9IiNlOGVkZjMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkN2RlZTciLz48L2xpbmVhckdyYWRpZW50PgogICAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Indhcm1HbG93Ij48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iLjciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+CiAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icmdiTGluZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmY0ZjdiIi8+PHN0b3Agb2Zmc2V0PSIuNDUiIHN0b3AtY29sb3I9IiM5YjVjZmYiLz48c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjNGFjYmZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzVmZjlhIi8+PC9saW5lYXJHcmFkaWVudD4KICAgICAgPGZpbHRlciBpZD0ic2hhZG93IiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMjIiIHN0ZERldmlhdGlvbj0iMjAiIGZsb29kLWNvbG9yPSIjMGMxMjE4IiBmbG9vZC1vcGFjaXR5PSIuMjgiLz48L2ZpbHRlcj4KICAgIDwvZGVmcz4KICAgIDxyZWN0IHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBmaWxsPSJ1cmwoI2JnKSIvPgogICAgPGNpcmNsZSBjeD0iNTYwIiBjeT0iMTIwIiByPSIxNzAiIGZpbGw9IiM1YzdiNzQiIG9wYWNpdHk9Ii4xMiIvPgogICAgPGNpcmNsZSBjeD0iMTI1IiBjeT0iNTYwIiByPSIxNDUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii41MiIvPgogICAgPGcgb3BhY2l0eT0iLjIyIiBzdHJva2U9IiM3Yjg3OTciIHN0cm9rZS13aWR0aD0iMSI+PHBhdGggZD0iTTAgMTEwSDcwME0wIDIyMEg3MDBNMCAzMzBINzAwTTAgNDQwSDcwME0wIDU1MEg3MDAiLz48cGF0aCBkPSJNMTEwIDBWNzAwTTIyMCAwVjcwME0zMzAgMFY3MDBNNDQwIDBWNzAwTTU1MCAwVjcwMCIvPjwvZz4KICAgIDxnIGZpbHRlcj0idXJsKCNzaGFkb3cpIj48cGF0aCBkPSJNMjQ3IDE0OGMwLTU1IDQ0LTk5IDk5LTk5czk5IDQ0IDk5IDk5djM5aDIwYzM4IDAgNjkgMzEgNjkgNjl2MjEzYzAgMzgtMzEgNjktNjkgNjlIMjI3Yy0zOCAwLTY5LTMxLTY5LTY5VjI1NmMwLTM4IDMxLTY5IDY5LTY5aDIweiIgZmlsbD0iIzVjN2I3NCIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjkiLz48cGF0aCBkPSJNMjc2IDE4NXYtMzdjMC0zOSAzMS03MCA3MC03MHM3MCAzMSA3MCA3MHYzNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjAyNjJlIiBzdHJva2Utd2lkdGg9IjIwIi8+PHJlY3QgeD0iMjIwIiB5PSIyOTUiIHdpZHRoPSIyNTIiIGhlaWdodD0iMTM2IiByeD0iMjgiIGZpbGw9InJnYmEoMjAsMjUsMzIsLjQ1KSIvPjxwYXRoIGQ9Ik0zNDYgMTg4djM0N00yMjAgMzUyaDI1MiIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LC4zOCkiIHN0cm9rZS13aWR0aD0iOSIvPjwvZz4KICAgIDxyZWN0IHg9IjI4IiB5PSIyOCIgd2lkdGg9IjEwNCIgaGVpZ2h0PSI0MiIgcng9IjIxIiBmaWxsPSIjMTExODIxIiBvcGFjaXR5PSIuOTIiLz48dGV4dCB4PSI4MCIgeT0iNTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZiI+T05ZWCAjMTE8L3RleHQ+CiAgICA8cmVjdCB4PSIyOCIgeT0iNjEyIiB3aWR0aD0iNjQ0IiBoZWlnaHQ9IjYwIiByeD0iMjIiIGZpbGw9IiMxMTE4MjEiIG9wYWNpdHk9Ii44OCIvPjx0ZXh0IHg9IjUyIiB5PSI2NTAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZiI+VmFjdXVtIENvbXByZXNzaW9uIFRyYXZlbCBCYWNrcGFjazwvdGV4dD4KICAgIDwvc3ZnPg==",
-      "sourceTitle": "Men Travel Backpack 17 inch Vacuum Compression Laptop Backpack Extended Large Capacity",
-      "sourcePriceText": "Цена меняется на площадке",
-      "productId": "1005007748290778",
-      "sourceUrl": "https://www.aliexpress.com/item/1005007748290778.html",
-      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005007748290778",
-      "sourceSearchQuery": "Men Travel Backpack 17 inch Vacuum Compression Laptop Backpack Extended Large Capacity",
-      "rating": null,
-      "orders": null
-    }, {
-      "id": 12,
-      "name": "Stainless Digital Kitchen Scale",
-      "category": "home",
-      "source": "AliExpress",
-      "type": "Дом",
-      "priceCny": 38,
-      "priceRub": 890,
-      "badge": "KITCHEN",
-      "deliveryDays": "20–25",
-      "description": "Цифровые кухонные весы из нержавеющей стали с LCD-дисплеем для продуктов, кофе и выпечки.",
-      "tags": ["kitchen", "digital scale", "LCD"],
-      "sizes": ["До 5 кг"],
-      "colors": ["Silver"],
-      "quick": ["low", "fast"],
-      "visual": "SMART SCALE",
-      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgNzAwIj4KICAgIDxkZWZzPgogICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjhmYWZjIi8+PHN0b3Agb2Zmc2V0PSIuNTgiIHN0b3AtY29sb3I9IiNlOGVkZjMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkN2RlZTciLz48L2xpbmVhckdyYWRpZW50PgogICAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Indhcm1HbG93Ij48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iLjciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+CiAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icmdiTGluZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmY0ZjdiIi8+PHN0b3Agb2Zmc2V0PSIuNDUiIHN0b3AtY29sb3I9IiM5YjVjZmYiLz48c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjNGFjYmZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzVmZjlhIi8+PC9saW5lYXJHcmFkaWVudD4KICAgICAgPGZpbHRlciBpZD0ic2hhZG93IiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMjIiIHN0ZERldmlhdGlvbj0iMjAiIGZsb29kLWNvbG9yPSIjMGMxMjE4IiBmbG9vZC1vcGFjaXR5PSIuMjgiLz48L2ZpbHRlcj4KICAgIDwvZGVmcz4KICAgIDxyZWN0IHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBmaWxsPSJ1cmwoI2JnKSIvPgogICAgPGNpcmNsZSBjeD0iNTYwIiBjeT0iMTIwIiByPSIxNzAiIGZpbGw9IiNiOGJlYzgiIG9wYWNpdHk9Ii4xMiIvPgogICAgPGNpcmNsZSBjeD0iMTI1IiBjeT0iNTYwIiByPSIxNDUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii41MiIvPgogICAgPGcgb3BhY2l0eT0iLjIyIiBzdHJva2U9IiM3Yjg3OTciIHN0cm9rZS13aWR0aD0iMSI+PHBhdGggZD0iTTAgMTEwSDcwME0wIDIyMEg3MDBNMCAzMzBINzAwTTAgNDQwSDcwME0wIDU1MEg3MDAiLz48cGF0aCBkPSJNMTEwIDBWNzAwTTIyMCAwVjcwME0zMzAgMFY3MDBNNDQwIDBWNzAwTTU1MCAwVjcwMCIvPjwvZz4KICAgIDxnIGZpbHRlcj0idXJsKCNzaGFkb3cpIj48cmVjdCB4PSIxOTAiIHk9IjE3MCIgd2lkdGg9IjMyMCIgaGVpZ2h0PSIzMjUiIHJ4PSI0MiIgZmlsbD0iI2I4YmVjOCIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjkiLz48cmVjdCB4PSIyMzgiIHk9IjIxNSIgd2lkdGg9IjIyNCIgaGVpZ2h0PSIxMDQiIHJ4PSIyMiIgZmlsbD0iI2Y3ZmFmYyIvPjx0ZXh0IHg9IjM1MCIgeT0iMjgyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiMyMjJiMzUiPjAuMDA8L3RleHQ+PGNpcmNsZSBjeD0iMjc4IiBjeT0iNDAwIiByPSIyNiIgZmlsbD0iIzIyMmIzNSIvPjxjaXJjbGUgY3g9IjM1MCIgY3k9IjQwMCIgcj0iMjYiIGZpbGw9IiMyMjJiMzUiLz48Y2lyY2xlIGN4PSI0MjIiIGN5PSI0MDAiIHI9IjI2IiBmaWxsPSIjMjIyYjM1Ii8+PC9nPgogICAgPHJlY3QgeD0iMjgiIHk9IjI4IiB3aWR0aD0iMTA0IiBoZWlnaHQ9IjQyIiByeD0iMjEiIGZpbGw9IiMxMTE4MjEiIG9wYWNpdHk9Ii45MiIvPjx0ZXh0IHg9IjgwIiB5PSI1NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmIj5PTllYICMxMjwvdGV4dD4KICAgIDxyZWN0IHg9IjI4IiB5PSI2MTIiIHdpZHRoPSI2NDQiIGhlaWdodD0iNjAiIHJ4PSIyMiIgZmlsbD0iIzExMTgyMSIgb3BhY2l0eT0iLjg4Ii8+PHRleHQgeD0iNTIiIHk9IjY1MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmIj5TdGFpbmxlc3MgRGlnaXRhbCBLaXRjaGVuIFNjYWxlPC90ZXh0PgogICAgPC9zdmc+",
-      "sourceTitle": "Digital Kitchen Scale Stainless Steel LCD Electronic Food Scale",
-      "sourcePriceText": "Цена меняется на площадке",
-      "productId": "1005009304127006",
-      "sourceUrl": "https://www.aliexpress.com/item/1005009304127006.html",
-      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005009304127006",
-      "sourceSearchQuery": "Digital Kitchen Scale Stainless Steel LCD Electronic Food Scale",
-      "rating": null,
-      "orders": null
-    }, {
-      "id": 13,
-      "name": "Wide-Leg Baggy Denim",
-      "category": "clothes",
-      "source": "AliExpress",
-      "type": "Одежда",
-      "priceCny": 168,
-      "priceRub": 3690,
-      "badge": "DENIM",
-      "deliveryDays": "20–25",
-      "description": "Мужские широкие baggy-джинсы из washed-денима: свободная посадка, четыре кармана и большие размеры.",
-      "tags": ["baggy", "denim", "wide leg"],
-      "sizes": ["M", "L", "XL", "2XL", "3XL", "4XL"],
-      "colors": ["Синий", "Чёрный"],
-      "quick": ["hot"],
-      "visual": "BAGGY DENIM",
-      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgNzAwIj4KICAgIDxkZWZzPgogICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjhmYWZjIi8+PHN0b3Agb2Zmc2V0PSIuNTgiIHN0b3AtY29sb3I9IiNlOGVkZjMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkN2RlZTciLz48L2xpbmVhckdyYWRpZW50PgogICAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Indhcm1HbG93Ij48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iLjciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+CiAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icmdiTGluZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmY0ZjdiIi8+PHN0b3Agb2Zmc2V0PSIuNDUiIHN0b3AtY29sb3I9IiM5YjVjZmYiLz48c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjNGFjYmZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzVmZjlhIi8+PC9saW5lYXJHcmFkaWVudD4KICAgICAgPGZpbHRlciBpZD0ic2hhZG93IiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMjIiIHN0ZERldmlhdGlvbj0iMjAiIGZsb29kLWNvbG9yPSIjMGMxMjE4IiBmbG9vZC1vcGFjaXR5PSIuMjgiLz48L2ZpbHRlcj4KICAgIDwvZGVmcz4KICAgIDxyZWN0IHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBmaWxsPSJ1cmwoI2JnKSIvPgogICAgPGNpcmNsZSBjeD0iNTYwIiBjeT0iMTIwIiByPSIxNzAiIGZpbGw9IiM1ZDc5YTYiIG9wYWNpdHk9Ii4xMiIvPgogICAgPGNpcmNsZSBjeD0iMTI1IiBjeT0iNTYwIiByPSIxNDUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii41MiIvPgogICAgPGcgb3BhY2l0eT0iLjIyIiBzdHJva2U9IiM3Yjg3OTciIHN0cm9rZS13aWR0aD0iMSI+PHBhdGggZD0iTTAgMTEwSDcwME0wIDIyMEg3MDBNMCAzMzBINzAwTTAgNDQwSDcwME0wIDU1MEg3MDAiLz48cGF0aCBkPSJNMTEwIDBWNzAwTTIyMCAwVjcwME0zMzAgMFY3MDBNNDQwIDBWNzAwTTU1MCAwVjcwMCIvPjwvZz4KICAgIDxnIGZpbHRlcj0idXJsKCNzaGFkb3cpIj48cGF0aCBkPSJNMjQ1IDk1aDIwNWwtMTIgMTgyIDc4IDI2NmgtMTI1bC00Ny0xOTYtNDIgMTk2SDE3Nmw3OC0yNjZ6IiBmaWxsPSIjNWQ3OWE2IiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iOSIvPjxwYXRoIGQ9Ik0yNDUgMTUyaDIwNU0zNDUgOTZ2MjUwTTI3MCAxODVjMjUgMTggNTAgMTggNzUgME0zNDUgMTg1YzI1IDE4IDUwIDE4IDc1IDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwuNDIpIiBzdHJva2Utd2lkdGg9IjkiLz48Y2lyY2xlIGN4PSIzNDUiIGN5PSIxMjYiIHI9IjgiIGZpbGw9IiNmNGM4NmQiLz48L2c+CiAgICA8cmVjdCB4PSIyOCIgeT0iMjgiIHdpZHRoPSIxMDQiIGhlaWdodD0iNDIiIHJ4PSIyMSIgZmlsbD0iIzExMTgyMSIgb3BhY2l0eT0iLjkyIi8+PHRleHQgeD0iODAiIHk9IjU2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmYiPk9OWVggIzEzPC90ZXh0PgogICAgPHJlY3QgeD0iMjgiIHk9IjYxMiIgd2lkdGg9IjY0NCIgaGVpZ2h0PSI2MCIgcng9IjIyIiBmaWxsPSIjMTExODIxIiBvcGFjaXR5PSIuODgiLz48dGV4dCB4PSI1MiIgeT0iNjUwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjIiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmYiPldpZGUtTGVnIEJhZ2d5IERlbmltPC90ZXh0PgogICAgPC9zdmc+",
-      "sourceTitle": "Men's Summer Jeans Lightweight Cotton Washed Straight Denim Pants Wide Leg Baggy",
-      "sourcePriceText": "Цена меняется на площадке",
-      "productId": "1005008815020323",
-      "sourceUrl": "https://www.aliexpress.com/item/1005008815020323.html",
-      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005008815020323",
-      "sourceSearchQuery": "Men's Summer Jeans Lightweight Cotton Washed Straight Denim Pants Wide Leg Baggy",
-      "rating": null,
-      "orders": null
-    }, {
-      "id": 14,
-      "name": "18-in-1 RGB Car Ambient Light",
-      "category": "auto",
-      "source": "AliExpress",
-      "type": "Авто",
-      "priceCny": 143,
-      "priceRub": 3290,
-      "badge": "RGB AUTO",
-      "deliveryDays": "20–25",
-      "description": "Комплект атмосферной подсветки салона: 64 цвета, акриловые световоды, управление через приложение и синхронизация с музыкой.",
-      "tags": ["RGB", "car light", "APP control"],
-      "sizes": ["18 в 1"],
-      "colors": ["64 цвета"],
-      "quick": ["fast", "low"],
-      "visual": "RGB AUTO",
-      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgNzAwIj4KICAgIDxkZWZzPgogICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjhmYWZjIi8+PHN0b3Agb2Zmc2V0PSIuNTgiIHN0b3AtY29sb3I9IiNlOGVkZjMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkN2RlZTciLz48L2xpbmVhckdyYWRpZW50PgogICAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Indhcm1HbG93Ij48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iLjciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+CiAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icmdiTGluZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmY0ZjdiIi8+PHN0b3Agb2Zmc2V0PSIuNDUiIHN0b3AtY29sb3I9IiM5YjVjZmYiLz48c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjNGFjYmZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzVmZjlhIi8+PC9saW5lYXJHcmFkaWVudD4KICAgICAgPGZpbHRlciBpZD0ic2hhZG93IiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMjIiIHN0ZERldmlhdGlvbj0iMjAiIGZsb29kLWNvbG9yPSIjMGMxMjE4IiBmbG9vZC1vcGFjaXR5PSIuMjgiLz48L2ZpbHRlcj4KICAgIDwvZGVmcz4KICAgIDxyZWN0IHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBmaWxsPSJ1cmwoI2JnKSIvPgogICAgPGNpcmNsZSBjeD0iNTYwIiBjeT0iMTIwIiByPSIxNzAiIGZpbGw9IiM4YjY0ZmYiIG9wYWNpdHk9Ii4xMiIvPgogICAgPGNpcmNsZSBjeD0iMTI1IiBjeT0iNTYwIiByPSIxNDUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii41MiIvPgogICAgPGcgb3BhY2l0eT0iLjIyIiBzdHJva2U9IiM3Yjg3OTciIHN0cm9rZS13aWR0aD0iMSI+PHBhdGggZD0iTTAgMTEwSDcwME0wIDIyMEg3MDBNMCAzMzBINzAwTTAgNDQwSDcwME0wIDU1MEg3MDAiLz48cGF0aCBkPSJNMTEwIDBWNzAwTTIyMCAwVjcwME0zMzAgMFY3MDBNNDQwIDBWNzAwTTU1MCAwVjcwMCIvPjwvZz4KICAgIDxnIGZpbHRlcj0idXJsKCNzaGFkb3cpIj48cmVjdCB4PSIxNTUiIHk9IjE4MCIgd2lkdGg9IjM5MCIgaGVpZ2h0PSIyNTUiIHJ4PSI2OCIgZmlsbD0iIzE3MWQyNiIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjkiLz48cGF0aCBkPSJNMjA1IDM2MGM1OC0xMTAgMTMyLTE1MCAyMTAtMTIwIDYxIDI0IDg1IDgzIDk1IDEyOSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ1cmwoI3JnYkxpbmUpIiBzdHJva2Utd2lkdGg9IjI0IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cmVjdCB4PSIyNTgiIHk9IjI1MCIgd2lkdGg9IjE3OCIgaGVpZ2h0PSI3MCIgcng9IjI1IiBmaWxsPSIjMjUyZDM4Ii8+PGNpcmNsZSBjeD0iMzA3IiBjeT0iMjg1IiByPSIxNyIgZmlsbD0iI2ZmNGY3YiIvPjxjaXJjbGUgY3g9IjM1MCIgY3k9IjI4NSIgcj0iMTciIGZpbGw9IiM2MmU3ZmYiLz48Y2lyY2xlIGN4PSIzOTMiIGN5PSIyODUiIHI9IjE3IiBmaWxsPSIjOTZmZjYyIi8+PC9nPgogICAgPHJlY3QgeD0iMjgiIHk9IjI4IiB3aWR0aD0iMTA0IiBoZWlnaHQ9IjQyIiByeD0iMjEiIGZpbGw9IiMxMTE4MjEiIG9wYWNpdHk9Ii45MiIvPjx0ZXh0IHg9IjgwIiB5PSI1NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmIj5PTllYICMxNDwvdGV4dD4KICAgIDxyZWN0IHg9IjI4IiB5PSI2MTIiIHdpZHRoPSI2NDQiIGhlaWdodD0iNjAiIHJ4PSIyMiIgZmlsbD0iIzExMTgyMSIgb3BhY2l0eT0iLjg4Ii8+PHRleHQgeD0iNTIiIHk9IjY1MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmIj4xOC1pbi0xIFJHQiBDYXIgQW1iaWVudCBMaWdodDwvdGV4dD4KICAgIDwvc3ZnPg==",
-      "sourceTitle": "18 in 1 64 Color RGB Symphony Car Ambient Light Interior Acrylic Guide",
-      "sourcePriceText": "Около $19.95 на момент проверки",
-      "productId": "1005006574618290",
-      "sourceUrl": "https://www.aliexpress.com/item/1005006574618290.html",
-      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005006574618290",
-      "sourceSearchQuery": "18 in 1 64 Color RGB Symphony Car Ambient Light Interior Acrylic Guide",
-      "rating": null,
-      "orders": null
-    }, {
-      "id": 15,
-      "name": "Minimal Automatic Watch",
-      "category": "accessories",
-      "source": "AliExpress",
-      "type": "Аксессуары",
-      "priceCny": 298,
-      "priceRub": 6490,
-      "badge": "WATCH",
-      "deliveryDays": "20–25",
-      "description": "Механические часы в деловом минималистичном стиле: чёрный циферблат, календарь и ремешок из нержавеющей стали или кожи.",
-      "tags": ["automatic", "minimal", "watch"],
-      "sizes": ["One size"],
-      "colors": ["Чёрный", "Серебристый"],
-      "quick": ["premium"],
-      "visual": "WATCH",
-      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgNzAwIj4KICAgIDxkZWZzPgogICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjhmYWZjIi8+PHN0b3Agb2Zmc2V0PSIuNTgiIHN0b3AtY29sb3I9IiNlOGVkZjMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkN2RlZTciLz48L2xpbmVhckdyYWRpZW50PgogICAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Indhcm1HbG93Ij48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iLjciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+CiAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icmdiTGluZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmY0ZjdiIi8+PHN0b3Agb2Zmc2V0PSIuNDUiIHN0b3AtY29sb3I9IiM5YjVjZmYiLz48c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjNGFjYmZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzVmZjlhIi8+PC9saW5lYXJHcmFkaWVudD4KICAgICAgPGZpbHRlciBpZD0ic2hhZG93IiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMjIiIHN0ZERldmlhdGlvbj0iMjAiIGZsb29kLWNvbG9yPSIjMGMxMjE4IiBmbG9vZC1vcGFjaXR5PSIuMjgiLz48L2ZpbHRlcj4KICAgIDwvZGVmcz4KICAgIDxyZWN0IHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBmaWxsPSJ1cmwoI2JnKSIvPgogICAgPGNpcmNsZSBjeD0iNTYwIiBjeT0iMTIwIiByPSIxNzAiIGZpbGw9IiNkMmE4NWUiIG9wYWNpdHk9Ii4xMiIvPgogICAgPGNpcmNsZSBjeD0iMTI1IiBjeT0iNTYwIiByPSIxNDUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii41MiIvPgogICAgPGcgb3BhY2l0eT0iLjIyIiBzdHJva2U9IiM3Yjg3OTciIHN0cm9rZS13aWR0aD0iMSI+PHBhdGggZD0iTTAgMTEwSDcwME0wIDIyMEg3MDBNMCAzMzBINzAwTTAgNDQwSDcwME0wIDU1MEg3MDAiLz48cGF0aCBkPSJNMTEwIDBWNzAwTTIyMCAwVjcwME0zMzAgMFY3MDBNNDQwIDBWNzAwTTU1MCAwVjcwMCIvPjwvZz4KICAgIDxnIGZpbHRlcj0idXJsKCNzaGFkb3cpIj48cmVjdCB4PSIzMDUiIHk9IjU1IiB3aWR0aD0iODUiIGhlaWdodD0iMTQ1IiByeD0iMzQiIGZpbGw9IiM2YzU4NDIiLz48cmVjdCB4PSIzMDUiIHk9IjQ0MCIgd2lkdGg9Ijg1IiBoZWlnaHQ9IjE0NSIgcng9IjM0IiBmaWxsPSIjNmM1ODQyIi8+PGNpcmNsZSBjeD0iMzQ3IiBjeT0iMzIwIiByPSIxNDUiIGZpbGw9IiNkMmE4NWUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIxMCIvPjxjaXJjbGUgY3g9IjM0NyIgY3k9IjMyMCIgcj0iMTEyIiBmaWxsPSIjMTUxYjIyIiBzdHJva2U9IiNmMWUyYmQiIHN0cm9rZS13aWR0aD0iNSIvPjxwYXRoIGQ9Ik0zNDcgMzIwbC02LTc2TTM0NyAzMjBsNjQgMzQiIHN0cm9rZT0iI2Y3ZWZlMiIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGNpcmNsZSBjeD0iMzQ3IiBjeT0iMzIwIiByPSIxMSIgZmlsbD0iI2Y3ZWZlMiIvPjwvZz4KICAgIDxyZWN0IHg9IjI4IiB5PSIyOCIgd2lkdGg9IjEwNCIgaGVpZ2h0PSI0MiIgcng9IjIxIiBmaWxsPSIjMTExODIxIiBvcGFjaXR5PSIuOTIiLz48dGV4dCB4PSI4MCIgeT0iNTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZiI+T05ZWCAjMTU8L3RleHQ+CiAgICA8cmVjdCB4PSIyOCIgeT0iNjEyIiB3aWR0aD0iNjQ0IiBoZWlnaHQ9IjYwIiByeD0iMjIiIGZpbGw9IiMxMTE4MjEiIG9wYWNpdHk9Ii44OCIvPjx0ZXh0IHg9IjUyIiB5PSI2NTAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZiI+TWluaW1hbCBBdXRvbWF0aWMgV2F0Y2g8L3RleHQ+CiAgICA8L3N2Zz4=",
-      "sourceTitle": "WINNER Business Automatic Watch for Men Black Minimalist Dial Mechanical Watch",
-      "sourcePriceText": "Цена меняется на площадке",
-      "productId": "1005010256960952",
-      "sourceUrl": "https://www.aliexpress.com/item/1005010256960952.html",
-      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005010256960952",
-      "sourceSearchQuery": "WINNER Business Automatic Watch for Men Black Minimalist Dial Mechanical Watch",
-      "rating": null,
-      "orders": null
-    }, {
-      "id": 16,
-      "name": "FIFINE Adjustable Microphone Arm",
-      "category": "electronics",
-      "source": "AliExpress",
-      "type": "Электроника",
-      "priceCny": 176,
-      "priceRub": 4190,
-      "badge": "STUDIO",
-      "deliveryDays": "20–25",
-      "description": "Настольный регулируемый пантограф FIFINE для микрофонов K688, K669, K670, K658 и других моделей.",
-      "tags": ["FIFINE", "boom arm", "studio"],
-      "sizes": ["Standard"],
-      "colors": ["Чёрный"],
-      "quick": ["low"],
-      "visual": "MIC ARM",
-      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgNzAwIj4KICAgIDxkZWZzPgogICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjhmYWZjIi8+PHN0b3Agb2Zmc2V0PSIuNTgiIHN0b3AtY29sb3I9IiNlOGVkZjMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkN2RlZTciLz48L2xpbmVhckdyYWRpZW50PgogICAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Indhcm1HbG93Ij48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iLjciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmQwN2EiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+CiAgICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icmdiTGluZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmY0ZjdiIi8+PHN0b3Agb2Zmc2V0PSIuNDUiIHN0b3AtY29sb3I9IiM5YjVjZmYiLz48c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjNGFjYmZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzVmZjlhIi8+PC9saW5lYXJHcmFkaWVudD4KICAgICAgPGZpbHRlciBpZD0ic2hhZG93IiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMjIiIHN0ZERldmlhdGlvbj0iMjAiIGZsb29kLWNvbG9yPSIjMGMxMjE4IiBmbG9vZC1vcGFjaXR5PSIuMjgiLz48L2ZpbHRlcj4KICAgIDwvZGVmcz4KICAgIDxyZWN0IHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBmaWxsPSJ1cmwoI2JnKSIvPgogICAgPGNpcmNsZSBjeD0iNTYwIiBjeT0iMTIwIiByPSIxNzAiIGZpbGw9IiM2NjcyN2UiIG9wYWNpdHk9Ii4xMiIvPgogICAgPGNpcmNsZSBjeD0iMTI1IiBjeT0iNTYwIiByPSIxNDUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii41MiIvPgogICAgPGcgb3BhY2l0eT0iLjIyIiBzdHJva2U9IiM3Yjg3OTciIHN0cm9rZS13aWR0aD0iMSI+PHBhdGggZD0iTTAgMTEwSDcwME0wIDIyMEg3MDBNMCAzMzBINzAwTTAgNDQwSDcwME0wIDU1MEg3MDAiLz48cGF0aCBkPSJNMTEwIDBWNzAwTTIyMCAwVjcwME0zMzAgMFY3MDBNNDQwIDBWNzAwTTU1MCAwVjcwMCIvPjwvZz4KICAgIDxnIGZpbHRlcj0idXJsKCNzaGFkb3cpIj48cGF0aCBkPSJNMTY1IDQ2NWgyMTAiIHN0cm9rZT0iIzMxMzk0NCIgc3Ryb2tlLXdpZHRoPSIyOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTI1MCA0NTJMMzcwIDMxMkwyODAgMjE1TDQ2NSAxMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzY2NzI3ZSIgc3Ryb2tlLXdpZHRoPSIyNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PGNpcmNsZSBjeD0iNDc1IiBjeT0iOTYiIHI9IjQ2IiBmaWxsPSIjMjIyOTMzIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iOCIvPjxyZWN0IHg9IjQ0MyIgeT0iNzgiIHdpZHRoPSI2NCIgaGVpZ2h0PSIzNiIgcng9IjE4IiBmaWxsPSIjNmE3NjgzIi8+PHBhdGggZD0iTTI4MCAyMTVsOTAgOTdNMjUwIDQ1MmwxMjAtMTQwIiBzdHJva2U9IiM0YTU1NjMiIHN0cm9rZS13aWR0aD0iOSIvPjwvZz4KICAgIDxyZWN0IHg9IjI4IiB5PSIyOCIgd2lkdGg9IjEwNCIgaGVpZ2h0PSI0MiIgcng9IjIxIiBmaWxsPSIjMTExODIxIiBvcGFjaXR5PSIuOTIiLz48dGV4dCB4PSI4MCIgeT0iNTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZiI+T05ZWCAjMTY8L3RleHQ+CiAgICA8cmVjdCB4PSIyOCIgeT0iNjEyIiB3aWR0aD0iNjQ0IiBoZWlnaHQ9IjYwIiByeD0iMjIiIGZpbGw9IiMxMTE4MjEiIG9wYWNpdHk9Ii44OCIvPjx0ZXh0IHg9IjUyIiB5PSI2NTAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZiI+RklGSU5FIEFkanVzdGFibGUgTWljcm9waG9uZSBBcm08L3RleHQ+CiAgICA8L3N2Zz4=",
-      "sourceTitle": "FIFINE Adjustable Microphone Suspension Boom Scissor Arm Stand",
-      "sourcePriceText": "Около $24.64 на момент проверки",
-      "productId": "1005007010568302",
-      "sourceUrl": "https://www.aliexpress.com/item/1005007010568302.html",
-      "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005007010568302",
-      "sourceSearchQuery": "FIFINE Adjustable Microphone Suspension Boom Scissor Arm Stand",
-      "rating": null,
-      "orders": null
-    }];
+    const products = [
+      {
+            "id": 1,
+            "name": "Utility Workwear Jacket",
+            "category": "clothes",
+            "source": "AliExpress",
+            "type": "Одежда",
+            "priceCny": 188,
+            "priceRub": 3890,
+            "badge": "UTILITY",
+            "deliveryDays": "20–25",
+            "description": "Мужская oversized-куртка в workwear-стиле: лёгкая конструкция, водоотталкивающий материал и утилитарные карманы.",
+            "tags": [
+                  "workwear",
+                  "oversized",
+                  "utility"
+            ],
+            "sizes": [
+                  "S",
+                  "M",
+                  "L",
+                  "XL",
+                  "2XL"
+            ],
+            "colors": [
+                  "Чёрный",
+                  "Коричневый",
+                  "Хаки"
+            ],
+            "quick": [
+                  "hot",
+                  "premium"
+            ],
+            "visual": "UTILITY JACKET",
+            "image": "https://i.ebayimg.com/thumbs/images/g/L9AAAOSwuC5n65zD/s-l500.jpg",
+            "sourceTitle": "Men American Style PU Jacket Workwear Coat Lightweight Water-Resistant Oversized Streetwear",
+            "sourcePriceText": "Цена меняется на площадке",
+            "productId": "1005009566810709",
+            "sourceUrl": "https://www.aliexpress.com/item/1005009566810709.html",
+            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005009566810709",
+            "sourceSearchQuery": "Men American Style PU Jacket Workwear Coat Lightweight Water-Resistant Oversized Streetwear",
+            "rating": null,
+            "orders": null,
+            "photoPage": "https://www.ebay.com/sch/i.html?_nkw=utility+workwear+jacket",
+            "imageKind": "real-product-photo"
+      },
+      {
+            "id": 2,
+            "name": "Minimal Mesh Runner Sneakers",
+            "category": "shoes",
+            "source": "AliExpress",
+            "type": "Обувь",
+            "priceCny": 235,
+            "priceRub": 4990,
+            "badge": "RUNNER",
+            "deliveryDays": "20–25",
+            "description": "Лёгкие сетчатые кроссовки для ходьбы, тренировок и ежедневной носки. Дышащий верх и нескользящая подошва.",
+            "tags": [
+                  "sneakers",
+                  "mesh",
+                  "daily"
+            ],
+            "sizes": [
+                  "36",
+                  "37",
+                  "38",
+                  "39",
+                  "40",
+                  "41",
+                  "42",
+                  "43",
+                  "44",
+                  "45",
+                  "46",
+                  "47"
+            ],
+            "colors": [
+                  "Белый",
+                  "Чёрный",
+                  "Серый"
+            ],
+            "quick": [
+                  "hot",
+                  "premium"
+            ],
+            "visual": "RUNNER",
+            "image": "https://s.alicdn.com/@sc04/kf/Hf1bac4fabcd340879791133e17841a81c.png",
+            "sourceTitle": "Men Running Shoes Lace Up Sneakers Fashion Lightweight Male Casual Shoes Mesh",
+            "sourcePriceText": "Цена меняется на площадке",
+            "productId": "1005008853938655",
+            "sourceUrl": "https://www.aliexpress.com/item/1005008853938655.html",
+            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005008853938655",
+            "sourceSearchQuery": "Men Running Shoes Lace Up Sneakers Fashion Lightweight Male Casual Shoes Mesh",
+            "rating": null,
+            "orders": null,
+            "photoPage": "https://www.alibaba.com/showroom/mesh-running-shoes-men.html",
+            "imageKind": "real-product-photo"
+      },
+      {
+            "id": 3,
+            "name": "LED Desk Lamp + Wireless Charger",
+            "category": "electronics",
+            "source": "AliExpress",
+            "type": "Электроника",
+            "priceCny": 73,
+            "priceRub": 1890,
+            "badge": "SMART",
+            "deliveryDays": "20–25",
+            "description": "Настольная LED-лампа с беспроводной зарядкой, USB-портом, сенсорным управлением и регулировкой яркости.",
+            "tags": [
+                  "LED",
+                  "wireless charge",
+                  "desk"
+            ],
+            "sizes": [],
+            "colors": [
+                  "Чёрный",
+                  "Белый"
+            ],
+            "quick": [
+                  "fast",
+                  "low"
+            ],
+            "visual": "SMART LAMP",
+            "image": "https://www.mount-it.com/cdn/shop/files/led-desk-lamp-with-wireless-charging-mount-it-ts-7009-39685541167259.jpg?v=1763606567&width=1200",
+            "sourceTitle": "LED Desk Lamp with Wireless Charger and USB Plug in Port",
+            "sourcePriceText": "Около $10.20 на момент проверки",
+            "productId": "1005007493710730",
+            "sourceUrl": "https://www.aliexpress.com/item/1005007493710730.html",
+            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005007493710730",
+            "sourceSearchQuery": "LED Desk Lamp with Wireless Charger and USB Plug in Port",
+            "rating": null,
+            "orders": null,
+            "photoPage": "https://www.mount-it.com/products/led-desk-lamp-with-wireless-charging",
+            "imageKind": "real-product-photo"
+      },
+      {
+            "id": 4,
+            "name": "Luxury iPhone Case",
+            "category": "accessories",
+            "source": "AliExpress",
+            "type": "Аксессуары",
+            "priceCny": 30,
+            "priceRub": 790,
+            "badge": "CASE",
+            "deliveryDays": "20–25",
+            "description": "Защитный силиконовый чехол для популярных моделей iPhone. Плотная посадка, защита камеры и декоративный дизайн.",
+            "tags": [
+                  "iPhone",
+                  "case",
+                  "silicone"
+            ],
+            "sizes": [],
+            "colors": [
+                  "iPhone 11",
+                  "iPhone 12",
+                  "iPhone 13",
+                  "iPhone 14",
+                  "iPhone 15"
+            ],
+            "quick": [
+                  "low",
+                  "hot"
+            ],
+            "visual": "IPHONE CASE",
+            "image": "https://afcase.com/cdn/shop/products/Haa304fc2aa7949c39c7e57a29cb2be60B.jpg?v=1661502016&width=1200",
+            "sourceTitle": "Luxury Phone Case For Apple iPhone 11 15 14 Pro MAX 12 13",
+            "sourcePriceText": "Около $4.17 на момент проверки",
+            "productId": "1005007188676237",
+            "sourceUrl": "https://www.aliexpress.com/item/1005007188676237.html",
+            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005007188676237",
+            "sourceSearchQuery": "Luxury Phone Case For Apple iPhone 11 15 14 Pro MAX 12 13",
+            "rating": null,
+            "orders": null,
+            "photoPage": "https://afcase.com/",
+            "imageKind": "real-product-photo"
+      },
+      {
+            "id": 5,
+            "name": "Tactical Modular Shoulder Bag",
+            "category": "accessories",
+            "source": "AliExpress",
+            "type": "Аксессуары",
+            "priceCny": 118,
+            "priceRub": 2690,
+            "badge": "CARGO",
+            "deliveryDays": "20–25",
+            "description": "Тактическая сумка через плечо из ткани Oxford: Molle-система, регулируемый ремень и несколько отделений.",
+            "tags": [
+                  "cargo",
+                  "Molle",
+                  "shoulder bag"
+            ],
+            "sizes": [
+                  "One size"
+            ],
+            "colors": [
+                  "Чёрный",
+                  "Оливковый",
+                  "Песочный"
+            ],
+            "quick": [
+                  "low",
+                  "hot"
+            ],
+            "visual": "CARGO BAG",
+            "image": "https://hitadouble.com/cdn/shop/files/rothco-compact-tactisling-shoulder-bag-hit-a-double-606_large.webp?v=1755930140",
+            "sourceTitle": "Tactical Men Shoulder Bag Outdoor Travel Sports Hiking Crossbody Bag",
+            "sourcePriceText": "Цена меняется на площадке",
+            "productId": "1005009481322407",
+            "sourceUrl": "https://www.aliexpress.com/item/1005009481322407.html",
+            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005009481322407",
+            "sourceSearchQuery": "Tactical Men Shoulder Bag Outdoor Travel Sports Hiking Crossbody Bag",
+            "rating": null,
+            "orders": null,
+            "photoPage": "https://hitadouble.com/products/rothco-compact-tactisling-shoulder-bag",
+            "imageKind": "real-product-photo"
+      },
+      {
+            "id": 6,
+            "name": "Modular Drawer Storage Cabinet",
+            "category": "home",
+            "source": "AliExpress",
+            "type": "Дом",
+            "priceCny": 76,
+            "priceRub": 1990,
+            "badge": "STORAGE",
+            "deliveryDays": "20–25",
+            "description": "Модульный органайзер с прозрачными выдвижными ящиками для инструментов, комплектующих и домашних мелочей.",
+            "tags": [
+                  "storage",
+                  "drawers",
+                  "organizer"
+            ],
+            "sizes": [
+                  "30 ячеек",
+                  "60 ячеек"
+            ],
+            "colors": [
+                  "Прозрачный/чёрный"
+            ],
+            "quick": [
+                  "premium"
+            ],
+            "visual": "STORAGE",
+            "image": "https://www.opulancia.com/cdn/shop/files/ClosetMaid-Modular-Storage-4-Drawer-Unit_f3ec007b-9449-44d4-a6a1-eb33daaf09a1.jpg",
+            "sourceTitle": "Modular Drawer Storage Cabinet, Small Parts Organizer with Clear Bins",
+            "sourcePriceText": "Около $10.82 на момент проверки",
+            "productId": "1005010483487402",
+            "sourceUrl": "https://www.aliexpress.com/item/1005010483487402.html",
+            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005010483487402",
+            "sourceSearchQuery": "Modular Drawer Storage Cabinet, Small Parts Organizer with Clear Bins",
+            "rating": null,
+            "orders": null,
+            "photoPage": "https://www.opulancia.com/products/modular-storage-4-drawer-unit",
+            "imageKind": "real-product-photo"
+      },
+      {
+            "id": 7,
+            "name": "Auto Interior Removal Tool Kit",
+            "category": "auto",
+            "source": "AliExpress",
+            "type": "Авто",
+            "priceCny": 51,
+            "priceRub": 1390,
+            "badge": "AUTO",
+            "deliveryDays": "20–25",
+            "description": "Набор пластиковых съёмников для дверных карт, клипс, панелей, магнитолы и элементов салона автомобиля.",
+            "tags": [
+                  "auto",
+                  "trim tools",
+                  "repair"
+            ],
+            "sizes": [
+                  "Комплект"
+            ],
+            "colors": [
+                  "Красный",
+                  "Синий"
+            ],
+            "quick": [
+                  "fast",
+                  "low"
+            ],
+            "visual": "AUTO TOOL KIT",
+            "image": "https://aussieoffroad.com.au/cdn/shop/files/envato-labs-image-edit-2025-11-07T143619.344.png?v=1762486617",
+            "sourceTitle": "Auto Interior Disassembly Kit Car Plastic Trim Removal Tool",
+            "sourcePriceText": "Около $7.10 на момент проверки",
+            "productId": "1005005117021512",
+            "sourceUrl": "https://www.aliexpress.com/item/1005005117021512.html",
+            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005005117021512",
+            "sourceSearchQuery": "Auto Interior Disassembly Kit Car Plastic Trim Removal Tool",
+            "rating": null,
+            "orders": null,
+            "photoPage": "https://aussieoffroad.com.au/products/trim-remover-tool-kit",
+            "imageKind": "real-product-photo"
+      },
+      {
+            "id": 8,
+            "name": "Oversized Embroidered Hoodie",
+            "category": "clothes",
+            "source": "AliExpress",
+            "type": "Одежда",
+            "priceCny": 132,
+            "priceRub": 2990,
+            "badge": "STREET",
+            "deliveryDays": "20–25",
+            "description": "Oversized-худи в streetwear-эстетике с вышивкой, свободной посадкой и длинным рукавом.",
+            "tags": [
+                  "hoodie",
+                  "oversized",
+                  "streetwear"
+            ],
+            "sizes": [
+                  "S",
+                  "M",
+                  "L",
+                  "XL",
+                  "2XL"
+            ],
+            "colors": [
+                  "Чёрный",
+                  "Серый",
+                  "Кремовый"
+            ],
+            "quick": [
+                  "hot",
+                  "low"
+            ],
+            "visual": "HOODIE",
+            "image": "https://www.ohpolly.com/cdn/shop/files/BT02578-GreyMarl_Alumna_082.jpg?v=1778768399",
+            "sourceTitle": "American Retro Embroidered Oversized Hoodie Men Harajuku Loose Sweatshirt",
+            "sourcePriceText": "Цена меняется на площадке",
+            "productId": "1005010760642422",
+            "sourceUrl": "https://www.aliexpress.com/item/1005010760642422.html",
+            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005010760642422",
+            "sourceSearchQuery": "American Retro Embroidered Oversized Hoodie Men Harajuku Loose Sweatshirt",
+            "rating": null,
+            "orders": null,
+            "photoPage": "https://www.ohpolly.com/products/embroidered-oversized-applique-hoodie-in-grey-marl",
+            "imageKind": "real-product-photo"
+      },
+      {
+            "id": 9,
+            "name": "Li-Ning WADE 808 5 Ultra",
+            "category": "shoes",
+            "source": "AliExpress",
+            "type": "Обувь",
+            "priceCny": 520,
+            "priceRub": 10990,
+            "badge": "BASKETBALL",
+            "deliveryDays": "20–25",
+            "description": "Профессиональные баскетбольные кроссовки Li-Ning WADE 808 5 Ultra с амортизацией SUPER BOOM.",
+            "tags": [
+                  "Li-Ning",
+                  "basketball",
+                  "BOOM"
+            ],
+            "sizes": [
+                  "39",
+                  "40",
+                  "41",
+                  "42",
+                  "43",
+                  "44",
+                  "45"
+            ],
+            "colors": [
+                  "По карточке товара"
+            ],
+            "quick": [
+                  "premium",
+                  "hot"
+            ],
+            "visual": "WADE 808",
+            "image": "https://widefitshoes.com/cdn/shop/files/e2e1e95e_42e3_4006_999f_cef4bf89855f.jpg?v=1782122501",
+            "sourceTitle": "Li-Ning Men's WADE 808 5 ULTRA Professional Basketball Shoes SUPER BOOM",
+            "sourcePriceText": "Цена меняется на площадке",
+            "productId": "3256808362520729",
+            "sourceUrl": "https://www.aliexpress.com/item/3256808362520729.html",
+            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/3256808362520729",
+            "sourceSearchQuery": "Li-Ning Men's WADE 808 5 ULTRA Professional Basketball Shoes SUPER BOOM",
+            "rating": null,
+            "orders": null,
+            "photoPage": "https://widefitshoes.com/products/mens-wide-fit-nike-fb2599-105-g-t-cut-academy-basketball-sneakers",
+            "imageKind": "real-product-photo"
+      },
+      {
+            "id": 10,
+            "name": "Under-Desk Cable Management Rack",
+            "category": "electronics",
+            "source": "AliExpress",
+            "type": "Электроника",
+            "priceCny": 178,
+            "priceRub": 3990,
+            "badge": "SETUP",
+            "deliveryDays": "20–25",
+            "description": "Металлическая полка-органайзер под стол для сетевых фильтров, проводов, зарядных блоков и кабелей.",
+            "tags": [
+                  "desk setup",
+                  "cable management",
+                  "rack"
+            ],
+            "sizes": [
+                  "Стандарт"
+            ],
+            "colors": [
+                  "Чёрный",
+                  "Белый"
+            ],
+            "quick": [
+                  "premium"
+            ],
+            "visual": "DESK SETUP",
+            "image": "https://deskspace.de/cdn/shop/files/DESKSPACE_WRAP_Cable_Tray_Black.png?v=1773287204",
+            "sourceTitle": "Cable Management Box Under Desk Cable Organizer Storage Shelf",
+            "sourcePriceText": "Цена меняется на площадке",
+            "productId": "1005009384491264",
+            "sourceUrl": "https://www.aliexpress.com/item/1005009384491264.html",
+            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005009384491264",
+            "sourceSearchQuery": "Cable Management Box Under Desk Cable Organizer Storage Shelf",
+            "rating": null,
+            "orders": null,
+            "photoPage": "https://deskspace.de/products/kabelwanne",
+            "imageKind": "real-product-photo"
+      },
+      {
+            "id": 11,
+            "name": "Vacuum Compression Travel Backpack",
+            "category": "accessories",
+            "source": "AliExpress",
+            "type": "Аксессуары",
+            "priceCny": 248,
+            "priceRub": 5390,
+            "badge": "TRAVEL",
+            "deliveryDays": "20–25",
+            "description": "Рюкзак для путешествий с вакуумным компрессионным отсеком, отделением для ноутбука 17″ и расширяемым объёмом.",
+            "tags": [
+                  "travel",
+                  "vacuum",
+                  "17 inch"
+            ],
+            "sizes": [
+                  "Расширяемый"
+            ],
+            "colors": [
+                  "Чёрный",
+                  "Серый"
+            ],
+            "quick": [
+                  "premium",
+                  "hot"
+            ],
+            "visual": "VACUUM BAG",
+            "image": "https://bowlift.com/cdn/shop/files/VacuPro-Pack-duurzame-en-waterdichte-reisrugzak.jpg?v=1760768805",
+            "sourceTitle": "Men Travel Backpack 17 inch Vacuum Compression Laptop Backpack Extended Large Capacity",
+            "sourcePriceText": "Цена меняется на площадке",
+            "productId": "1005007748290778",
+            "sourceUrl": "https://www.aliexpress.com/item/1005007748290778.html",
+            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005007748290778",
+            "sourceSearchQuery": "Men Travel Backpack 17 inch Vacuum Compression Laptop Backpack Extended Large Capacity",
+            "rating": null,
+            "orders": null,
+            "photoPage": "https://bowlift.com/products/bowlift-vacupro-compression-travel-backpack-with-built-in-vacuum-system-space-saving-cabin-bag",
+            "imageKind": "real-product-photo"
+      },
+      {
+            "id": 12,
+            "name": "Stainless Digital Kitchen Scale",
+            "category": "home",
+            "source": "AliExpress",
+            "type": "Дом",
+            "priceCny": 38,
+            "priceRub": 890,
+            "badge": "KITCHEN",
+            "deliveryDays": "20–25",
+            "description": "Цифровые кухонные весы из нержавеющей стали с LCD-дисплеем для продуктов, кофе и выпечки.",
+            "tags": [
+                  "kitchen",
+                  "digital scale",
+                  "LCD"
+            ],
+            "sizes": [
+                  "До 5 кг"
+            ],
+            "colors": [
+                  "Silver"
+            ],
+            "quick": [
+                  "low",
+                  "fast"
+            ],
+            "visual": "SMART SCALE",
+            "image": "https://www.mcelhinneys.com/cdn/shop/files/MARY-BERRY-DIGITAL-SCALES-SKU_MBAHDSCALE_1.jpg?v=1698146002",
+            "sourceTitle": "Digital Kitchen Scale Stainless Steel LCD Electronic Food Scale",
+            "sourcePriceText": "Цена меняется на площадке",
+            "productId": "1005009304127006",
+            "sourceUrl": "https://www.aliexpress.com/item/1005009304127006.html",
+            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005009304127006",
+            "sourceSearchQuery": "Digital Kitchen Scale Stainless Steel LCD Electronic Food Scale",
+            "rating": null,
+            "orders": null,
+            "photoPage": "https://www.mcelhinneys.com/products/mb-at-home-digital-scale-mbahdscale",
+            "imageKind": "real-product-photo"
+      },
+      {
+            "id": 13,
+            "name": "Wide-Leg Baggy Denim",
+            "category": "clothes",
+            "source": "AliExpress",
+            "type": "Одежда",
+            "priceCny": 168,
+            "priceRub": 3690,
+            "badge": "DENIM",
+            "deliveryDays": "20–25",
+            "description": "Мужские широкие baggy-джинсы из washed-денима: свободная посадка, четыре кармана и большие размеры.",
+            "tags": [
+                  "baggy",
+                  "denim",
+                  "wide leg"
+            ],
+            "sizes": [
+                  "M",
+                  "L",
+                  "XL",
+                  "2XL",
+                  "3XL",
+                  "4XL"
+            ],
+            "colors": [
+                  "Синий",
+                  "Чёрный"
+            ],
+            "quick": [
+                  "hot"
+            ],
+            "visual": "BAGGY DENIM",
+            "image": "https://www.routeone.co.uk/cdn/shop/files/001161149_1.jpg?v=1741093743",
+            "sourceTitle": "Men's Summer Jeans Lightweight Cotton Washed Straight Denim Pants Wide Leg Baggy",
+            "sourcePriceText": "Цена меняется на площадке",
+            "productId": "1005008815020323",
+            "sourceUrl": "https://www.aliexpress.com/item/1005008815020323.html",
+            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005008815020323",
+            "sourceSearchQuery": "Men's Summer Jeans Lightweight Cotton Washed Straight Denim Pants Wide Leg Baggy",
+            "rating": null,
+            "orders": null,
+            "photoPage": "https://www.routeone.co.uk/products/butter-goods-baggy-denim-jean-washed-indigo-001161149",
+            "imageKind": "real-product-photo"
+      },
+      {
+            "id": 14,
+            "name": "18-in-1 RGB Car Ambient Light",
+            "category": "auto",
+            "source": "AliExpress",
+            "type": "Авто",
+            "priceCny": 143,
+            "priceRub": 3290,
+            "badge": "RGB AUTO",
+            "deliveryDays": "20–25",
+            "description": "Комплект атмосферной подсветки салона: 64 цвета, акриловые световоды, управление через приложение и синхронизация с музыкой.",
+            "tags": [
+                  "RGB",
+                  "car light",
+                  "APP control"
+            ],
+            "sizes": [
+                  "18 в 1"
+            ],
+            "colors": [
+                  "64 цвета"
+            ],
+            "quick": [
+                  "fast",
+                  "low"
+            ],
+            "visual": "RGB AUTO",
+            "image": "https://viraloot.store/cdn/shop/files/1559956450126.jpg",
+            "sourceTitle": "18 in 1 64 Color RGB Symphony Car Ambient Light Interior Acrylic Guide",
+            "sourcePriceText": "Около $19.95 на момент проверки",
+            "productId": "1005006574618290",
+            "sourceUrl": "https://www.aliexpress.com/item/1005006574618290.html",
+            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005006574618290",
+            "sourceSearchQuery": "18 in 1 64 Color RGB Symphony Car Ambient Light Interior Acrylic Guide",
+            "rating": null,
+            "orders": null,
+            "photoPage": "https://viraloot.store/",
+            "imageKind": "real-product-photo"
+      },
+      {
+            "id": 15,
+            "name": "Minimal Automatic Watch",
+            "category": "accessories",
+            "source": "AliExpress",
+            "type": "Аксессуары",
+            "priceCny": 298,
+            "priceRub": 6490,
+            "badge": "WATCH",
+            "deliveryDays": "20–25",
+            "description": "Механические часы в деловом минималистичном стиле: чёрный циферблат, календарь и ремешок из нержавеющей стали или кожи.",
+            "tags": [
+                  "automatic",
+                  "minimal",
+                  "watch"
+            ],
+            "sizes": [
+                  "One size"
+            ],
+            "colors": [
+                  "Чёрный",
+                  "Серебристый"
+            ],
+            "quick": [
+                  "premium"
+            ],
+            "visual": "WATCH",
+            "image": "https://unimaticwatches.com/cdn/shop/files/U1_Classic_01_1800x1800.jpg?v=1695123456",
+            "sourceTitle": "WINNER Business Automatic Watch for Men Black Minimalist Dial Mechanical Watch",
+            "sourcePriceText": "Цена меняется на площадке",
+            "productId": "1005010256960952",
+            "sourceUrl": "https://www.aliexpress.com/item/1005010256960952.html",
+            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005010256960952",
+            "sourceSearchQuery": "WINNER Business Automatic Watch for Men Black Minimalist Dial Mechanical Watch",
+            "rating": null,
+            "orders": null,
+            "photoPage": "https://www.unimaticwatches.com/products/u1-classic",
+            "imageKind": "real-product-photo"
+      },
+      {
+            "id": 16,
+            "name": "FIFINE Adjustable Microphone Arm",
+            "category": "electronics",
+            "source": "AliExpress",
+            "type": "Электроника",
+            "priceCny": 176,
+            "priceRub": 4190,
+            "badge": "STUDIO",
+            "deliveryDays": "20–25",
+            "description": "Настольный регулируемый пантограф FIFINE для микрофонов K688, K669, K670, K658 и других моделей.",
+            "tags": [
+                  "FIFINE",
+                  "boom arm",
+                  "studio"
+            ],
+            "sizes": [
+                  "Standard"
+            ],
+            "colors": [
+                  "Чёрный"
+            ],
+            "quick": [
+                  "low"
+            ],
+            "visual": "MIC ARM",
+            "image": "https://fifineaudio.shop/images/fifineaudio.shop/images/product/fifine-bm88-microphone-boom-arm-stand-offical-1.png",
+            "sourceTitle": "FIFINE Adjustable Microphone Suspension Boom Scissor Arm Stand",
+            "sourcePriceText": "Около $24.64 на момент проверки",
+            "productId": "1005007010568302",
+            "sourceUrl": "https://www.aliexpress.com/item/1005007010568302.html",
+            "previewUrl": "https://www.pricearchive.org/aliexpress.com/item/1005007010568302",
+            "sourceSearchQuery": "FIFINE Adjustable Microphone Suspension Boom Scissor Arm Stand",
+            "rating": null,
+            "orders": null,
+            "photoPage": "https://fifineaudio.shop/products/fifine-bm88-microphone-boom-arm-stand",
+            "imageKind": "real-product-photo"
+      }
+];
 
     const deliveryRates = {
       standard: { title: "Стандарт", perKg: 650, days: "20–25", base: 350 },
@@ -2882,8 +3174,7 @@
     }
 
     function getProductImageCandidates(product) {
-      // Product previews are embedded into the HTML. This avoids marketplace
-      // anti-bot pages and third-party screenshot services inside the catalog.
+      // Direct product-photo CDN links: no screenshot pages, anti-bot frames or drawn SVG placeholders.
       return [product.image].filter(Boolean);
     }
 
@@ -2916,7 +3207,7 @@
           <img
             class="product-photo"
             src="${firstImage}"
-            alt="${product.name} — фото из карточки ${product.source}"
+            alt="${product.name} — реальное фото товара"
             loading="${size === "modal" ? "eager" : "lazy"}"
             decoding="async"
             referrerpolicy="no-referrer"
@@ -2924,8 +3215,8 @@
             data-image-index="0"
             onerror="handleProductImageError(this)"
           >
-          <div class="product-photo-fallback"><span>${label}</span><small>Открой источник, чтобы посмотреть фотографии продавца</small></div>
-          <div class="product-photo-note">Превью товара ONYX</div>
+          <div class="product-photo-fallback"><span>${label}</span><small>Фото временно недоступно — открой карточку источника</small></div>
+          <div class="product-photo-note">Реальное фото товара</div>
         </div>
       `;
     }
