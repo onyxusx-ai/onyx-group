@@ -1553,6 +1553,197 @@
       .banner-panel::after { left: 16px !important; font-size: clamp(2.4rem, 15vw, 5rem) !important; }
     }
 
+
+
+    /* ===== FINAL V6 — brand, intro, visible route label, calculation CTA ===== */
+    .final-brand {
+      min-width: 286px !important;
+      min-height: 62px;
+      gap: 12px;
+      padding: 8px 14px 7px 12px !important;
+      cursor: pointer;
+      border-color: rgba(255,255,255,.16) !important;
+      background: linear-gradient(135deg, rgba(255,255,255,.105), rgba(255,255,255,.045)) !important;
+      box-shadow: 0 16px 44px rgba(0,0,0,.22) !important;
+    }
+    .final-brand:hover {
+      border-color: rgba(255,112,69,.48) !important;
+      box-shadow: 0 18px 48px rgba(0,0,0,.28), 0 0 0 4px rgba(255,112,69,.07) !important;
+    }
+    .onyx-brand-lockup { display:block; width:148px; flex:0 0 148px; }
+    .onyx-wordmark-svg { display:block; width:100%; height:auto; overflow:visible; }
+    .brand-service {
+      max-width: 104px;
+      color: rgba(238,239,235,.66);
+      font-size: .58rem;
+      line-height: 1.35;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .intro-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(255,112,69,.13), transparent 28%),
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.055), transparent 24%),
+        linear-gradient(145deg, #181b1e, #0f1113 68%);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .intro-overlay[hidden] { display:none; }
+    .intro-overlay.is-playing {
+      pointer-events: auto;
+      animation: introOverlaySequence 2.35s cubic-bezier(.22,.72,.18,1) both;
+    }
+    .intro-content {
+      position: relative;
+      z-index: 3;
+      width: min(520px, calc(100% - 48px));
+      display: grid;
+      justify-items: center;
+      gap: 22px;
+    }
+    .intro-wordmark {
+      width: min(430px, 92%);
+      filter: drop-shadow(0 18px 40px rgba(0,0,0,.30));
+      transform: translateY(22px) scale(.94);
+      opacity: 0;
+    }
+    .intro-overlay.is-playing .intro-wordmark {
+      animation: introLogoRise 1.15s .14s cubic-bezier(.2,.75,.2,1) forwards;
+    }
+    .intro-tagline {
+      color: rgba(239,240,236,.72);
+      font-size: clamp(.68rem, 1.7vw, .86rem);
+      letter-spacing: .34em;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    .intro-overlay.is-playing .intro-tagline {
+      animation: introTaglineRise .72s .55s ease forwards;
+    }
+    .intro-progress {
+      width: min(330px, 76%);
+      height: 3px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      opacity: 0;
+    }
+    .intro-progress span {
+      display:block;
+      width:100%;
+      height:100%;
+      transform: translateX(-102%);
+      background: linear-gradient(90deg, #ff7045, #ffb08e, #ffffff);
+      box-shadow: 0 0 24px rgba(255,112,69,.45);
+    }
+    .intro-overlay.is-playing .intro-progress { animation: introProgressShow .2s .66s forwards; }
+    .intro-overlay.is-playing .intro-progress span { animation: introProgressMove 1.15s .68s cubic-bezier(.22,.78,.18,1) forwards; }
+    .intro-orbit {
+      position:absolute;
+      border-radius:50%;
+      border:1px solid rgba(255,255,255,.065);
+      opacity:0;
+      transform:scale(.72);
+    }
+    .intro-orbit-one { width:min(650px,85vw); aspect-ratio:1; }
+    .intro-orbit-two { width:min(920px,118vw); aspect-ratio:1; }
+    .intro-overlay.is-playing .intro-orbit-one { animation:introOrbit 1.5s .12s ease forwards; }
+    .intro-overlay.is-playing .intro-orbit-two { animation:introOrbit 1.8s .28s ease forwards; }
+
+    @keyframes introOverlaySequence {
+      0% { opacity:0; }
+      10%, 76% { opacity:1; }
+      100% { opacity:0; }
+    }
+    @keyframes introLogoRise {
+      to { opacity:1; transform:translateY(0) scale(1); }
+    }
+    @keyframes introTaglineRise {
+      to { opacity:1; transform:translateY(0); }
+    }
+    @keyframes introProgressShow { to { opacity:1; } }
+    @keyframes introProgressMove { to { transform:translateX(0); } }
+    @keyframes introOrbit { to { opacity:1; transform:scale(1); } }
+
+    .banner-panel {
+      padding-bottom: 142px !important;
+    }
+    .banner-panel::after {
+      content: "CHINA  →  RU" !important;
+      left: 34px !important;
+      right: auto !important;
+      bottom: 22px !important;
+      z-index: 1 !important;
+      max-width: calc(100% - 68px);
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: clamp(3rem, 6.2vw, 6rem) !important;
+      line-height: .9;
+      letter-spacing: -.07em !important;
+      color: rgba(255,255,255,.105) !important;
+    }
+    .banner-grid { position:relative; z-index:2; }
+
+    .calc-quote-cta {
+      width: 100%;
+      margin-top: 16px;
+      min-height: 54px;
+      font-weight: 850;
+      letter-spacing: -.02em;
+    }
+
+    .final-footer-wordmark {
+      width: 150px;
+      color: #f0f0ec;
+      margin-bottom: 12px;
+    }
+    .final-footer-wordmark svg { display:block; width:100%; height:auto; }
+
+    @media (max-width: 900px) {
+      .final-brand { min-width:auto !important; padding-right:10px !important; }
+      .onyx-brand-lockup { width:132px; flex-basis:132px; }
+      .brand-service { display:none; }
+    }
+    @media (max-width: 720px) {
+      .banner-panel { padding-bottom: 104px !important; }
+      .banner-panel::after {
+        left: 18px !important;
+        bottom: 18px !important;
+        max-width: calc(100% - 36px);
+        font-size: clamp(2.5rem, 13vw, 4.2rem) !important;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .intro-overlay.is-playing { animation-duration: 1.15s; }
+      .intro-overlay.is-playing .intro-wordmark,
+      .intro-overlay.is-playing .intro-tagline,
+      .intro-overlay.is-playing .intro-progress,
+      .intro-overlay.is-playing .intro-progress span,
+      .intro-overlay.is-playing .intro-orbit-one,
+      .intro-overlay.is-playing .intro-orbit-two { animation-duration: .01ms !important; animation-delay: 0ms !important; }
+    }
+
+
+
+    /* ===== V8 RESTORED: V6 preserved + marketplace/order additions ===== */
+    .marketplace-browser{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:18px;padding:24px;margin-bottom:20px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025));box-shadow:var(--shadow)}
+    .marketplace-browser-label{display:inline-block;color:var(--accent3);font-size:.75rem;font-weight:900;letter-spacing:.14em;margin-bottom:9px}.marketplace-browser h3{font-size:clamp(1.5rem,3vw,2.2rem);letter-spacing:-.05em;margin:0 0 10px}.marketplace-browser p{color:var(--muted);line-height:1.55;margin:0 0 16px}.marketplace-search-form{display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,.36fr) auto;gap:10px}.marketplace-search-form input,.marketplace-search-form select{width:100%;min-width:0;background:rgba(255,255,255,.05);color:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 15px;outline:none}.marketplace-search-form input:focus,.marketplace-search-form select:focus{border-color:rgba(255,90,31,.48);box-shadow:0 0 0 4px rgba(225,42,0,.08)}
+    .marketplace-example-tags{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:12px;color:var(--muted);font-size:.82rem}.marketplace-example-tags button{border:1px solid var(--line);background:rgba(255,255,255,.04);color:#ddd;border-radius:999px;padding:7px 10px;cursor:pointer}.marketplace-flow{display:grid;gap:10px}.marketplace-flow-step{display:grid;grid-template-columns:auto 1fr;column-gap:12px;padding:15px;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.035)}.marketplace-flow-step b{grid-row:1/3;color:var(--accent3);font-size:.8rem}.marketplace-flow-step strong{font-size:1rem}.marketplace-flow-step span{color:var(--muted);font-size:.84rem;margin-top:3px}.marketplace-flow-step.accent{border-color:rgba(255,90,31,.25);background:linear-gradient(145deg,rgba(255,90,31,.13),rgba(255,255,255,.035))}
+    .marketplace-source-button{appearance:none;text-align:left;color:inherit;cursor:pointer;font:inherit}.marketplace-source-button em{display:block;margin-top:12px;color:var(--accent3);font-style:normal;font-size:.8rem}.marketplace-legal-note{color:var(--muted);font-size:.82rem;line-height:1.5;margin:15px 0 0}
+    .product-source-link{margin-top:10px;border:0;background:transparent;color:var(--accent3);padding:0;cursor:pointer;font-weight:800;font-size:.83rem;text-align:left}.product-source-link:hover{text-decoration:underline}.calculator-standalone{max-width:920px;margin:0 auto}.individual-order-layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:20px;align-items:start}.telegram-order-card{padding:24px;border-radius:28px;border:1px solid var(--line);background:linear-gradient(145deg,rgba(42,171,238,.09),rgba(255,255,255,.03));box-shadow:var(--shadow);text-align:center;position:sticky;top:108px}.telegram-order-icon{width:56px;height:56px;margin:0 auto;display:grid;place-items:center;border-radius:18px;background:#229ed9;color:#fff}.telegram-order-icon svg{width:29px;height:29px}.telegram-order-card h3{font-size:1.45rem;margin:13px 0 8px}.telegram-order-card p{color:var(--muted);line-height:1.5}.telegram-order-qr{display:block;width:min(240px,100%);aspect-ratio:1;margin:18px auto;border-radius:22px;background:#fff;padding:10px}.telegram-manager-link{width:100%}.telegram-order-card small{display:block;color:var(--muted);margin-top:14px}.telegram-order-card small a{color:#73c9f2}
+    .restored-modal-actions{display:grid;grid-template-columns:auto 1fr 1fr}.restored-modal-actions button{min-width:0}.telegram-handoff{position:fixed;inset:0;z-index:160;display:grid;place-items:center;padding:18px;background:rgba(0,0,0,.65);opacity:0;pointer-events:none;transition:opacity .18s ease}.telegram-handoff.show{opacity:1;pointer-events:auto}.telegram-handoff-card{width:min(680px,100%);padding:24px;border-radius:28px;border:1px solid var(--line);background:#121316;box-shadow:0 30px 90px rgba(0,0,0,.55);position:relative}.telegram-handoff-title{font-size:1.7rem;font-weight:900;letter-spacing:-.05em}.telegram-handoff-card p{color:var(--muted)}.telegram-handoff-card textarea{width:100%;min-height:190px;resize:vertical;background:rgba(255,255,255,.045);color:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}.telegram-handoff-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.telegram-handoff-actions .ghost-btn{grid-column:1/-1;text-align:center}.telegram-handoff-close{position:absolute;right:16px;top:14px;width:38px;height:38px;border-radius:999px;background:rgba(255,255,255,.06);color:#fff;border:1px solid var(--line);cursor:pointer;font-size:1.35rem}
+    .floating-tg,.floating-plus{backdrop-filter:none!important;filter:none!important;animation:none!important;box-shadow:0 10px 24px rgba(0,0,0,.24)!important;transition:transform .16s ease,opacity .16s ease!important}.floating-tg:hover,.floating-plus:hover{transform:translateY(-2px)}
+    @media(max-width:1020px){.marketplace-browser,.individual-order-layout{grid-template-columns:1fr}.telegram-order-card{position:relative;top:auto}.marketplace-search-form{grid-template-columns:1fr 1fr}.marketplace-search-form .primary-btn{grid-column:1/-1}.restored-modal-actions{grid-template-columns:1fr 1fr}.restored-modal-actions .ghost-btn{grid-column:1/-1}}
+    @media(max-width:720px){.marketplace-search-form,.telegram-handoff-actions,.restored-modal-actions{grid-template-columns:1fr}.marketplace-search-form .primary-btn,.telegram-handoff-actions .ghost-btn,.restored-modal-actions .ghost-btn{grid-column:auto}.floating-actions{right:10px;bottom:10px}.floating-tg,.floating-plus{width:46px!important;height:46px!important}}
+
 </style>
 
   <meta name="tracking-api" content="" />
@@ -1560,33 +1751,50 @@
   <link rel="preconnect" href="https://a.basemaps.cartocdn.com" crossorigin>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
-<body>
+<body id="top">
+  <div class="intro-overlay" id="introOverlay" hidden aria-hidden="true">
+    <div class="intro-orbit intro-orbit-one"></div>
+    <div class="intro-orbit intro-orbit-two"></div>
+    <div class="intro-content">
+      <svg class="intro-wordmark" viewBox="0 0 228 70" aria-label="ONYX GROUP">
+        <defs>
+          <linearGradient id="introWordmarkGradient" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="100%" stop-color="#dedfdb"/>
+          </linearGradient>
+        </defs>
+        <circle cx="25" cy="25" r="18" fill="none" stroke="url(#introWordmarkGradient)" stroke-width="11"/>
+        <path d="M51 45V5h12l25 25V5h12v40H88L63 20v25Z" fill="url(#introWordmarkGradient)"/>
+        <path d="M105 5h14l11 15 11-15h14l-19 26v14h-12V31Z" fill="url(#introWordmarkGradient)"/>
+        <path d="M158 5h15l10 12 10-12h15l-18 20 19 20h-16l-11-12-11 12h-15l19-21Z" fill="url(#introWordmarkGradient)"/>
+        <circle cx="213" cy="9" r="4" fill="#ff7045"/>
+        <text x="58" y="65" fill="#d9dad7" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" letter-spacing="8">GROUP</text>
+      </svg>
+      <div class="intro-tagline">BUYER · CARGO · CHINA → RUSSIA</div>
+      <div class="intro-progress"><span></span></div>
+    </div>
+  </div>
   <div class="grain"></div><div class="glow one"></div><div class="glow two"></div><div class="glow three"></div>
   <header class="site-header"><div class="container header-inner">
-    <a href="#top" class="brand" id="top" aria-label="ONYX GROUP">
-        <span class="brand-mark logo-emblem">
-          <svg viewBox="0 0 64 64" width="26" height="26" aria-hidden="true">
-            <defs>
-              <linearGradient id="onyxLogoGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#ff8a50"/>
-                <stop offset="48%" stop-color="#ff5a1f"/>
-                <stop offset="100%" stop-color="#e12a00"/>
-              </linearGradient>
-              <filter id="onyxLogoGlow" x="-30%" y="-30%" width="160%" height="160%">
-                <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ff5a1f" flood-opacity="0.55"/>
-              </filter>
-            </defs>
-            <path d="M32 4L54 16.5V40.5C54 49.7 45.2 57.1 32 61C18.8 57.1 10 49.7 10 40.5V16.5L32 4Z" fill="url(#onyxLogoGrad)" filter="url(#onyxLogoGlow)"/>
-            <path d="M32 11L47 19.5V38.2C47 44.9 41.1 50.2 32 53.2C22.9 50.2 17 44.9 17 38.2V19.5L32 11Z" fill="rgba(0,0,0,0.22)" stroke="rgba(255,255,255,0.28)"/>
-            <path d="M22.8 22.8H29.1L32 27.15L34.9 22.8H41.2L35.2 31.6L42 41.2H35.45L32 36.1L28.55 41.2H22L28.8 31.6L22.8 22.8Z" fill="#fff"/>
-            <path d="M21.5 17.7L32 11.8L42.5 17.7" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        </span>
-        <span class="brand-copy">
-          <span class="brand-main">ONYX GROUP</span>
-          <span class="brand-sub">China Buyer / Cargo Service</span>
-        </span>
-      </a>
+    <a href="#top" class="brand final-brand" id="brandReplay" aria-label="ONYX GROUP — повторить вступительную анимацию">
+      <span class="onyx-brand-lockup" aria-hidden="true">
+        <svg class="onyx-wordmark-svg" viewBox="0 0 228 70" role="img">
+          <defs>
+            <linearGradient id="onyxWordmarkGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="100%" stop-color="#e7e7e3"/>
+            </linearGradient>
+          </defs>
+          <circle cx="25" cy="25" r="18" fill="none" stroke="url(#onyxWordmarkGradient)" stroke-width="11"/>
+          <path d="M51 45V5h12l25 25V5h12v40H88L63 20v25Z" fill="url(#onyxWordmarkGradient)"/>
+          <path d="M105 5h14l11 15 11-15h14l-19 26v14h-12V31Z" fill="url(#onyxWordmarkGradient)"/>
+          <path d="M158 5h15l10 12 10-12h15l-18 20 19 20h-16l-11-12-11 12h-15l19-21Z" fill="url(#onyxWordmarkGradient)"/>
+          <circle cx="213" cy="9" r="4" fill="#ff7045"/>
+          <text x="58" y="65" fill="#d9dad7" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" letter-spacing="8">GROUP</text>
+        </svg>
+      </span>
+      <span class="brand-service">CHINA BUYER / CARGO SERVICE</span>
+    </a>
     <nav class="nav" id="nav"><a href="#catalog">Каталог</a><a href="#sources">Площадки</a><a href="#calculator">Расчёт</a><a href="#process">Как работает</a><a href="#tracking">Трекинг</a><a href="#faq">FAQ</a><a href="#contacts">Контакты</a></nav>
     <div class="header-actions"><button class="icon-btn" id="openSearchBtn" aria-label="Поиск">⌕</button><button class="cart-btn" id="openCartBtn" aria-label="Заявка"><span>Заявка</span><span class="cart-count" id="cartCount">0</span></button><button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button></div>
   </div></header>
@@ -1612,7 +1820,6 @@
           <div class="hero-actions">
             <a class="primary-btn" href="#catalog">Смотреть каталог</a>
             <a class="secondary-btn" href="#calculator">Рассчитать доставку</a>
-            <a class="ghost-btn" href="#quote">Оставить заявку</a>
           </div>
 
           <div class="hero-metrics">
@@ -1621,8 +1828,8 @@
               <span>Работаем с китайскими маркетплейсами, фабриками и поставщиками.</span>
             </div>
             <div class="metric">
-              <strong>7–24 дня</strong>
-              <span>Средний срок доставки товара из Китая в Россию.</span>
+              <strong>20–25 дней</strong>
+              <span>Стандартный срок доставки товара из Китая в Россию.</span>
             </div>
             <div class="metric">
               <strong>Фото-проверка</strong>
@@ -1697,15 +1904,77 @@
       </div>
     </section>
 
-    <section class="search-band" id="smart-search"><div class="container"><div class="search-shell reveal"><div class="search-row"><div class="input-wrap"><input type="text" id="globalSearch" placeholder="Найти товар: кроссовки, пуховик, электроника, ссылка 1688..."></div><div class="input-wrap"><select id="mainCategoryFilter"><option value="all">Все категории</option><option value="clothes">Одежда</option><option value="shoes">Обувь</option><option value="electronics">Электроника</option><option value="accessories">Аксессуары</option><option value="home">Дом</option><option value="auto">Авто</option></select></div><div class="input-wrap"><select id="sourceFilter"><option value="all">Все площадки</option><option value="1688">1688</option><option value="Taobao">Taobao</option><option value="Poizon">Poizon</option><option value="Pinduoduo">Pinduoduo</option><option value="AliExpress">AliExpress</option></select></div><div class="input-wrap"><select id="priceFilter"><option value="all">Любая цена</option><option value="under2000">до 2 000 ₽</option><option value="under5000">до 5 000 ₽</option><option value="premium">premium</option></select></div><button class="primary-btn" id="searchNowBtn">Найти</button></div><div class="search-tags"><span>Популярное:</span><button class="tag-link" data-search="techwear">techwear</button><button class="tag-link" data-search="кроссовки">кроссовки</button><button class="tag-link" data-search="iPhone">iPhone</button><button class="tag-link" data-search="сумка">сумка</button><button class="tag-link" data-search="авто">авто</button><button class="tag-link" data-search="дом">дом</button></div></div></div></section>
+    <section class="search-band" id="smart-search"><div class="container"><div class="search-shell reveal"><div class="search-row"><div class="input-wrap"><input type="text" id="globalSearch" placeholder="Найти товар: кроссовки, пуховик, электроника, ссылка 1688..."></div><div class="input-wrap"><select id="mainCategoryFilter"><option value="all">Все категории</option><option value="clothes">Одежда</option><option value="shoes">Обувь</option><option value="electronics">Электроника</option><option value="accessories">Аксессуары</option><option value="home">Дом</option><option value="auto">Авто</option></select></div><div class="input-wrap"><select id="sourceFilter"><option value="all">Все площадки</option><option value="Alibaba">Alibaba</option><option value="1688">1688</option><option value="Taobao">Taobao</option><option value="Poizon">Poizon</option><option value="Pinduoduo">Pinduoduo</option><option value="AliExpress">AliExpress</option></select></div><div class="input-wrap"><select id="priceFilter"><option value="all">Любая цена</option><option value="under2000">до 2 000 ₽</option><option value="under5000">до 5 000 ₽</option><option value="premium">premium</option></select></div><button class="primary-btn" id="searchNowBtn">Найти</button></div><div class="search-tags"><span>Популярное:</span><button class="tag-link" data-search="techwear">techwear</button><button class="tag-link" data-search="кроссовки">кроссовки</button><button class="tag-link" data-search="iPhone">iPhone</button><button class="tag-link" data-search="сумка">сумка</button><button class="tag-link" data-search="авто">авто</button><button class="tag-link" data-search="дом">дом</button></div></div></div></section>
 
-    <section class="section tight" id="sources"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">SOURCES</div><h2>Площадки, с которыми работаем</h2><p>Можно отправить ссылку, фото, название товара или просто идею — мы найдём варианты в Китае.</p></div></div><div class="source-grid"><div class="source-card reveal"><span>Оптовые цены</span><strong>1688</strong><div class="source-meta"><span class="small-pill">factory</span><span class="small-pill">low price</span></div></div><div class="source-card reveal"><span>Огромный выбор</span><strong>Taobao</strong><div class="source-meta"><span class="small-pill">fashion</span><span class="small-pill">trends</span></div></div><div class="source-card reveal"><span>Обувь и стритвир</span><strong>Poizon</strong><div class="source-meta"><span class="small-pill">sneakers</span><span class="small-pill">brands</span></div></div><div class="source-card reveal"><span>Бюджетные находки</span><strong>Pinduoduo</strong><div class="source-meta"><span class="small-pill">deals</span><span class="small-pill">cheap</span></div></div><div class="source-card reveal"><span>Привычный формат</span><strong>AliExpress</strong><div class="source-meta"><span class="small-pill">retail</span><span class="small-pill">fast search</span></div></div></div></div></section>
+    <section class="section tight" id="sources">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head-copy reveal">
+            <div class="eyebrow">SOURCES</div>
+            <h2>Площадки, с которыми работаем</h2>
+            <p>Можно отправить ссылку, фото, название товара или просто идею — мы найдём варианты в Китае.</p>
+          </div>
+        </div>
+
+        <div class="marketplace-browser reveal">
+          <div class="marketplace-browser-copy">
+            <span class="marketplace-browser-label">ПОИСК НА ПЛОЩАДКАХ</span>
+            <h3>Выбери товар самостоятельно или передай ссылку ONYX GROUP</h3>
+            <p>Введи запрос, открой выбранную площадку и найди нужный товар. После этого скопируй ссылку в индивидуальную заявку — мы проверим продавца, рассчитаем доставку и выкупим товар.</p>
+
+            <form class="marketplace-search-form" id="marketplaceSearchForm">
+              <input id="marketplaceSearchInput" type="search" placeholder="Например: кроссовки, запчасть, куртка, техника" autocomplete="off">
+              <select id="marketplaceSearchSelect" aria-label="Выберите площадку">
+                <option value="alibaba">Alibaba</option>
+                <option value="1688">1688</option>
+                <option value="taobao">Taobao</option>
+                <option value="aliexpress">AliExpress</option>
+                <option value="poizon">Poizon</option>
+                <option value="pinduoduo">Pinduoduo</option>
+              </select>
+              <button class="primary-btn" type="submit">Открыть поиск</button>
+            </form>
+
+            <div class="marketplace-example-tags">
+              <span>Популярное:</span>
+              <button type="button" data-marketplace-query="кроссовки">кроссовки</button>
+              <button type="button" data-marketplace-query="автозапчасти">автозапчасти</button>
+              <button type="button" data-marketplace-query="женская одежда">одежда</button>
+              <button type="button" data-marketplace-query="электроника">электроника</button>
+            </div>
+          </div>
+
+          <div class="marketplace-flow">
+            <div class="marketplace-flow-step">
+              <b>01</b><strong>Найти</strong><span>Открыть площадку и выбрать товар</span>
+            </div>
+            <div class="marketplace-flow-step">
+              <b>02</b><strong>Скопировать</strong><span>Вставить ссылку в заявку ONYX</span>
+            </div>
+            <div class="marketplace-flow-step accent">
+              <b>03</b><strong>Заказать</strong><span>Получить расчёт, выкуп и доставку</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="source-grid">
+          <button class="source-card reveal marketplace-source-button" type="button" data-marketplace="alibaba"><span>Поставщики и опт</span><strong>Alibaba</strong><div class="source-meta"><span class="small-pill">global B2B</span><span class="small-pill">factory</span></div><em>Открыть площадку ↗</em></button>
+          <button class="source-card reveal marketplace-source-button" type="button" data-marketplace="1688"><span>Оптовые цены</span><strong>1688</strong><div class="source-meta"><span class="small-pill">factory</span><span class="small-pill">low price</span></div><em>Открыть площадку ↗</em></button>
+          <button class="source-card reveal marketplace-source-button" type="button" data-marketplace="taobao"><span>Огромный выбор</span><strong>Taobao</strong><div class="source-meta"><span class="small-pill">fashion</span><span class="small-pill">trends</span></div><em>Открыть площадку ↗</em></button>
+          <button class="source-card reveal marketplace-source-button" type="button" data-marketplace="poizon"><span>Обувь и стритвир</span><strong>Poizon</strong><div class="source-meta"><span class="small-pill">sneakers</span><span class="small-pill">brands</span></div><em>Открыть площадку ↗</em></button>
+          <button class="source-card reveal marketplace-source-button" type="button" data-marketplace="pinduoduo"><span>Бюджетные находки</span><strong>Pinduoduo</strong><div class="source-meta"><span class="small-pill">deals</span><span class="small-pill">cheap</span></div><em>Открыть площадку ↗</em></button>
+          <button class="source-card reveal marketplace-source-button" type="button" data-marketplace="aliexpress"><span>Привычный формат</span><strong>AliExpress</strong><div class="source-meta"><span class="small-pill">retail</span><span class="small-pill">fast search</span></div><em>Открыть площадку ↗</em></button>
+        </div>
+
+        <p class="marketplace-legal-note reveal">Сайт ONYX GROUP не копирует каталоги площадок и не принимает оплату от их имени. Покупатель выбирает товар на площадке, а ONYX GROUP оказывает отдельную услугу проверки, выкупа, консолидации и доставки.</p>
+      </div>
+    </section>
 
     <section class="section" id="categories"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">CATEGORIES</div><h2>Что можно привезти</h2><p>Одежда, обувь, техника, аксессуары, товары для дома, авто и любые позиции под запрос.</p></div></div><div class="category-grid"><button class="category-card reveal" data-category-jump="clothes"><div class="category-icon">👕</div><strong>Одежда</strong><span>худи, куртки, джинсы, костюмы, дропы</span></button><button class="category-card reveal" data-category-jump="shoes"><div class="category-icon">👟</div><strong>Обувь</strong><span>кроссовки, ботинки, slides, пары под заказ</span></button><button class="category-card reveal" data-category-jump="electronics"><div class="category-icon">🎧</div><strong>Электроника</strong><span>гаджеты, аксессуары, свет, девайсы</span></button><button class="category-card reveal" data-category-jump="accessories"><div class="category-icon">👜</div><strong>Аксессуары</strong><span>сумки, чехлы, кошельки, ремни</span></button><button class="category-card reveal" data-category-jump="home"><div class="category-icon">🏠</div><strong>Дом</strong><span>декор, хранение, мебель, полезные вещи</span></button><button class="category-card reveal" data-category-jump="auto"><div class="category-icon">🚗</div><strong>Авто</strong><span>обвесы, аксессуары, уход, детали</span></button></div></div></section>
 
     <section class="section" id="catalog"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">CATALOG</div><h2>Витрина находок</h2><p>Товары выглядят как единый каталог ONYX, но логика — поиск, выкуп и доставка из Китая.</p></div><div class="section-actions reveal"><button class="secondary-btn" id="resetFiltersBtn">Сбросить фильтры</button><button class="primary-btn" id="scrollQuoteBtn">Заказать по ссылке</button></div></div><div class="catalog-toolbar reveal"><div class="filter-pills" id="quickFilters"><button class="filter-pill active" data-quick="all">Все</button><button class="filter-pill" data-quick="hot">Хиты</button><button class="filter-pill" data-quick="fast">Быстрая доставка</button><button class="filter-pill" data-quick="low">До 3000 ₽</button><button class="filter-pill" data-quick="premium">Premium</button></div><div class="toolbar-selects"><select id="sortFilter"><option value="default">По умолчанию</option><option value="priceAsc">Цена ↑</option><option value="priceDesc">Цена ↓</option><option value="ratingDesc">Рейтинг</option><option value="ordersDesc">Заказы</option></select></div></div><div class="product-grid" id="productGrid"></div></div></section>
 
-    <section class="section tight"><div class="container"><div class="banner-panel reveal"><div class="banner-grid"><div><div class="eyebrow">FULL SERVICE</div><h2>Не нужно разбираться в китайских сайтах.</h2><p>Клиенту не надо переводить карточки, писать поставщику, считать доставку и спорить о размерах. ONYX GROUP берёт на себя коммуникацию, выкуп, проверку, склад и логистику.</p><a class="primary-btn" href="#quote">Оставить заявку</a></div><div class="banner-cards"><div class="banner-card"><strong>🔎 Найдём аналог по фото</strong><span>Можно отправить фото товара, а не ссылку.</span></div><div class="banner-card"><strong>📸 Фото перед отправкой</strong><span>Проверка товара на складе в Китае.</span></div><div class="banner-card"><strong>📦 Объединение посылок</strong><span>Несколько товаров можно собрать в одну отправку.</span></div></div></div></div></div></section>
+    <section class="section tight"><div class="container"><div class="banner-panel reveal"><div class="banner-grid"><div><div class="eyebrow">FULL SERVICE</div><h2>Не нужно разбираться в китайских сайтах.</h2><p>Клиенту не надо переводить карточки, писать поставщику, считать доставку и спорить о размерах. ONYX GROUP берёт на себя коммуникацию, выкуп, проверку, склад и логистику.</p></div><div class="banner-cards"><div class="banner-card"><strong>🔎 Найдём аналог по фото</strong><span>Можно отправить фото товара, а не ссылку.</span></div><div class="banner-card"><strong>📸 Фото перед отправкой</strong><span>Проверка товара на складе в Китае.</span></div><div class="banner-card"><strong>📦 Объединение посылок</strong><span>Несколько товаров можно собрать в одну отправку.</span></div></div></div></div></div></section>
 
     <section class="section" id="benefits"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">ADVANTAGES</div><h2>Почему через ONYX GROUP</h2><p>Сервис сделан так, чтобы покупка из Китая была понятной, безопасной и без хаоса.</p></div></div><div class="benefits-grid"><div class="benefit-card reveal"><div><div class="benefit-icon">💸</div><strong>Цена ниже перекупов</strong><p>Покупаем ближе к китайскому источнику и отдельно показываем комиссию сервиса.</p></div></div><div class="benefit-card reveal"><div><div class="benefit-icon">🧾</div><strong>Прозрачный расчёт</strong><p>Товар, доставка, комиссия, страховка и итог — всё считается до оформления.</p></div></div><div class="benefit-card reveal"><div><div class="benefit-icon">📸</div><strong>Фото-контроль</strong><p>Делаем фото товара на складе, сверяем цвет, размер, модель и комплектацию.</p></div></div><div class="benefit-card reveal"><div><div class="benefit-icon">🚚</div><strong>Карго логистика</strong><p>Доставляем посылки в РФ, объединяем заказы и помогаем с маршрутом.</p></div></div></div></div></section>
 
@@ -1721,7 +1990,7 @@
           </div>
         </div>
 
-        <div class="calculator-layout">
+        <div class="calculator-standalone">
           <div class="calc-panel reveal">
             <h3>Рассчитать заказ</h3>
             <p>Введи цену товара в юанях и примерный вес. Если вес введён числом больше 100, сайт считает, что это граммы, и сам переведёт в килограммы.</p>
@@ -1744,39 +2013,55 @@
             </div>
 
             <div class="auto-rate-panel">
-              <div>
-                <span>Курс сайта</span>
-                <strong id="siteRateLabel">¥ → ₽</strong>
-              </div>
-              <div>
-                <span>Комиссия ONYX</span>
-                <strong id="siteFeeLabel">авто</strong>
-              </div>
-              <div>
-                <span>Маршрут</span>
-                <strong id="siteRouteLabel">Стандарт</strong>
-              </div>
+              <div><span>Курс сайта</span><strong id="siteRateLabel">¥ → ₽</strong></div>
+              <div><span>Комиссия ONYX</span><strong id="siteFeeLabel">авто</strong></div>
+              <div><span>Маршрут</span><strong id="siteRouteLabel">Стандарт</strong></div>
             </div>
 
             <div class="calc-result" id="calcResult"></div>
 
-            <div class="calc-note">
-              Итог является предварительным. Финальная сумма фиксируется менеджером после проверки товара, продавца, веса и маршрута.
-            </div>
-          </div>
+            <div class="calc-note">Итог является предварительным. Финальная сумма фиксируется менеджером после проверки товара, продавца, веса и маршрута.</div>
 
-          <div class="quote-panel reveal" id="quote">
+            <button class="primary-btn calc-quote-cta" type="button" id="calcQuoteBtn">Передать этот расчёт в заявку</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section quote-section" id="quote">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head-copy reveal">
+            <div class="eyebrow">INDIVIDUAL ORDER</div>
+            <h2>Индивидуальный заказ</h2>
+            <p>Для товара по ссылке, фотографии или описанию. Расчёт и заявка теперь находятся в отдельных блоках.</p>
+          </div>
+        </div>
+
+        <div class="individual-order-layout">
+          <div class="quote-panel reveal">
             <h3>Заявка на поиск / выкуп</h3>
-            <p>Отправь ссылку, фото или описание товара. Форма соберёт сообщение и откроет Telegram для отправки менеджеру.</p>
+            <p>Отправь ссылку, фото или описание товара. Сайт подготовит сообщение для менеджера и сохранит заявку на сервере, если запущена полная версия проекта.</p>
 
             <form class="quote-form" id="quoteForm">
               <input type="text" id="quoteName" placeholder="Имя" required>
               <input type="text" id="quoteContact" placeholder="Telegram / телефон" required>
-              <input type="text" id="quoteLink" placeholder="Ссылка на товар или название">
+              <input type="url" id="quoteLink" placeholder="Ссылка на товар с Alibaba, 1688, Taobao и других площадок">
               <textarea id="quoteText" placeholder="Что нужно найти / размер / цвет / количество / город доставки"></textarea>
-              <button class="primary-btn" type="submit">Отправить заявку в Telegram</button>
+              <button class="primary-btn" type="submit">Подготовить заявку в Telegram</button>
             </form>
           </div>
+
+          <aside class="telegram-order-card reveal">
+            <div class="telegram-order-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M9.78 15.53L9.41 20.74C9.94 20.74 10.17 20.51 10.45 20.23L12.94 17.84L18.11 21.62C19.06 22.15 19.73 21.87 19.99 20.75L23.4 4.77C23.71 3.33 22.88 2.77 21.96 3.11L1.91 10.78C0.54 11.31 0.56 12.07 1.68 12.41L6.81 14.01L18.73 6.53C19.29 6.19 19.8 6.38 19.38 6.72L9.78 15.53Z"/></svg>
+            </div>
+            <h3>Менеджер заказов</h3>
+            <p>После отправки формы текст заявки будет скопирован. Останется открыть чат и отправить его администратору.</p>
+            <img class="telegram-order-qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAAFoAQAAAABSnlx4AAACy0lEQVR4nO2bzW4jMQyDycW8/ytzD5TkyWJ7KOBJpcZNm2Qy34FwDZn6CYVv/Pz5DnzoQ/84DeUGFwTlJ/7FeucbfXRPpS/EetILTIiC6PcU14qzk+7RNEkAoAgJIAiBseN1I5rpnk0TlNdVACOceJ3frORDaDmURLhWPPML+kklv5e+gHUg0sHEAZve5srrp5V8Bv2vP/n/I9E+uqfS19rdAHxmEjYoEdJvRB/dU2k6XjAW2OG6LhBOxXfUSPdU+rLnBhVLLoAU/J+IpY//QifdU2kfkbnoAOQdH64krt6h5GNoyk6QkFQrL8nJD5GPZrqn0qJoFxiRJJN7v8rB5uTzW2jmobhCi4soEOtduZQ+uifTXOkNFBmmopYiyiFFZ3/voPMwtD9ZPiUu7tjxg5toghlYGHmmAJEg/ZlP0266J9KV7wAVx725E0gL/rSSz6FJKorey4LTRW++lAl76Z5Ku4sGMEJ3PHxGplM8/nsLbROoTCfhflqenCjD6Lt9dE+lfTT6T8qk0j1LVdvYH5167CaaUDbOqkPsuqy7x8gieDPdQ2n3cVSuEDaCitxHke4cP7iBdo1qRY34zDfWSEq48j66J9Oxv0lFFA9nGEMSrh6e/b2FvpW6ATBnIVYaVG0IHn+yiXasyEmTVZ1ajYhI55vpnkjnAbmaZmm/AbuTKp48rOQzaFZikwMnMddWwL2n1kf3YNqOjzG9RvLUTx6mGVklK6d8qZ/g9C+30VeNmNzGjrN+AuUAEHH6DVvoqwbrsyjFrIAzl1xpFBvpnkpfuPvvsCc5EoHlUOwL++ieSr98vyH7O7mzKeXu1+nPb6FRS5o1kvUct/2KMx+7g77WW/lQdEUwF7zst079ZDftsrcL4PGNHiAitz1KT93jaNdkwRyIuMVxAGHD36Lk19P3Udia+F7j36/ty0a6p9K3YeMfVnLoQ++n/wJD7bJxjvk/OwAAAABJRU5ErkJggg==" alt="QR-код Telegram @onyxshopadmin">
+            <a class="secondary-btn telegram-manager-link" href="https://t.me/onyxshopadmin" target="_blank" rel="noopener noreferrer">Открыть @onyxshopadmin</a>
+            <small>Новости и подборки: <a href="https://t.me/onyxgrouptg" target="_blank" rel="noopener noreferrer">@onyxgrouptg</a></small>
+          </aside>
         </div>
       </div>
     </section>
@@ -1994,7 +2279,7 @@
 
     <section class="section" id="blog"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">GUIDES</div><h2>Гайды для клиентов</h2><p>Информационные карточки, чтобы сайт выглядел не пусто и повышал доверие.</p></div></div><div class="blog-grid"><article class="blog-card reveal"><div><small>Guide</small><strong>Почему 1688 дешевле обычных магазинов</strong><p>Короткое объяснение разницы между оптом, розницей и перепродажей.</p></div><a class="mini-action" href="#quote">Заказать поиск</a></article><article class="blog-card reveal"><div><small>Safety</small><strong>Как не попасть на плохого продавца</strong><p>Рейтинг, отзывы, фото покупателей и опыт менеджера помогают снизить риск.</p></div><a class="mini-action" href="#insurance">Подробнее</a></article><article class="blog-card reveal"><div><small>Delivery</small><strong>Когда выгодно объединять посылки</strong><p>Если товаров несколько, объединение на складе может сделать маршрут удобнее.</p></div><a class="mini-action" href="#warehouse">Склад</a></article></div></div></section>
 
-    <section class="section" id="contacts"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">CONTACTS</div><h2>Связь с ONYX GROUP</h2><p>Заменишь контакты на свои — и сайт готов под реальный запуск.</p></div></div><div class="contact-grid"><a class="contact-card reveal" href="https://t.me/onyxgroup" target="_blank" rel="noopener noreferrer"><span>Telegram</span><strong>@onyxgroup</strong></a><a class="contact-card reveal" href="https://instagram.com/onyxgroup" target="_blank" rel="noopener noreferrer"><span>Instagram</span><strong>@onyxgroup</strong></a><a class="contact-card reveal" href="mailto:orders@onyx-group.ru"><span>Email</span><strong>orders@onyx-group.ru</strong></a><a class="contact-card reveal" href="#quote"><span>Заявка</span><strong>Через сайт</strong></a></div></div></section>
+    <section class="section" id="contacts"><div class="container"><div class="section-head"><div class="section-head-copy reveal"><div class="eyebrow">CONTACTS</div><h2>Связь с ONYX GROUP</h2><p>Заменишь контакты на свои — и сайт готов под реальный запуск.</p></div></div><div class="contact-grid"><a class="contact-card reveal" href="https://t.me/onyxgrouptg" target="_blank" rel="noopener noreferrer"><span>Telegram</span><strong>@onyxgrouptg</strong></a><a class="contact-card reveal" href="https://instagram.com/onyxgroup" target="_blank" rel="noopener noreferrer"><span>Instagram</span><strong>@onyxgroup</strong></a><a class="contact-card reveal" href="mailto:orders@onyx-group.ru"><span>Email</span><strong>orders@onyx-group.ru</strong></a><a class="contact-card reveal" href="#quote"><span>Заявка</span><strong>Через сайт</strong></a></div></div></section>
 
     <section class="section tight"><div class="container"><div class="support-grid"><div class="support-card reveal"><div class="eyebrow">SUPPORT</div><h2 style="margin:14px 0 10px;letter-spacing:-.06em;line-height:.96;">Поддержка до и после заказа</h2><p style="color:var(--muted);line-height:1.55;margin:0;">Клиенту важно не просто нажать кнопку, а понимать, где заказ и что происходит.</p><div class="support-list"><div class="support-row"><i>💬</i><div><strong>Менеджер в Telegram</strong><span>Уточнение размера, цвета, модели и адреса доставки.</span></div></div><div class="support-row"><i>📦</i><div><strong>Статусы заказа</strong><span>Выкуплен, на складе, в пути, прибыл в РФ.</span></div></div><div class="support-row"><i>🧾</i><div><strong>Прозрачный расчёт</strong><span>Понятная структура итоговой стоимости.</span></div></div></div></div><div class="support-card reveal"><div class="eyebrow">NEWSLETTER</div><h2 style="margin:14px 0 10px;letter-spacing:-.06em;line-height:.96;">Подборки и тренды из Китая</h2><p style="color:var(--muted);line-height:1.55;margin:0;">Можно использовать как форму подписки или сбор заявок на подборки.</p><form class="newsletter-form final-newsletter-form" id="newsletterForm">
               <input type="text" id="newsletterInput" placeholder="Telegram или email для подборок" required>
@@ -2022,25 +2307,54 @@
             </div></div></div></div></section>
   </main>
 
-  <footer class="site-footer"><div class="container footer-inner"><div><div class="footer-logo"><span>
-          <svg viewBox="0 0 64 64" width="18" height="18" aria-hidden="true">
-            <path d="M32 6L52 17V39C52 48 44 55 32 58C20 55 12 48 12 39V17L32 6Z" fill="currentColor"/>
-            <path d="M22 22H28.5L32 27.2L35.5 22H42L36 31.5L42.5 42H36L32 36L28 42H21.5L28 31.5L22 22Z" fill="#050505"/>
+  <footer class="site-footer"><div class="container footer-inner"><div><div class="footer-logo final-footer-wordmark">
+          <svg viewBox="0 0 228 70" aria-label="ONYX GROUP">
+            <circle cx="25" cy="25" r="18" fill="none" stroke="currentColor" stroke-width="11"/>
+            <path d="M51 45V5h12l25 25V5h12v40H88L63 20v25Z" fill="currentColor"/>
+            <path d="M105 5h14l11 15 11-15h14l-19 26v14h-12V31Z" fill="currentColor"/>
+            <path d="M158 5h15l10 12 10-12h15l-18 20 19 20h-16l-11-12-11 12h-15l19-21Z" fill="currentColor"/>
+            <circle cx="213" cy="9" r="4" fill="#ff7045"/>
+            <text x="58" y="65" fill="currentColor" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" letter-spacing="8">GROUP</text>
           </svg>
-        </span> ONYX GROUP</div><p>China buyer service / cargo / product search / delivery to Russia.</p></div><div class="footer-links"><a href="#catalog">Каталог</a><a href="#calculator">Расчёт</a><a href="#quote">Заявка</a><a href="#faq">FAQ</a><a href="#contacts">Контакты</a></div></div></footer>
+        </div><p>China buyer service / cargo / product search / delivery to Russia.</p></div><div class="footer-links"><a href="#catalog">Каталог</a><a href="#calculator">Расчёт</a><a href="#quote">Заявка</a><a href="#faq">FAQ</a><a href="#contacts">Контакты</a></div></div></footer>
 
   <div class="overlay" id="overlay"></div>
   <aside class="cart-drawer" id="cartDrawer" aria-hidden="true"><div class="drawer-head"><h3>Заявка / корзина</h3><button class="icon-btn" id="closeCartBtn" aria-label="Закрыть">✕</button></div><div class="cart-body" id="cartItems"></div><div class="cart-foot"><div class="cart-total"><span>Примерный итог</span><strong id="cartTotal">0 ₽</strong></div><form class="checkout-form" id="checkoutForm"><input type="text" id="customerName" placeholder="Имя" required><input type="text" id="customerContact" placeholder="Telegram или телефон" required><input type="text" id="customerCity" placeholder="Город доставки" required><textarea id="customerComment" placeholder="Комментарий: размер, цвет, количество, пожелания"></textarea><button type="submit" class="primary-btn">Отправить заявку</button></form></div></aside>
-  <div class="product-modal" id="productModal"><div class="product-modal-inner"><button class="modal-close" id="closeModalBtn">✕</button><div class="modal-grid"><div class="modal-media" id="modalMedia"></div><div class="modal-content"><div class="modal-meta" id="modalMeta"></div><h3 id="modalTitle"></h3><div class="modal-price" id="modalPrice"></div><p class="modal-desc" id="modalDesc"></p><div class="trust-box"><span>🚚 Доставка Китай → РФ 7–24 дня</span><span>📦 Проверка товара на складе</span><span>💰 Прозрачная комиссия ONYX GROUP</span><span>💬 Подтверждение заказа в Telegram</span></div><div class="modal-block"><div class="modal-block-title">Характеристики</div><div class="product-chips" id="modalChips"></div></div><div class="modal-block" id="sizeBlock" style="display:none;"><div class="modal-block-title">Размер</div><div class="option-grid" id="sizeOptions"></div></div><div class="modal-block" id="colorBlock" style="display:none;"><div class="modal-block-title">Цвет / модель</div><div class="option-grid" id="colorOptions"></div></div><div class="modal-block"><div class="modal-block-title">Источник</div><div class="calc-result" id="modalSourceBox"></div></div><div class="modal-actions"><button class="secondary-btn" id="modalCloseAction">Закрыть</button><button class="primary-btn" id="modalAddToCartBtn">Добавить в заявку</button></div></div></div></div></div>
-  <div class="toast" id="toast"></div><div class="floating-actions"><a class="floating-tg" href="https://t.me/onyxgroup" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+  <div class="product-modal" id="productModal"><div class="product-modal-inner"><button class="modal-close" id="closeModalBtn">✕</button><div class="modal-grid"><div class="modal-media" id="modalMedia"></div><div class="modal-content"><div class="modal-meta" id="modalMeta"></div><h3 id="modalTitle"></h3><div class="modal-price" id="modalPrice"></div><p class="modal-desc" id="modalDesc"></p><div class="trust-box"><span>🚚 Стандартная доставка Китай → РФ 20–25 дней</span><span>📦 Проверка товара на складе</span><span>💰 Прозрачная комиссия ONYX GROUP</span><span>💬 Подтверждение заказа в Telegram</span></div><div class="modal-block"><div class="modal-block-title">Характеристики</div><div class="product-chips" id="modalChips"></div></div><div class="modal-block" id="sizeBlock" style="display:none;"><div class="modal-block-title">Размер</div><div class="option-grid" id="sizeOptions"></div></div><div class="modal-block" id="colorBlock" style="display:none;"><div class="modal-block-title">Цвет / модель</div><div class="option-grid" id="colorOptions"></div></div><div class="modal-block"><div class="modal-block-title">Источник</div><div class="calc-result" id="modalSourceBox"></div></div><div class="modal-actions restored-modal-actions"><button class="ghost-btn" id="modalCloseAction">Закрыть</button><button class="secondary-btn" id="modalOpenSourceBtn">Открыть источник</button><button class="primary-btn" id="modalAddToCartBtn">Добавить в заявку</button></div></div></div></div></div>
+  <div class="toast" id="toast"></div><div class="floating-actions"><a class="floating-tg" href="https://t.me/onyxgrouptg" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
       <svg viewBox="0 0 24 24" width="23" height="23" aria-hidden="true">
         <path fill="currentColor" d="M9.78 15.53L9.41 20.74C9.94 20.74 10.17 20.51 10.45 20.23L12.94 17.84L18.11 21.62C19.06 22.15 19.73 21.87 19.99 20.75L23.4 4.77C23.71 3.33 22.88 2.77 21.96 3.11L1.91 10.78C0.54 11.31 0.56 12.07 1.68 12.41L6.81 14.01L18.73 6.53C19.29 6.19 19.8 6.38 19.38 6.72L9.78 15.53Z"/>
       </svg>
-    </a><a class="floating-plus" href="#quote" aria-label="Заявка">+</a></div>
+    </a><a class="floating-plus" href="#quote" aria-label="Открыть индивидуальную заявку">+</a></div>
+
+  <div class="telegram-handoff" id="telegramHandoff" aria-hidden="true">
+    <div class="telegram-handoff-card">
+      <button class="telegram-handoff-close" id="telegramHandoffClose" type="button" aria-label="Закрыть">×</button>
+      <div class="telegram-handoff-title">Заявка подготовлена</div>
+      <p>Текст заявки скопирован. Отправь его менеджеру <strong>@onyxshopadmin</strong>.</p>
+      <textarea id="telegramHandoffText" readonly></textarea>
+      <div class="telegram-handoff-actions">
+        <button class="secondary-btn" id="copyTelegramOrderBtn" type="button">Скопировать ещё раз</button>
+        <a class="primary-btn" id="shareTelegramOrderBtn" href="#" target="_blank" rel="noopener noreferrer">Передать через Telegram</a>
+        <a class="ghost-btn" href="https://t.me/onyxshopadmin" target="_blank" rel="noopener noreferrer">Открыть чат менеджера</a>
+      </div>
+    </div>
+  </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    const TELEGRAM_USERNAME = "onyxgroup";
+    const PUBLIC_TELEGRAM_URL = "https://t.me/onyxgrouptg";
+    const ORDER_TELEGRAM_USERNAME = "onyxshopadmin";
+    const ORDER_TELEGRAM_URL = "https://t.me/onyxshopadmin";
+    const MARKETPLACES = {
+      alibaba: { name: "Alibaba", home: "https://www.alibaba.com/", search: query => `https://www.alibaba.com/trade/search?SearchText=${encodeURIComponent(query)}` },
+      "1688": { name: "1688", home: "https://www.1688.com/", search: query => `https://s.1688.com/selloffer/offer_search.htm?keywords=${encodeURIComponent(query)}` },
+      taobao: { name: "Taobao", home: "https://www.taobao.com/", search: query => `https://s.taobao.com/search?q=${encodeURIComponent(query)}` },
+      aliexpress: { name: "AliExpress", home: "https://www.aliexpress.com/", search: query => `https://www.aliexpress.com/wholesale?SearchText=${encodeURIComponent(query)}` },
+      poizon: { name: "Poizon", home: "https://www.poizon.com/", search: null },
+      pinduoduo: { name: "Pinduoduo", home: "https://www.pinduoduo.com/", search: null }
+    };
+    const SOURCE_TO_MARKETPLACE = { Alibaba: "alibaba", "1688": "1688", Taobao: "taobao", AliExpress: "aliexpress", Poizon: "poizon", Pinduoduo: "pinduoduo" };
     const MANAGER_PIN = "2026";
     const TRACKING_API_BASE = (document.querySelector('meta[name="tracking-api"]')?.content || "").trim();
 
@@ -2393,6 +2707,9 @@
     let currentProduct = null;
     let selectedSize = "";
     let selectedColor = "";
+    let currentTelegramOrderMessage = "";
+    let lastCalculationSummary = "";
+    let introTimer = null;
 
     const $ = (id) => document.getElementById(id);
 
@@ -2484,9 +2801,10 @@
                 <span class="price-cny">из ${product.source}</span>
               </div>
 
+              <button class="product-source-link" type="button" onclick="openProductSource(${product.id})">Открыть на ${product.source} ↗</button>
               <div class="product-actions">
                 <button class="secondary-btn" onclick="openProductModal(${product.id})">Подробнее</button>
-                <button class="primary-btn" onclick="quickAdd(${product.id})">В заявку</button>
+                <button class="primary-btn" onclick="startOnyxOrder(${product.id})">В заявку</button>
               </div>
             </div>
           </div>
@@ -2606,6 +2924,7 @@
 
       renderOptions("size", product.sizes || []);
       renderOptions("color", product.colors || []);
+      if ($("modalOpenSourceBtn")) $("modalOpenSourceBtn").dataset.productId = String(product.id);
 
       productModal.classList.add("show");
       overlay.classList.add("show");
@@ -2756,43 +3075,136 @@
       fields.forEach(field => {
         if (field.value) lines.push(`${field.label}: ${field.value}`);
       });
-      return encodeURIComponent(lines.join("\n"));
+      return lines.join("\n");
     }
 
-    function openTelegramWithMessage(message) {
-      window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${message}`, "_blank", "noopener,noreferrer");
+    async function copyTextSafe(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch (error) {
+        const area = document.createElement("textarea");
+        area.value = text;
+        area.style.position = "fixed";
+        area.style.opacity = "0";
+        document.body.appendChild(area);
+        area.select();
+        const copied = document.execCommand("copy");
+        area.remove();
+        return copied;
+      }
     }
 
-    function submitQuoteForm(event) {
+    function buildTelegramShareUrl(message) {
+      return `https://t.me/share/url?url=${encodeURIComponent(ORDER_TELEGRAM_URL)}&text=${encodeURIComponent(message)}`;
+    }
+
+    function showTelegramHandoff(message) {
+      currentTelegramOrderMessage = message;
+      const modal = $("telegramHandoff");
+      if ($("telegramHandoffText")) $("telegramHandoffText").value = message;
+      if ($("shareTelegramOrderBtn")) $("shareTelegramOrderBtn").href = buildTelegramShareUrl(message);
+      modal?.classList.add("show");
+      modal?.setAttribute("aria-hidden", "false");
+    }
+
+    function closeTelegramHandoff() {
+      const modal = $("telegramHandoff");
+      modal?.classList.remove("show");
+      modal?.setAttribute("aria-hidden", "true");
+    }
+
+    async function persistOrderRequest(payload) {
+      if (location.protocol === "file:") return null;
+      try {
+        const response = await fetch("/api/order-requests", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        if (!response.ok) return null;
+        return await response.json();
+      } catch (error) {
+        return null;
+      }
+    }
+
+    async function openTelegramOrder(message, payload = {}) {
+      await copyTextSafe(message);
+      await persistOrderRequest({ ...payload, message });
+      showTelegramHandoff(message);
+      showToast("Заявка подготовлена и скопирована");
+    }
+
+    function buildMarketplaceSearchUrl(platformId, query) {
+      const marketplace = MARKETPLACES[platformId];
+      if (!marketplace) return "";
+      const cleanQuery = String(query || "").trim();
+      return cleanQuery && marketplace.search ? marketplace.search(cleanQuery) : marketplace.home;
+    }
+
+    async function openMarketplaceSearch(platformId, query) {
+      const marketplace = MARKETPLACES[platformId];
+      if (!marketplace) return;
+      const cleanQuery = String(query || "").trim();
+      if (cleanQuery && !marketplace.search) {
+        await copyTextSafe(cleanQuery);
+        showToast(`Запрос скопирован. Вставь его в поиск ${marketplace.name}`);
+      }
+      window.open(buildMarketplaceSearchUrl(platformId, cleanQuery), "_blank", "noopener,noreferrer");
+    }
+
+    function getProductSourceUrl(product) {
+      if (product?.sourceUrl) return product.sourceUrl;
+      const platformId = SOURCE_TO_MARKETPLACE[product?.source] || "alibaba";
+      return buildMarketplaceSearchUrl(platformId, product?.sourceSearchQuery || product?.name || "");
+    }
+
+    function openProductSource(id) {
+      const product = products.find(item => item.id === id);
+      if (!product) return;
+      window.open(getProductSourceUrl(product), "_blank", "noopener,noreferrer");
+    }
+
+    function startOnyxOrder(id) {
+      const product = products.find(item => item.id === id);
+      if (!product) return;
+      if ($("quoteLink")) $("quoteLink").value = getProductSourceUrl(product);
+      if ($("quoteText")) $("quoteText").value = `Товар из витрины: ${product.name}\nПлощадка: ${product.source}\nЦена в Китае: ${formatCny(product.priceCny)}\nОриентир с доставкой: ${formatRub(product.priceRub)}\nНужны проверка, выкуп и доставка через ONYX GROUP.`;
+      $("quote")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(() => $("quoteName")?.focus(), 500);
+      showToast("Товар перенесён в индивидуальную заявку");
+    }
+
+    async function submitQuoteForm(event) {
       event.preventDefault();
-
       const message = buildTelegramMessage("🔥 Новая заявка ONYX GROUP", [
         { label: "Имя", value: $("quoteName").value.trim() },
         { label: "Контакт", value: $("quoteContact").value.trim() },
         { label: "Ссылка / товар", value: $("quoteLink").value.trim() },
         { label: "Комментарий", value: $("quoteText").value.trim() }
       ]);
-
-      openTelegramWithMessage(message);
-      showToast("Открываю Telegram с заявкой");
+      await openTelegramOrder(message, {
+        type: "individual",
+        customerName: $("quoteName").value.trim(),
+        customerContact: $("quoteContact").value.trim(),
+        productLink: $("quoteLink").value.trim()
+      });
       event.target.reset();
     }
 
-    function submitCheckoutForm(event) {
+    async function submitCheckoutForm(event) {
       event.preventDefault();
-
       if (!cart.length) {
         showToast("Заявка пустая");
         return;
       }
-
       const itemsText = cart.map((item, index) => {
         const props = [];
         if (item.size) props.push(`размер ${item.size}`);
         if (item.color) props.push(`цвет/модель ${item.color}`);
         return `${index + 1}) ${item.name} — ${item.qty} шт · ${item.source} · ${formatRub(item.priceRub)}${props.length ? " · " + props.join(", ") : ""}`;
       }).join("\n");
-
       const message = buildTelegramMessage("🧾 Заявка из корзины ONYX GROUP", [
         { label: "Имя", value: $("customerName").value.trim() },
         { label: "Контакт", value: $("customerContact").value.trim() },
@@ -2801,9 +3213,7 @@
         { label: "Примерный итог", value: formatRub(getCartTotal()) },
         { label: "Комментарий", value: $("customerComment").value.trim() }
       ]);
-
-      openTelegramWithMessage(message);
-      showToast("Заявка собрана в Telegram");
+      await openTelegramOrder(message, { type: "cart", total: getCartTotal(), items: cart });
       cart = [];
       renderCart();
       event.target.reset();
@@ -2914,6 +3324,14 @@
           <strong>${formatRub(total)}</strong>
         </div>
       `;
+
+      lastCalculationSummary = [
+        `Цена товара: ${formatCny(priceCny)}`,
+        `Вес: ${weightData.label}`,
+        `Маршрут: ${route.title}, ${route.days} дней`,
+        `Комиссия: ${commissionInfo.note}`,
+        `Предварительный итог: ${formatRub(total)}`
+      ].join("\n");
     }
 
     function getStatusByStep(step) {
@@ -3296,6 +3714,45 @@
       activeQuickFilter = "all";
     }
 
+    function finishIntro() {
+      const intro = $("introOverlay");
+      if (!intro) return;
+      intro.classList.remove("is-playing");
+      intro.hidden = true;
+      intro.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("intro-active");
+    }
+
+    function playIntro(scrollToTop = false) {
+      const intro = $("introOverlay");
+      if (!intro) return;
+
+      clearTimeout(introTimer);
+      intro.hidden = false;
+      intro.setAttribute("aria-hidden", "false");
+      intro.classList.remove("is-playing");
+      void intro.offsetWidth;
+      intro.classList.add("is-playing");
+      document.body.classList.add("intro-active");
+
+      if (scrollToTop) window.scrollTo({ top: 0, behavior: "smooth" });
+      introTimer = setTimeout(finishIntro, 2400);
+    }
+
+    function openQuoteFromCalculation() {
+      const quote = $("quote");
+      const quoteText = $("quoteText");
+      const quoteName = $("quoteName");
+
+      if (quoteText && lastCalculationSummary) {
+        const prefix = "Предварительный расчёт с сайта:\\n";
+        if (!quoteText.value.trim()) quoteText.value = prefix + lastCalculationSummary;
+      }
+
+      quote?.scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(() => quoteName?.focus(), 520);
+    }
+
     function bindEvents() {
       if (burger && nav) {
         burger.addEventListener("click", () => {
@@ -3310,6 +3767,53 @@
           });
         });
       }
+
+      if ($("brandReplay")) {
+        $("brandReplay").addEventListener("click", event => {
+          event.preventDefault();
+          playIntro(true);
+        });
+      }
+
+      if ($("calcQuoteBtn")) {
+        $("calcQuoteBtn").addEventListener("click", openQuoteFromCalculation);
+      }
+
+      if ($("marketplaceSearchForm")) {
+        $("marketplaceSearchForm").addEventListener("submit", event => {
+          event.preventDefault();
+          openMarketplaceSearch($("marketplaceSearchSelect").value, $("marketplaceSearchInput").value);
+        });
+      }
+
+      document.querySelectorAll("[data-marketplace]").forEach(button => {
+        button.addEventListener("click", () => {
+          openMarketplaceSearch(button.dataset.marketplace, $("marketplaceSearchInput")?.value || "");
+        });
+      });
+
+      document.querySelectorAll("[data-marketplace-query]").forEach(button => {
+        button.addEventListener("click", () => {
+          if ($("marketplaceSearchInput")) $("marketplaceSearchInput").value = button.dataset.marketplaceQuery;
+          $("marketplaceSearchInput")?.focus();
+        });
+      });
+
+      if ($("modalOpenSourceBtn")) {
+        $("modalOpenSourceBtn").addEventListener("click", () => {
+          const id = Number($("modalOpenSourceBtn").dataset.productId);
+          if (id) openProductSource(id);
+        });
+      }
+
+      if ($("telegramHandoffClose")) $("telegramHandoffClose").addEventListener("click", closeTelegramHandoff);
+      if ($("copyTelegramOrderBtn")) $("copyTelegramOrderBtn").addEventListener("click", async () => {
+        await copyTextSafe(currentTelegramOrderMessage);
+        showToast("Текст заявки скопирован");
+      });
+      if ($("telegramHandoff")) $("telegramHandoff").addEventListener("click", event => {
+        if (event.target === $("telegramHandoff")) closeTelegramHandoff();
+      });
 
       if ($("openSearchBtn")) {
         $("openSearchBtn").addEventListener("click", () => {
@@ -3335,6 +3839,7 @@
         overlay.addEventListener("click", () => {
           closeProductModal();
           closeDrawer();
+          closeTelegramHandoff();
         });
       }
 
@@ -3469,11 +3974,14 @@
         if (event.key === "Escape") {
           closeProductModal();
           closeDrawer();
+          closeTelegramHandoff();
         }
       });
     }
 
     window.openProductModal = openProductModal;
+    window.openProductSource = openProductSource;
+    window.startOnyxOrder = startOnyxOrder;
     window.quickAdd = quickAdd;
     window.changeQty = changeQty;
     window.removeCartItem = removeCartItem;
@@ -3486,6 +3994,7 @@
     renderTrackingResult(getAllTrackingOrders()["ONYX-2406"]);
     bindEvents();
     applyReveal();
+    setTimeout(() => playIntro(false), 120);
   </script>
 </body>
 </html>
