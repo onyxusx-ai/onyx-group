@@ -1,0 +1,11 @@
+name = "onyx-group-catalog"
+main = "src/index.mjs"
+compatibility_date = "2026-07-01"
+
+[vars]
+ALLOWED_ORIGINS = "*"
+
+[[r2_buckets]]
+binding = "STORAGE"
+bucket_name = "onyx-group-storage"
+preview_bucket_name = "onyx-group-storage-dev"
