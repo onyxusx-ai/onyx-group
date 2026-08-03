@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "ONYX GROUP — импорт товара",
+  "version": "1.0.0",
+  "description": "Импортирует точные фотографии и данные открытого объявления в каталог ONYX GROUP.",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_title": "Добавить товар в ONYX",
+    "default_popup": "popup.html"
+  }
+}

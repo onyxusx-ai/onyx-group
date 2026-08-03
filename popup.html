@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Импорт в ONYX</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main>
+    <header><strong>ONYX GROUP</strong><span>точное объявление → каталог</span></header>
+
+    <details id="settingsBox">
+      <summary>Подключение</summary>
+      <label>Worker URL<input id="apiBase" placeholder="https://onyx-group-catalog....workers.dev"></label>
+      <label>Admin token<input id="adminToken" type="password" placeholder="Секретный токен"></label>
+      <button id="saveSettings" class="secondary">Сохранить</button>
+    </details>
+
+    <button id="extractButton" class="primary">Считать открытое объявление</button>
+    <p id="status" class="status">Открой карточку товара на площадке.</p>
+
+    <section id="preview" hidden>
+      <label>Название<input id="title"></label>
+      <label>Площадка<input id="platform"></label>
+      <label>Цена на площадке<input id="priceText"></label>
+      <div class="grid">
+        <label>Цена, ¥<input id="priceCny" inputmode="decimal"></label>
+        <label>Цена с сервисом, ₽<input id="priceRub" inputmode="numeric"></label>
+      </div>
+      <div class="grid">
+        <label>Категория<select id="category"><option value="clothes">Одежда</option><option value="shoes">Обувь</option><option value="electronics">Электроника</option><option value="accessories" selected>Аксессуары</option><option value="home">Дом</option><option value="auto">Авто</option></select></label>
+        <label>Тип<input id="type" value="Товар"></label>
+      </div>
+      <label>Описание<textarea id="description"></textarea></label>
+      <div id="imageSummary" class="images"></div>
+      <button id="importButton" class="primary">Добавить в витрину ONYX</button>
+    </section>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>
