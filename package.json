@@ -1,8 +1,8 @@
 {
-  "name": "onyx-group-marketplace",
-  "version": "2.0.0",
+  "name": "onyx-group-v8-restored",
+  "version": "3.0.0",
   "private": true,
-  "description": "ONYX GROUP buyer, cargo, marketplace search and tracking website",
+  "description": "Full ONYX GROUP V6 website with marketplace search and Telegram order flow",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
