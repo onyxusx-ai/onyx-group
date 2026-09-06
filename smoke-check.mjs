@@ -9,6 +9,7 @@ const admin = adminShell();
 const worker = read('src/index.mjs');
 const migration = read('migrations/0001_ops_mvp.sql');
 const businessModelMigration = read('migrations/0002_confirmed_business_model.sql');
+const assistantMigration = read('migrations/0003_ai_telegram.sql');
 const manifest = JSON.parse(read('manifest.json'));
 const inlineScripts = [...site.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)]
   .map((match) => match[1])
@@ -50,6 +51,11 @@ for (const table of ['payment_records', 'shipments']) {
   assert(businessModelMigration.includes(`CREATE TABLE ${table}`), `В миграции бизнес-модели нет таблицы ${table}`);
 }
 assert(businessModelMigration.includes('buyer_type'), 'Не зафиксированы два типа покупателей');
+for (const table of ['ai_runs', 'telegram_payment_requests']) {
+  assert(assistantMigration.includes(`CREATE TABLE ${table}`), `В миграции ИИ/Telegram нет таблицы ${table}`);
+}
+assert(worker.includes("'/api/webhooks/telegram'"), 'Нет защищённого webhook Telegram');
+assert(admin.includes('ИИ-помощник'), 'Нет интерфейса ИИ-помощника');
 assert(manifest.manifest_version === 3, 'Расширение должно быть Manifest V3');
 assert(manifest.permissions.includes('activeTab'), 'Расширению не хватает activeTab');
 console.log('Smoke check: OK');

@@ -17,6 +17,16 @@ import {
   validateOfferImportRow,
 } from './ops-core.mjs';
 import { detectPlatform, isSafeRemoteUrl } from '../catalog-core.mjs';
+import {
+  answerTelegramCallback,
+  buildTelegramPaymentMessage,
+  constantTimeEqual,
+  markTelegramPaymentReviewed,
+  parseTelegramBindings,
+  redactSensitiveText,
+  runOnyxAssistant,
+  sendTelegramPaymentReview,
+} from './assistant-integrations.mjs';
 
 const encoder = new TextEncoder();
 const MAX_JSON_BYTES = 1_000_000;
@@ -143,6 +153,19 @@ async function dbRun(env, sql, values = []) {
   return dbStatement(env, sql, values).run();
 }
 
+async function ensurePaymentTelegramRule(env) {
+  const timestamp = nowIso();
+  await dbRun(env, `INSERT OR IGNORE INTO automation_rules
+    (id,name,trigger_event,conditions_json,action_type,mode,enabled,responsible_role,created_at,updated_at)
+    VALUES ('rule_payment_telegram_review','Подтверждение оплаты в Telegram','payment.submitted','{}','telegram_payment_review','review',1,'manager',?,?)`,
+  [timestamp, timestamp]);
+  return dbFirst(env, `SELECT * FROM automation_rules WHERE id='rule_payment_telegram_review'`);
+}
+
+function telegramConfigured(env) {
+  return Boolean(env.TELEGRAM_BOT_TOKEN && env.TELEGRAM_ADMIN_CHAT_ID && env.TELEGRAM_WEBHOOK_SECRET && env.TELEGRAM_ADMIN_BINDINGS);
+}
+
 function allowedOrigins(env) {
   return String(env.ALLOWED_ORIGINS || 'https://onyxusx-ai.github.io,http://localhost:8787,http://127.0.0.1:8787')
     .split(',').map((value) => value.trim()).filter(Boolean);
@@ -246,6 +269,7 @@ async function handleBootstrap(request, env) {
     (id,name,trigger_event,conditions_json,action_type,mode,enabled,responsible_role,created_at,updated_at)
     VALUES ('rule_order_created_review','Проверка нового заказа','order.created','{}','prepare_manager_review','review',1,'manager',?,?)`,
   [timestamp, timestamp]);
+  await ensurePaymentTelegramRule(env);
   return json(request, env, { ok: true, user: { id, email, name, role: 'owner' } }, 201);
 }
 
@@ -482,9 +506,12 @@ async function orderDetail(request, env, user, orderId) {
       JOIN suppliers s ON s.id=so.supplier_id JOIN order_items oi ON oi.id=soi.order_item_id
       WHERE so.buyer_order_id=? ORDER BY soi.created_at`, [orderId]),
     dbAll(env, 'SELECT * FROM money_movements WHERE order_id=? ORDER BY created_at', [orderId]),
-    dbAll(env, `SELECT p.*, u.name AS created_by_name, c.name AS confirmed_by_name
+    dbAll(env, `SELECT p.*, u.name AS created_by_name, c.name AS confirmed_by_name,
+      t.status AS telegram_status,t.last_error_message AS telegram_error
       FROM payment_records p JOIN staff_users u ON u.id=p.created_by
-      LEFT JOIN staff_users c ON c.id=p.confirmed_by WHERE p.order_id=? ORDER BY p.created_at`, [orderId]),
+      LEFT JOIN staff_users c ON c.id=p.confirmed_by
+      LEFT JOIN telegram_payment_requests t ON t.payment_id=p.id
+      WHERE p.order_id=? ORDER BY p.created_at`, [orderId]),
     dbAll(env, `SELECT sh.*, u.name AS confirmed_by_name FROM shipments sh
       LEFT JOIN staff_users u ON u.id=sh.confirmed_by WHERE sh.order_id=? ORDER BY sh.created_at`, [orderId]),
     dbAll(env, `SELECT e.*, u.name AS actor_name FROM order_events e LEFT JOIN staff_users u ON u.id=e.actor_user_id
@@ -723,7 +750,8 @@ async function createPaymentRecord(request, env, user, orderId) {
   const timestamp = nowIso();
   const paymentId = makeId('pay');
   const nextPaymentStatus = ['unpaid', 'failed'].includes(order.payment_status) ? 'pending' : order.payment_status;
-  await env.DB.batch([
+  const telegramRule = await ensurePaymentTelegramRule(env);
+  const statements = [
     env.DB.prepare(`INSERT INTO payment_records
       (id,order_id,idempotency_key,method,status,expected_amount_minor,currency,provider,external_reference,note,created_by,created_at,updated_at)
       VALUES (?,?,?,?,'pending_verification',?,?,?,?,?,?,?,?)`).bind(paymentId, orderId, idempotencyKey, method,
@@ -733,7 +761,22 @@ async function createPaymentRecord(request, env, user, orderId) {
       .bind(nextPaymentStatus, timestamp, orderId),
     env.DB.prepare('INSERT INTO order_events (id,order_id,actor_user_id,event_type,payload_json,created_at) VALUES (?,?,?,?,?,?)')
       .bind(makeId('evt'), orderId, user.id, 'payment_submitted_for_review', JSON.stringify({ paymentId, method, currency }), timestamp),
-  ]);
+  ];
+  if (Number(telegramRule?.enabled) === 1) {
+    const jobId = makeId('job');
+    const requestId = makeId('tpr');
+    const jobStatus = telegramRule.mode === 'live' ? 'pending' : 'review';
+    statements.push(
+      env.DB.prepare(`INSERT INTO automation_jobs
+        (id,rule_id,order_id,idempotency_key,action_type,payload_json,status,run_after,created_at,updated_at)
+        VALUES (?,?,?,?,?,?,?, ?,?,?)`).bind(jobId, telegramRule.id, orderId, `telegram-payment:${paymentId}`,
+        'telegram_payment_review', JSON.stringify({ paymentId }), jobStatus, timestamp, timestamp, timestamp),
+      env.DB.prepare(`INSERT INTO telegram_payment_requests
+        (id,payment_id,job_id,status,created_at,updated_at) VALUES (?,?,?,'prepared',?,?)`)
+        .bind(requestId, paymentId, jobId, timestamp, timestamp),
+    );
+  }
+  await env.DB.batch(statements);
   return json(request, env, { ok: true, duplicate: false, payment: { id: paymentId, status: 'pending_verification' } }, 201);
 }
 
@@ -1023,6 +1066,160 @@ async function importOffers(request, env) {
   return json(request, env, { ok: true, preview: false, imported, errors: [] }, 201);
 }
 
+async function integrationStatus(request, env) {
+  const rule = await ensurePaymentTelegramRule(env);
+  return json(request, env, {
+    ok: true,
+    integrations: {
+      ai: { configured: Boolean(env.OPENAI_API_KEY && env.OPENAI_MODEL), model: env.OPENAI_MODEL || null },
+      telegram: { configured: telegramConfigured(env), mode: rule?.mode || 'review', enabled: Number(rule?.enabled) === 1 },
+    },
+  });
+}
+
+async function assistantForOrder(request, env, user, orderId) {
+  assertMethod(request, 'POST');
+  const body = await readJson(request, 20_000);
+  const order = await dbFirst(env, `SELECT id,public_code,buyer_type,order_status,payment_status,delivery_status,
+    sale_currency,sales_total_minor,purchase_estimate_minor,delivery_cost_estimate_minor,commission_cost_estimate_minor,costs_complete
+    FROM orders WHERE id=?`, [orderId]);
+  if (!order) throw new HttpError(404, 'ORDER_NOT_FOUND', 'Заказ не найден.');
+  const [items, supplierOrders] = await Promise.all([
+    dbAll(env, 'SELECT title,sku,variant_text,quantity,sale_unit_minor,sale_currency FROM order_items WHERE order_id=? ORDER BY created_at', [orderId]),
+    dbAll(env, `SELECT s.name AS supplier_name,so.status,so.purchase_total_minor,so.purchase_currency
+      FROM supplier_orders so JOIN suppliers s ON s.id=so.supplier_id WHERE so.buyer_order_id=? ORDER BY so.created_at`, [orderId]),
+  ]);
+  const purpose = cleanText(body.purpose, 40, { required: true, field: 'Задача помощника' });
+  const input = redactSensitiveText(cleanText(body.input, 4000, { required: true, field: 'Сообщение для помощника' }), 4000);
+  const runId = makeId('air');
+  const timestamp = nowIso();
+  const inputHash = await sha256(input);
+  const orderContext = { ...order, items, supplierOrders };
+  try {
+    const result = await runOnyxAssistant(env, { purpose, input, orderContext });
+    await env.DB.batch([
+      env.DB.prepare(`INSERT INTO ai_runs
+        (id,order_id,staff_user_id,purpose,input_hash,input_preview,output_text,model,status,created_at)
+        VALUES (?,?,?,?,?,?,?,?,'completed',?)`).bind(runId, orderId, user.id, purpose, inputHash,
+        input.slice(0, 300), result.output, result.model, timestamp),
+      env.DB.prepare('INSERT INTO order_events (id,order_id,actor_user_id,event_type,payload_json,created_at) VALUES (?,?,?,?,?,?)')
+        .bind(makeId('evt'), orderId, user.id, 'ai_assistant_completed', JSON.stringify({ runId, purpose, model: result.model }), timestamp),
+    ]);
+    return json(request, env, { ok: true, assistant: { runId, purpose, output: result.output, model: result.model } });
+  } catch (error) {
+    const errorCode = cleanText(error.code || 'AI_FAILED', 80);
+    await dbRun(env, `INSERT INTO ai_runs
+      (id,order_id,staff_user_id,purpose,input_hash,input_preview,status,error_code,created_at)
+      VALUES (?,?,?,?,?,?,'failed',?,?)`, [runId, orderId, user.id, purpose, inputHash, input.slice(0, 300), errorCode, timestamp]);
+    const status = errorCode === 'AI_NOT_CONFIGURED' ? 503 : errorCode.startsWith('AI_') ? 502 : 500;
+    throw new HttpError(status, errorCode, error.message);
+  }
+}
+
+async function approveAutomationJob(request, env, user, jobId) {
+  assertMethod(request, 'POST');
+  const job = await dbFirst(env, 'SELECT * FROM automation_jobs WHERE id=?', [jobId]);
+  if (!job) throw new HttpError(404, 'JOB_NOT_FOUND', 'Операция не найдена.');
+  if (job.action_type !== 'telegram_payment_review') throw new HttpError(409, 'JOB_NOT_APPROVABLE', 'Эту операцию нельзя отправить вручную.');
+  if (job.status === 'done') return json(request, env, { ok: true, duplicate: true, jobId });
+  if (job.status !== 'review') throw new HttpError(409, 'JOB_NOT_APPROVABLE', 'Операция уже выполняется или требует повтора после ошибки.');
+  if (!telegramConfigured(env)) throw new HttpError(503, 'TELEGRAM_NOT_CONFIGURED', 'Telegram ещё не настроен. Добавьте секреты бота, чат и привязку сотрудника.');
+  const payload = { ...JSON.parse(job.payload_json || '{}'), manuallyApprovedBy: user.id, manuallyApprovedAt: nowIso() };
+  await dbRun(env, `UPDATE automation_jobs SET status='pending',payload_json=?,run_after=?,updated_at=? WHERE id=? AND status='review'`,
+    [JSON.stringify(payload), nowIso(), nowIso(), jobId]);
+  const result = await runAutomationJob(env, jobId);
+  if (result.failed) throw new HttpError(502, 'TELEGRAM_SEND_FAILED', 'Telegram не получил сообщение. Ошибка сохранена в очереди; операцию можно безопасно повторить.');
+  return json(request, env, { ok: true, duplicate: Boolean(result.duplicate), jobId, result });
+}
+
+async function telegramStaffFromCallback(env, telegramUserId) {
+  const binding = parseTelegramBindings(env.TELEGRAM_ADMIN_BINDINGS)
+    .find((item) => item.telegramUserId === String(telegramUserId));
+  if (!binding) return null;
+  const staff = await dbFirst(env, 'SELECT id,email,name,role,is_active FROM staff_users WHERE email=?', [binding.staffEmail]);
+  if (!staff || Number(staff.is_active) !== 1 || !['owner', 'manager'].includes(staff.role)) return null;
+  return staff;
+}
+
+async function handleTelegramWebhook(request, env) {
+  assertMethod(request, 'POST');
+  if (!env.TELEGRAM_WEBHOOK_SECRET || !constantTimeEqual(request.headers.get('x-telegram-bot-api-secret-token'), env.TELEGRAM_WEBHOOK_SECRET)) {
+    throw new HttpError(403, 'INVALID_TELEGRAM_SECRET', 'Webhook Telegram не подтверждён.');
+  }
+  const update = await readJson(request, 200_000);
+  const providerEventId = cleanText(update.update_id, 80, { required: true, field: 'Telegram update_id' });
+  const duplicate = await dbFirst(env, `SELECT id,status FROM webhook_events WHERE provider='telegram' AND provider_event_id=?`, [providerEventId]);
+  if (duplicate) return json(request, env, { ok: true, duplicate: true });
+  const timestamp = nowIso();
+  const webhookId = makeId('whk');
+  const inserted = await dbRun(env, `INSERT OR IGNORE INTO webhook_events
+    (id,provider,provider_event_id,payload_hash,signature_valid,status,created_at)
+    VALUES (?,'telegram',?,?,1,'processing',?)`, [webhookId, providerEventId, await sha256(JSON.stringify(update)), timestamp]);
+  if (Number(inserted.meta?.changes || 0) !== 1) return json(request, env, { ok: true, duplicate: true });
+  const callback = update.callback_query;
+  const match = String(callback?.data || '').match(/^pay_(confirm|reject):(pay_[A-Za-z0-9-]+)$/);
+  if (!match) {
+    await dbRun(env, `UPDATE webhook_events SET status='ignored' WHERE id=?`, [webhookId]);
+    return json(request, env, { ok: true, ignored: true });
+  }
+  const expectedChatId = String(env.TELEGRAM_ADMIN_CHAT_ID || '');
+  const callbackChatId = String(callback?.message?.chat?.id ?? '');
+  const staff = await telegramStaffFromCallback(env, callback?.from?.id);
+  if (!staff || !expectedChatId || callbackChatId !== expectedChatId) {
+    await dbRun(env, `UPDATE webhook_events SET status='rejected' WHERE id=?`, [webhookId]);
+    await answerTelegramCallback(env, callback.id, 'Нет доступа к подтверждению.', true).catch(() => {});
+    return json(request, env, { ok: true, rejected: true });
+  }
+  const paymentId = match[2];
+  const telegramRequest = await dbFirst(env, `SELECT t.*,p.status AS payment_status,p.expected_amount_minor,p.currency,p.method,p.provider,p.external_reference,
+    o.public_code FROM telegram_payment_requests t JOIN payment_records p ON p.id=t.payment_id
+    JOIN orders o ON o.id=p.order_id WHERE t.payment_id=?`, [paymentId]);
+  const callbackMessageId = String(callback?.message?.message_id ?? '');
+  if (!telegramRequest || telegramRequest.status !== 'sent' || telegramRequest.telegram_chat_id !== callbackChatId
+      || telegramRequest.telegram_message_id !== callbackMessageId) {
+    await dbRun(env, `UPDATE webhook_events SET status='rejected' WHERE id=?`, [webhookId]);
+    await answerTelegramCallback(env, callback.id, 'Запрос устарел или уже обработан.', true).catch(() => {});
+    return json(request, env, { ok: true, rejected: true });
+  }
+  const claimed = await dbRun(env, `UPDATE telegram_payment_requests SET status='prepared',updated_at=? WHERE id=? AND status='sent'`,
+    [nowIso(), telegramRequest.id]);
+  if (Number(claimed.meta?.changes || 0) !== 1) {
+    await dbRun(env, `UPDATE webhook_events SET status='duplicate' WHERE id=?`, [webhookId]);
+    await answerTelegramCallback(env, callback.id, 'Запрос уже обрабатывается.', true).catch(() => {});
+    return json(request, env, { ok: true, duplicate: true });
+  }
+  const action = match[1] === 'confirm' ? 'confirm' : 'reject';
+  const internalRequest = new Request(request.url, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ action }),
+  });
+  try {
+    await reviewPaymentRecord(internalRequest, env, staff, paymentId);
+  } catch (error) {
+    await env.DB.batch([
+      env.DB.prepare(`UPDATE telegram_payment_requests SET status='failed',last_error_code=?,last_error_message=?,updated_at=? WHERE id=?`)
+        .bind(cleanText(error.code || 'PAYMENT_REVIEW_FAILED', 80), cleanText(error.message, 500), nowIso(), telegramRequest.id),
+      env.DB.prepare(`UPDATE webhook_events SET status='failed' WHERE id=?`).bind(webhookId),
+    ]);
+    throw error;
+  }
+  const finalStatus = action === 'confirm' ? 'confirmed' : 'rejected';
+  await env.DB.batch([
+    env.DB.prepare(`UPDATE telegram_payment_requests SET status=?,resolved_at=?,updated_at=? WHERE id=?`)
+      .bind(finalStatus, nowIso(), nowIso(), telegramRequest.id),
+    env.DB.prepare(`UPDATE webhook_events SET status='done' WHERE id=?`).bind(webhookId),
+  ]);
+  const original = buildTelegramPaymentMessage({
+    order: { public_code: telegramRequest.public_code },
+    payment: telegramRequest,
+  });
+  const resultText = `${original}\n\n${action === 'confirm' ? `✅ Подтверждено: ${staff.name}` : `❌ Отклонено: ${staff.name}`}`;
+  await answerTelegramCallback(env, callback.id, action === 'confirm' ? 'Оплата подтверждена.' : 'Оплата отклонена.').catch(() => {});
+  await markTelegramPaymentReviewed(env, callback, resultText).catch(() => {});
+  return json(request, env, { ok: true, paymentId, status: finalStatus });
+}
+
 async function listJobs(request, env) {
   const jobs = await dbAll(env, `SELECT j.*,o.public_code FROM automation_jobs j LEFT JOIN orders o ON o.id=j.order_id
     WHERE j.status IN ('review','failed','dead','pending') ORDER BY j.updated_at DESC LIMIT 200`);
@@ -1043,7 +1240,11 @@ async function updateRule(request, env, ruleId) {
   const mode = body.mode === undefined ? rule.mode : cleanText(body.mode, 20);
   if (!['review', 'live'].includes(mode)) throw new HttpError(422, 'VALIDATION_ERROR', 'Неизвестный режим правила.');
   if (mode === 'live' && rule.action_type !== 'prepare_manager_review') {
-    throw new HttpError(409, 'LIVE_MODE_NOT_APPROVED', 'Для этого действия сначала нужна отдельная проверка рабочей интеграции.');
+    const telegramApproved = rule.action_type === 'telegram_payment_review'
+      && env.TELEGRAM_LIVE_APPROVED === 'true' && telegramConfigured(env);
+    if (!telegramApproved) {
+      throw new HttpError(409, 'LIVE_MODE_NOT_APPROVED', 'Сначала настройте Telegram, проверьте ручную отправку и отдельно включите TELEGRAM_LIVE_APPROVED.');
+    }
   }
   await dbRun(env, 'UPDATE automation_rules SET enabled=?,mode=?,updated_at=? WHERE id=?', [enabled, mode, nowIso(), ruleId]);
   return json(request, env, { ok: true, rule: { ...rule, enabled, mode } });
@@ -1057,25 +1258,60 @@ async function retryJob(request, env, jobId) {
   const timestamp = nowIso();
   await dbRun(env, `UPDATE automation_jobs SET status='pending',run_after=?,last_error_code=NULL,last_error_message=NULL,updated_at=? WHERE id=?`,
     [timestamp, timestamp, jobId]);
+  if (job.action_type === 'telegram_payment_review') {
+    await dbRun(env, `UPDATE telegram_payment_requests SET status='prepared',last_error_code=NULL,last_error_message=NULL,updated_at=? WHERE job_id=?`,
+      [timestamp, jobId]);
+  }
   return json(request, env, { ok: true, jobId, status: 'pending' });
 }
 
 export async function runAutomationJob(env, jobId) {
   const job = await dbFirst(env, 'SELECT * FROM automation_jobs WHERE id=?', [jobId]);
-  if (!job || !['pending', 'running'].includes(job.status)) return { skipped: true };
+  if (!job || job.status !== 'pending') return { skipped: true };
   const timestamp = nowIso();
-  await dbRun(env, `UPDATE automation_jobs SET status='running',attempts=attempts+1,updated_at=? WHERE id=?`, [timestamp, jobId]);
+  const claim = await dbRun(env, `UPDATE automation_jobs SET status='running',attempts=attempts+1,updated_at=? WHERE id=? AND status='pending'`, [timestamp, jobId]);
+  if (Number(claim.meta?.changes || 0) !== 1) return { skipped: true };
   try {
     if (job.action_type === 'prepare_manager_review') {
       await dbRun(env, `UPDATE automation_jobs SET status='review',updated_at=? WHERE id=?`, [nowIso(), jobId]);
       return { review: true };
     }
+    if (job.action_type === 'telegram_payment_review') {
+      const payload = JSON.parse(job.payload_json || '{}');
+      const telegramRequest = await dbFirst(env, 'SELECT * FROM telegram_payment_requests WHERE job_id=?', [jobId]);
+      if (!telegramRequest) throw Object.assign(new Error('Не найдена подготовленная Telegram-задача.'), { code: 'TELEGRAM_REQUEST_NOT_FOUND' });
+      if (['sent', 'confirmed', 'rejected'].includes(telegramRequest.status)) {
+        await dbRun(env, `UPDATE automation_jobs SET status='done',updated_at=? WHERE id=?`, [nowIso(), jobId]);
+        return { done: true, duplicate: true };
+      }
+      const payment = await dbFirst(env, 'SELECT * FROM payment_records WHERE id=?', [payload.paymentId]);
+      if (!payment || payment.status !== 'pending_verification') {
+        throw Object.assign(new Error('Платёж уже обработан или не найден.'), { code: 'PAYMENT_NOT_PENDING' });
+      }
+      const order = await dbFirst(env, 'SELECT id,public_code FROM orders WHERE id=?', [payment.order_id]);
+      const sent = await sendTelegramPaymentReview(env, { payment, order });
+      await env.DB.batch([
+        env.DB.prepare(`UPDATE telegram_payment_requests SET status='sent',telegram_chat_id=?,telegram_message_id=?,
+          sent_at=?,last_error_code=NULL,last_error_message=NULL,updated_at=? WHERE id=?`)
+          .bind(sent.chatId, sent.messageId, nowIso(), nowIso(), telegramRequest.id),
+        env.DB.prepare(`UPDATE automation_jobs SET status='done',last_error_code=NULL,last_error_message=NULL,updated_at=? WHERE id=?`)
+          .bind(nowIso(), jobId),
+      ]);
+      return { done: true, telegram: { messageId: sent.messageId } };
+    }
     throw new Error('Автоматическое действие не подключено; требуется ручная обработка.');
   } catch (error) {
     const refreshed = await dbFirst(env, 'SELECT attempts,max_attempts FROM automation_jobs WHERE id=?', [jobId]);
     const status = Number(refreshed.attempts) >= Number(refreshed.max_attempts) ? 'dead' : 'failed';
-    await dbRun(env, `UPDATE automation_jobs SET status=?,last_error_code='ACTION_FAILED',last_error_message=?,updated_at=? WHERE id=?`,
-      [status, cleanText(error.message, 500), nowIso(), jobId]);
+    const errorCode = cleanText(error.code || 'ACTION_FAILED', 80);
+    const errorMessage = cleanText(error.message, 500);
+    const statements = [env.DB.prepare(`UPDATE automation_jobs SET status=?,last_error_code=?,last_error_message=?,updated_at=? WHERE id=?`)
+      .bind(status, errorCode, errorMessage, nowIso(), jobId)];
+    if (job.action_type === 'telegram_payment_review') {
+      statements.push(env.DB.prepare(`UPDATE telegram_payment_requests SET status='failed',last_error_code=?,last_error_message=?,updated_at=? WHERE job_id=?`)
+        .bind(errorCode, errorMessage, nowIso(), jobId));
+    }
+    await env.DB.batch(statements);
     return { failed: true, status };
   }
 }
@@ -1211,6 +1447,7 @@ async function handleAdminApi(request, env, url) {
   if (path === '/api/admin/offers/import') { await requireUser(request, env, ['owner', 'manager']); return importOffers(request, env); }
   if (path === '/api/admin/jobs' && request.method === 'GET') return listJobs(request, env);
   if (path === '/api/admin/rules' && request.method === 'GET') return listRules(request, env);
+  if (path === '/api/admin/integrations/status' && request.method === 'GET') return integrationStatus(request, env);
 
   let match = path.match(/^\/api\/admin\/orders\/([^/]+)$/);
   if (match && request.method === 'GET') return orderDetail(request, env, user, decodeURIComponent(match[1]));
@@ -1221,6 +1458,8 @@ async function handleAdminApi(request, env, url) {
   if (match) { await requireUser(request, env, ['owner', 'finance']); return createMoneyMovement(request, env, user, decodeURIComponent(match[1])); }
   match = path.match(/^\/api\/admin\/orders\/([^/]+)\/payments$/);
   if (match) { await requireUser(request, env, ['owner', 'finance']); return createPaymentRecord(request, env, user, decodeURIComponent(match[1])); }
+  match = path.match(/^\/api\/admin\/orders\/([^/]+)\/assistant$/);
+  if (match) { await requireUser(request, env, ['owner', 'manager']); return assistantForOrder(request, env, user, decodeURIComponent(match[1])); }
   match = path.match(/^\/api\/admin\/payments\/([^/]+)$/);
   if (match) { await requireUser(request, env, ['owner']); return reviewPaymentRecord(request, env, user, decodeURIComponent(match[1])); }
   match = path.match(/^\/api\/admin\/orders\/([^/]+)\/shipments$/);
@@ -1233,6 +1472,8 @@ async function handleAdminApi(request, env, url) {
   if (match) { await requireUser(request, env, ['owner', 'manager']); return updateSupplierOrder(request, env, user, decodeURIComponent(match[1])); }
   match = path.match(/^\/api\/admin\/jobs\/([^/]+)\/retry$/);
   if (match) { await requireUser(request, env, ['owner', 'manager']); return retryJob(request, env, decodeURIComponent(match[1])); }
+  match = path.match(/^\/api\/admin\/jobs\/([^/]+)\/approve$/);
+  if (match) { await requireUser(request, env, ['owner', 'manager']); return approveAutomationJob(request, env, user, decodeURIComponent(match[1])); }
   match = path.match(/^\/api\/admin\/rules\/([^/]+)$/);
   if (match) { await requireUser(request, env, ['owner']); return updateRule(request, env, decodeURIComponent(match[1])); }
   throw new HttpError(404, 'NOT_FOUND', 'Маршрут не найден.');
@@ -1257,6 +1498,7 @@ export async function handleRequest(request, env, context = {}) {
     const user = await requireUser(request, env);
     return json(request, env, { ok: true, user: { id: user.id, email: user.email, name: user.name, role: user.role } });
   }
+  if (url.pathname === '/api/webhooks/telegram') return handleTelegramWebhook(request, env);
   if (url.pathname === '/api/orders') return createPublicOrder(request, env, context);
   if (url.pathname === '/api/products' && request.method === 'GET') return publicProducts(request, env);
   if (url.pathname === '/api/import') return importProduct(request, env);

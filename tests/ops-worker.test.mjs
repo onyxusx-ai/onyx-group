@@ -9,6 +9,7 @@ import { TestD1 } from './d1-test-adapter.mjs';
 const migrations = [
   path.resolve('migrations/0001_ops_mvp.sql'),
   path.resolve('migrations/0002_confirmed_business_model.sql'),
+  path.resolve('migrations/0003_ai_telegram.sql'),
 ];
 const migrate = (DB) => migrations.forEach((migration) => DB.migrate(migration));
 const origin = 'https://onyxusx-ai.github.io';
@@ -152,9 +153,54 @@ test('цена, наличие, несколько поставщиков, ро�
   });
   assert.equal((await duplicatePayment.json()).duplicate, true);
   assert.equal((await call(env, `/api/admin/payments/${paymentOneId}`, { method: 'PATCH', cookie: financeCookie, body: { action: 'confirm' } })).status, 403);
-  const confirmedOne = await call(env, `/api/admin/payments/${paymentOneId}`, { method: 'PATCH', cookie: ownerCookie, body: { action: 'confirm' } });
-  assert.equal((await confirmedOne.json()).orderPaymentStatus, 'partially_paid');
+  const telegramJob = (await (await call(env, '/api/admin/jobs', { cookie: ownerCookie })).json()).jobs
+    .find((job) => job.action_type === 'telegram_payment_review');
+  assert.equal(telegramJob.status, 'review');
+  assert.equal((await call(env, `/api/admin/jobs/${telegramJob.id}/approve`, { method: 'POST', cookie: ownerCookie })).status, 503);
+  const outboundCalls = [];
+  Object.assign(env, {
+    TELEGRAM_BOT_TOKEN: 'test-token',
+    TELEGRAM_ADMIN_CHAT_ID: '777',
+    TELEGRAM_WEBHOOK_SECRET: 'telegram-secret',
+    TELEGRAM_ADMIN_BINDINGS: '456:manager@onyx.test',
+    OPENAI_API_KEY: 'test-openai-key',
+    OPENAI_MODEL: 'test-model',
+    async OUTBOUND_FETCH(url, options) {
+      const requestBody = JSON.parse(options.body);
+      outboundCalls.push({ url, body: requestBody });
+      if (url.includes('api.openai.com')) {
+        return Response.json({ model: 'test-model', output_text: 'Проверьте наличие у поставщика.' });
+      }
+      if (url.endsWith('/sendMessage')) return Response.json({ ok: true, result: { message_id: 42, chat: { id: 777 } } });
+      return Response.json({ ok: true, result: true });
+    },
+  });
+  assert.equal((await call(env, `/api/admin/jobs/${telegramJob.id}/approve`, { method: 'POST', cookie: ownerCookie })).status, 200);
+  assert.ok(outboundCalls.some((item) => item.url.endsWith('/sendMessage')));
+  const invalidWebhook = await call(env, '/api/webhooks/telegram', {
+    method: 'POST', headers: { 'x-telegram-bot-api-secret-token': 'wrong' }, body: { update_id: 1 },
+  });
+  assert.equal(invalidWebhook.status, 403);
+  const telegramWebhook = await call(env, '/api/webhooks/telegram', {
+    method: 'POST', headers: { 'x-telegram-bot-api-secret-token': 'telegram-secret' },
+    body: { update_id: 2, callback_query: { id: 'callback-1', from: { id: 456 }, data: `pay_confirm:${paymentOneId}`, message: { message_id: 42, chat: { id: 777 } } } },
+  });
+  assert.equal(telegramWebhook.status, 200);
+  assert.equal((await telegramWebhook.json()).status, 'confirmed');
+  const duplicateWebhook = await call(env, '/api/webhooks/telegram', {
+    method: 'POST', headers: { 'x-telegram-bot-api-secret-token': 'telegram-secret' },
+    body: { update_id: 2, callback_query: { id: 'callback-1', from: { id: 456 }, data: `pay_confirm:${paymentOneId}`, message: { message_id: 42, chat: { id: 777 } } } },
+  });
+  assert.equal((await duplicateWebhook.json()).duplicate, true);
+  const afterTelegram = await (await call(env, `/api/admin/orders/${orderId}`, { cookie: ownerCookie })).json();
+  assert.equal(afterTelegram.order.payment_status, 'partially_paid');
   assert.equal((await (await call(env, `/api/admin/payments/${paymentOneId}`, { method: 'PATCH', cookie: ownerCookie, body: { action: 'confirm' } })).json()).duplicate, true);
+
+  const assistant = await call(env, `/api/admin/orders/${orderId}/assistant`, {
+    method: 'POST', cookie: managerCookie, body: { purpose: 'next_action', input: 'Что делать дальше?' },
+  });
+  assert.equal(assistant.status, 200);
+  assert.match((await assistant.json()).assistant.output, /наличие/);
 
   const paymentTwo = await call(env, `/api/admin/orders/${orderId}/payments`, {
     method: 'POST', cookie: ownerCookie, headers: { 'idempotency-key': 'manual-payment-002' },
