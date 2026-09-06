@@ -59,6 +59,43 @@ async function createStaffAndLogin(env, ownerCookie, role, email) {
   return cookieFrom(login);
 }
 
+test('локальная HTTP-сессия работает без Secure, а HTTPS сохраняет Secure', async (t) => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'onyx-local-auth-'));
+  const DB = new TestD1(path.join(directory, 'ops.sqlite'));
+  t.after(() => {
+    DB.close();
+    fs.rmSync(directory, { recursive: true, force: true });
+  });
+  migrate(DB);
+  const env = envFor(DB);
+  await call(env, '/api/admin/bootstrap', {
+    method: 'POST',
+    headers: { 'x-setup-token': 'setup-secret' },
+    body: { email: 'owner@onyx.test', name: 'Владелец', password: 'strong-password-123' },
+  });
+
+  const localLogin = await worker.fetch(new Request('http://localhost:8787/api/auth/login', {
+    method: 'POST',
+    headers: { origin: 'http://localhost:8787', 'content-type': 'application/json' },
+    body: JSON.stringify({ email: 'owner@onyx.test', password: 'strong-password-123' }),
+  }), env, { waitUntil() {} });
+  assert.equal(localLogin.status, 200);
+  const localSetCookie = localLogin.headers.get('set-cookie');
+  assert.match(localSetCookie, /HttpOnly/);
+  assert.doesNotMatch(localSetCookie, /; Secure/);
+
+  const localSession = localSetCookie.split(';')[0];
+  const currentUser = await worker.fetch(new Request('http://localhost:8787/api/auth/me', {
+    headers: { origin: 'http://localhost:8787', cookie: localSession },
+  }), env, { waitUntil() {} });
+  assert.equal(currentUser.status, 200);
+
+  const secureLogin = await call(env, '/api/auth/login', {
+    method: 'POST', body: { email: 'owner@onyx.test', password: 'strong-password-123' },
+  });
+  assert.match(secureLogin.headers.get('set-cookie'), /; Secure/);
+});
+
 test('сквозной сценарий: сайт → сохранение → защита от дубля → перезапуск → панель', async (t) => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'onyx-ops-'));
   const databasePath = path.join(directory, 'ops.sqlite');
