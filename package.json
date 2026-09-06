@@ -1,11 +1,14 @@
 {
-  "name": "onyx-group-catalog-worker",
+  "name": "onyx-group-operations",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev",
+    "dev": "wrangler dev --local",
     "deploy": "wrangler deploy",
-    "check": "node --check src/index.mjs"
+    "test": "node --test *.test.mjs tests/*.test.mjs",
+    "check": "node --check src/index.mjs && node --check src/ops-core.mjs && node --check src/admin-shell.mjs && node smoke-check.mjs",
+    "db:migrate:local": "wrangler d1 migrations apply DB --local",
+    "db:migrate:remote": "wrangler d1 migrations apply DB --remote"
   },
   "devDependencies": {
     "wrangler": "^4.0.0"

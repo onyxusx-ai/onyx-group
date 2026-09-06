@@ -2864,26 +2864,56 @@ const SITE_CONFIG = window.ONYX_CONFIG || {};
       modal?.setAttribute("aria-hidden", "true");
     }
 
-    async function persistOrderRequest(payload) {
+    function createIdempotencyKey(scope = "order") {
+      const random = window.crypto?.randomUUID
+        ? window.crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+      return `${scope}:${random}`;
+    }
+
+    function waitForRetry(delay) {
+      return new Promise(resolve => setTimeout(resolve, delay));
+    }
+
+    async function persistOrderRequest(payload, idempotencyKey) {
       if (!ONYX_API_BASE) return null;
-      try {
-        const response = await fetch(`${ONYX_API_BASE}/api/orders`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-        if (!response.ok) return null;
-        return await response.json();
-      } catch (error) {
-        return null;
+      const retryDelays = [0, 450, 1200];
+      for (const delay of retryDelays) {
+        if (delay) await waitForRetry(delay);
+        try {
+          const response = await fetch(`${ONYX_API_BASE}/api/orders`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Idempotency-Key": idempotencyKey
+            },
+            body: JSON.stringify(payload)
+          });
+          const data = await response.json().catch(() => null);
+          if (response.ok) return data;
+          if (response.status < 500 && response.status !== 429) return null;
+        } catch (error) {
+          // Повтор использует тот же ключ: сервер не создаст второй заказ.
+        }
       }
+      return null;
     }
 
     async function openTelegramOrder(message, payload = {}) {
+      const idempotencyKey = createIdempotencyKey(payload.type || "order");
       await copyTextSafe(message);
-      await persistOrderRequest({ ...payload, message });
+      const persisted = await persistOrderRequest({
+        ...payload,
+        source: "github-pages",
+        buyerType: payload.buyerType || "consumer",
+        saleCurrency: payload.saleCurrency || "RUB",
+        message
+      }, idempotencyKey);
       showTelegramHandoff(message);
-      showToast("Заявка подготовлена и скопирована");
+      showToast(persisted?.order?.code
+        ? `Заявка ${persisted.order.code} сохранена и скопирована`
+        : "Заявка скопирована. Сервер недоступен — передай её менеджеру вручную");
+      return persisted;
     }
 
     function buildMarketplaceSearchUrl(platformId, query) {
@@ -2938,7 +2968,9 @@ const SITE_CONFIG = window.ONYX_CONFIG || {};
         type: "individual",
         customerName: $("quoteName").value.trim(),
         customerContact: $("quoteContact").value.trim(),
-        productLink: $("quoteLink").value.trim()
+        productLink: $("quoteLink").value.trim(),
+        comment: $("quoteText").value.trim(),
+        saleCurrency: "RUB"
       });
       event.target.reset();
     }
@@ -2963,7 +2995,24 @@ const SITE_CONFIG = window.ONYX_CONFIG || {};
         { label: "Примерный итог", value: formatRub(getCartTotal()) },
         { label: "Комментарий", value: $("customerComment").value.trim() }
       ]);
-      await openTelegramOrder(message, { type: "cart", total: getCartTotal(), items: cart });
+      await openTelegramOrder(message, {
+        type: "cart",
+        customerName: $("customerName").value.trim(),
+        customerContact: $("customerContact").value.trim(),
+        customerCity: $("customerCity").value.trim(),
+        comment: $("customerComment").value.trim(),
+        salesTotalMinor: Math.round(getCartTotal() * 100),
+        saleCurrency: "RUB",
+        items: cart.map(item => ({
+          name: item.name,
+          sku: item.sku || "",
+          qty: item.qty,
+          size: item.size || "",
+          color: item.color || "",
+          saleUnitMinor: Math.round(Number(item.priceRub || 0) * 100),
+          currency: "RUB"
+        }))
+      });
       cart = [];
       renderCart();
       event.target.reset();

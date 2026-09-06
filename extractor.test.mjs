@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { platformFromHostname, dedupeImageUrls, pickJsonLdProduct, parseNumericPrice } from '../extension/extractor-core.mjs';
+import { platformFromHostname, dedupeImageUrls, pickJsonLdProduct, parseNumericPrice } from './extractor-core.mjs';
 
 test('platformFromHostname recognizes marketplace hosts', () => {
   assert.equal(platformFromHostname('detail.1688.com'), '1688');

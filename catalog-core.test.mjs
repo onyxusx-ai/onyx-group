@@ -5,7 +5,7 @@ import {
   normalizeImageUrl,
   isSafeRemoteUrl,
   mapApiProduct,
-} from '../shared/catalog-core.mjs';
+} from './catalog-core.mjs';
 
 test('detectPlatform recognizes supported marketplaces', () => {
   assert.equal(detectPlatform('https://www.aliexpress.com/item/1.html'), 'AliExpress');

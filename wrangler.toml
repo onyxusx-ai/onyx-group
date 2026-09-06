@@ -3,9 +3,18 @@ main = "src/index.mjs"
 compatibility_date = "2026-07-01"
 
 [vars]
-ALLOWED_ORIGINS = "*"
+ALLOWED_ORIGINS = "https://onyxusx-ai.github.io,http://localhost:8787,http://127.0.0.1:8787"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "onyx-group-ops"
+database_id = "REPLACE_AFTER_RUNNING_WRANGLER_D1_CREATE"
+migrations_dir = "migrations"
 
 [[r2_buckets]]
 binding = "STORAGE"
 bucket_name = "onyx-group-storage"
 preview_bucket_name = "onyx-group-storage-dev"
+
+[triggers]
+crons = ["*/5 * * * *"]
