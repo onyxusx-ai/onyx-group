@@ -2905,6 +2905,7 @@ const SITE_CONFIG = window.ONYX_CONFIG || {};
       const persisted = await persistOrderRequest({
         ...payload,
         source: "github-pages",
+        buyerType: payload.buyerType || "consumer",
         saleCurrency: payload.saleCurrency || "RUB",
         message
       }, idempotencyKey);

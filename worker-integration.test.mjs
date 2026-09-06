@@ -30,6 +30,7 @@ test('worker imports exact listing image into storage and returns catalog', asyn
   const bucket = new FakeBucket();
   const database = new TestD1();
   database.migrate(path.resolve('migrations/0001_ops_mvp.sql'));
+  database.migrate(path.resolve('migrations/0002_confirmed_business_model.sql'));
   const env = { DB: database, STORAGE: bucket, ADMIN_TOKEN: 'secret', ALLOWED_ORIGINS: '*' };
   const originalFetch = globalThis.fetch;
   globalThis.fetch = async (input) => {

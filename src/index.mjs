@@ -1,10 +1,12 @@
 import { adminShell } from './admin-shell.mjs';
 import {
   ROLES,
+  BUYER_TYPES,
   ORDER_STATUSES,
   PAYMENT_STATUSES,
   DELIVERY_STATUSES,
   SUPPLIER_ORDER_STATUSES,
+  SHIPMENT_STATUSES,
   assertTransition,
   calculateFinancialSnapshot,
   evaluateSupplierOffer,
@@ -55,6 +57,19 @@ function cleanText(value, max = 500, { required = false, field = 'Поле' } = 
 
 function normalizeContact(value) {
   return cleanText(value, 240, { required: true, field: 'Контакт' }).toLowerCase().replace(/\s+/g, ' ');
+}
+
+function normalizeBuyerType(value, fallback = 'consumer') {
+  const buyerType = cleanText(value || fallback, 30);
+  if (!BUYER_TYPES.includes(buyerType)) throw new HttpError(422, 'INVALID_BUYER_TYPE', 'Тип покупателя должен быть consumer или dropshipper.');
+  return buyerType;
+}
+
+function normalizeClockTime(value) {
+  const time = cleanText(value, 5);
+  if (!time) return null;
+  if (!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(time)) throw new HttpError(422, 'INVALID_TIME', 'Время должно быть в формате ЧЧ:ММ.');
+  return time;
 }
 
 function parseCookie(request, name) {
@@ -283,19 +298,20 @@ async function handleLogout(request, env) {
   return json(request, env, { ok: true }, 200, { 'set-cookie': 'onyx_session=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0' });
 }
 
-async function upsertCustomer(env, payload, timestamp) {
+async function upsertCustomer(env, payload, timestamp, buyerType = 'consumer') {
   const contact = cleanText(payload.customerContact || payload.contact, 240, { required: true, field: 'Контакт клиента' });
   const normalized = normalizeContact(contact);
   const id = makeId('cus');
   await dbRun(env, `INSERT INTO customers
-    (id,name,contact,normalized_contact,phone,email,country,city,address,created_at,updated_at)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?)
+    (id,name,contact,normalized_contact,phone,email,country,city,address,customer_type,created_at,updated_at)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
     ON CONFLICT(normalized_contact) DO UPDATE SET
       name=CASE WHEN excluded.name <> '' THEN excluded.name ELSE customers.name END,
       contact=excluded.contact,
       country=CASE WHEN excluded.country <> '' THEN excluded.country ELSE customers.country END,
       city=CASE WHEN excluded.city <> '' THEN excluded.city ELSE customers.city END,
       address=CASE WHEN excluded.address <> '' THEN excluded.address ELSE customers.address END,
+      customer_type=CASE WHEN customers.customer_type=excluded.customer_type THEN customers.customer_type ELSE 'both' END,
       updated_at=excluded.updated_at`, [
     id,
     cleanText(payload.customerName || payload.name, 160),
@@ -306,6 +322,7 @@ async function upsertCustomer(env, payload, timestamp) {
     cleanText(payload.country, 100),
     cleanText(payload.city || payload.customerCity, 120),
     cleanText(payload.address, 500),
+    buyerType,
     timestamp,
     timestamp,
   ]);
@@ -355,7 +372,8 @@ async function createPublicOrder(request, env, context) {
   if (duplicate) return json(request, env, { ok: true, duplicate: true, order: { id: duplicate.id, code: duplicate.public_code } });
 
   const timestamp = nowIso();
-  const customer = await upsertCustomer(env, payload, timestamp);
+  const buyerType = normalizeBuyerType(payload.buyerType);
+  const customer = await upsertCustomer(env, payload, timestamp, buyerType);
   const currency = normalizeCurrency(payload.saleCurrency || payload.currency || 'RUB');
   const items = publicOrderItems(payload, currency);
   const providedTotal = payload.salesTotalMinor ?? payload.totalMinor;
@@ -366,13 +384,14 @@ async function createPublicOrder(request, env, context) {
   const publicCode = makePublicCode();
   const nextActionAt = new Date(Date.now() + 4 * 60 * 60_000).toISOString();
   const insert = await dbRun(env, `INSERT OR IGNORE INTO orders
-    (id,public_code,source,source_event_id,customer_id,order_status,payment_status,delivery_status,comment,sale_currency,sales_total_minor,next_action_at,created_at,updated_at)
-    VALUES (?,?,?,?,?,'new','unpaid','not_started',?,?,?,?,?,?)`, [
+    (id,public_code,source,source_event_id,customer_id,buyer_type,order_status,payment_status,delivery_status,comment,sale_currency,sales_total_minor,next_action_at,created_at,updated_at)
+    VALUES (?,?,?,?,?,?,'new','unpaid','not_started',?,?,?,?,?,?)`, [
     orderId,
     publicCode,
     cleanText(payload.source || `site:${payload.type || 'order'}`, 80),
     sourceEventId,
     customer.id,
+    buyerType,
     cleanText(payload.message || payload.comment, 4000),
     currency,
     salesTotalMinor,
@@ -409,6 +428,7 @@ function listQueryParams(url) {
     orderStatus: cleanText(url.searchParams.get('orderStatus'), 40),
     paymentStatus: cleanText(url.searchParams.get('paymentStatus'), 40),
     deliveryStatus: cleanText(url.searchParams.get('deliveryStatus'), 40),
+    buyerType: cleanText(url.searchParams.get('buyerType'), 30),
     assignedTo: cleanText(url.searchParams.get('assignedTo'), 80),
     attention: url.searchParams.get('attention') === '1',
   };
@@ -426,6 +446,7 @@ async function listOrders(request, env, user, url) {
   if (filters.orderStatus) { clauses.push('o.order_status = ?'); values.push(filters.orderStatus); }
   if (filters.paymentStatus) { clauses.push('o.payment_status = ?'); values.push(filters.paymentStatus); }
   if (filters.deliveryStatus) { clauses.push('o.delivery_status = ?'); values.push(filters.deliveryStatus); }
+  if (filters.buyerType) { clauses.push('o.buyer_type = ?'); values.push(normalizeBuyerType(filters.buyerType)); }
   if (filters.assignedTo) { clauses.push('o.assigned_to = ?'); values.push(filters.assignedTo); }
   if (filters.attention) { clauses.push(`o.order_status IN (${ACTIVE_ORDER_STATUSES}) AND (o.next_action_at IS NULL OR o.next_action_at < ?)`); values.push(nowIso()); }
   const rows = await dbAll(env, `SELECT o.*, c.name AS customer_name, c.contact AS customer_contact, u.name AS assigned_name
@@ -452,7 +473,7 @@ async function orderDetail(request, env, user, orderId) {
     order.customer_email = maskContact(order.customer_email);
     order.customer_address = null;
   }
-  const [items, supplierOrders, supplierItems, movements, events] = await Promise.all([
+  const [items, supplierOrders, supplierItems, movements, payments, shipments, events] = await Promise.all([
     dbAll(env, 'SELECT * FROM order_items WHERE order_id=? ORDER BY created_at', [orderId]),
     dbAll(env, `SELECT so.*, s.name AS supplier_name FROM supplier_orders so JOIN suppliers s ON s.id=so.supplier_id
       WHERE so.buyer_order_id=? ORDER BY so.created_at`, [orderId]),
@@ -461,6 +482,11 @@ async function orderDetail(request, env, user, orderId) {
       JOIN suppliers s ON s.id=so.supplier_id JOIN order_items oi ON oi.id=soi.order_item_id
       WHERE so.buyer_order_id=? ORDER BY soi.created_at`, [orderId]),
     dbAll(env, 'SELECT * FROM money_movements WHERE order_id=? ORDER BY created_at', [orderId]),
+    dbAll(env, `SELECT p.*, u.name AS created_by_name, c.name AS confirmed_by_name
+      FROM payment_records p JOIN staff_users u ON u.id=p.created_by
+      LEFT JOIN staff_users c ON c.id=p.confirmed_by WHERE p.order_id=? ORDER BY p.created_at`, [orderId]),
+    dbAll(env, `SELECT sh.*, u.name AS confirmed_by_name FROM shipments sh
+      LEFT JOIN staff_users u ON u.id=sh.confirmed_by WHERE sh.order_id=? ORDER BY sh.created_at`, [orderId]),
     dbAll(env, `SELECT e.*, u.name AS actor_name FROM order_events e LEFT JOIN staff_users u ON u.id=e.actor_user_id
       WHERE e.order_id=? ORDER BY e.created_at DESC LIMIT 200`, [orderId]),
   ]);
@@ -473,6 +499,8 @@ async function orderDetail(request, env, user, orderId) {
       items: supplierItems.filter((item) => item.supplier_order_id === supplierOrder.id),
     })),
     movements,
+    payments,
+    shipments,
     events,
     finance: calculateFinancialSnapshot(order, movements),
   });
@@ -556,6 +584,7 @@ async function updateOrder(request, env, user, orderId) {
     if (body.assignedTo && !assignee) throw new HttpError(422, 'INVALID_ASSIGNEE', 'Ответственный сотрудник не найден.');
     fields.push('assigned_to=?'); values.push(body.assignedTo || null);
   }
+  if (body.buyerType !== undefined) { fields.push('buyer_type=?'); values.push(normalizeBuyerType(body.buyerType)); }
   if (body.nextActionAt !== undefined) { fields.push('next_action_at=?'); values.push(body.nextActionAt || null); }
   if (body.priceReviewStatus !== undefined) { fields.push('price_review_status=?'); values.push(cleanText(body.priceReviewStatus, 40)); }
   if (body.stockReviewStatus !== undefined) { fields.push('stock_review_status=?'); values.push(cleanText(body.stockReviewStatus, 40)); }
@@ -566,8 +595,16 @@ async function updateOrder(request, env, user, orderId) {
   const timestamp = nowIso();
   fields.push('updated_at=?', 'version=version+1'); values.push(timestamp, orderId);
   await dbRun(env, `UPDATE orders SET ${fields.join(',')} WHERE id=?`, values);
+  if (body.buyerType !== undefined) {
+    await dbRun(env, `UPDATE customers SET customer_type=(
+      SELECT CASE WHEN COUNT(DISTINCT buyer_type)>1 THEN 'both' ELSE MAX(buyer_type) END
+      FROM orders WHERE customer_id=?
+    ),updated_at=? WHERE id=?`, [current.customer_id, timestamp, current.customer_id]);
+  }
   await dbRun(env, 'INSERT INTO order_events (id,order_id,actor_user_id,event_type,payload_json,created_at) VALUES (?,?,?,?,?,?)',
-    [makeId('evt'), orderId, user.id, 'order_updated', JSON.stringify({ fields: Object.keys(patch).concat(body.assignedTo !== undefined ? ['assigned_to'] : []) }), timestamp]);
+    [makeId('evt'), orderId, user.id, 'order_updated', JSON.stringify({ fields: Object.keys(patch)
+      .concat(body.assignedTo !== undefined ? ['assigned_to'] : [])
+      .concat(body.buyerType !== undefined ? ['buyer_type'] : []) }), timestamp]);
   return orderDetail(request, env, user, orderId);
 }
 
@@ -665,6 +702,150 @@ async function createMoneyMovement(request, env, user, orderId) {
   return json(request, env, { ok: true, movementId }, 201);
 }
 
+async function createPaymentRecord(request, env, user, orderId) {
+  assertMethod(request, 'POST');
+  const body = await readJson(request, 30_000);
+  const order = await dbFirst(env, 'SELECT * FROM orders WHERE id=?', [orderId]);
+  if (!order) throw new HttpError(404, 'ORDER_NOT_FOUND', 'Заказ не найден.');
+  const idempotencyKey = cleanText(request.headers.get('idempotency-key') || body.idempotencyKey, 120,
+    { required: true, field: 'Idempotency-Key' });
+  if (!/^[A-Za-z0-9._:-]{8,120}$/.test(idempotencyKey)) throw new HttpError(422, 'INVALID_IDEMPOTENCY_KEY', 'Некорректный ключ защиты от повторов.');
+  const duplicate = await dbFirst(env, 'SELECT id,status FROM payment_records WHERE idempotency_key=?', [idempotencyKey]);
+  if (duplicate) return json(request, env, { ok: true, duplicate: true, payment: duplicate });
+  const method = cleanText(body.method, 40);
+  if (!['bank_transfer', 'payment_provider', 'cash', 'other'].includes(method)) {
+    throw new HttpError(422, 'INVALID_PAYMENT_METHOD', 'Для пилота доступны перевод, платёжный провайдер, наличные или другой ручной способ.');
+  }
+  const expectedAmountMinor = normalizeMinor(body.expectedAmountMinor, { allowNull: false, field: 'Ожидаемая сумма' });
+  if (expectedAmountMinor < 0) throw new HttpError(422, 'VALIDATION_ERROR', 'Сумма не может быть отрицательной.');
+  const currency = normalizeCurrency(body.currency || order.sale_currency);
+  if (currency !== order.sale_currency) throw new HttpError(409, 'PAYMENT_CURRENCY_MISMATCH', 'В пилоте платёж должен быть в валюте заказа.');
+  const timestamp = nowIso();
+  const paymentId = makeId('pay');
+  const nextPaymentStatus = ['unpaid', 'failed'].includes(order.payment_status) ? 'pending' : order.payment_status;
+  await env.DB.batch([
+    env.DB.prepare(`INSERT INTO payment_records
+      (id,order_id,idempotency_key,method,status,expected_amount_minor,currency,provider,external_reference,note,created_by,created_at,updated_at)
+      VALUES (?,?,?,?,'pending_verification',?,?,?,?,?,?,?,?)`).bind(paymentId, orderId, idempotencyKey, method,
+      expectedAmountMinor, currency, cleanText(body.provider, 120) || null, cleanText(body.externalReference, 200) || null,
+      cleanText(body.note, 1000) || null, user.id, timestamp, timestamp),
+    env.DB.prepare('UPDATE orders SET payment_status=?,updated_at=?,version=version+1 WHERE id=?')
+      .bind(nextPaymentStatus, timestamp, orderId),
+    env.DB.prepare('INSERT INTO order_events (id,order_id,actor_user_id,event_type,payload_json,created_at) VALUES (?,?,?,?,?,?)')
+      .bind(makeId('evt'), orderId, user.id, 'payment_submitted_for_review', JSON.stringify({ paymentId, method, currency }), timestamp),
+  ]);
+  return json(request, env, { ok: true, duplicate: false, payment: { id: paymentId, status: 'pending_verification' } }, 201);
+}
+
+async function reviewPaymentRecord(request, env, user, paymentId) {
+  assertMethod(request, 'PATCH');
+  const body = await readJson(request, 20_000);
+  const payment = await dbFirst(env, 'SELECT * FROM payment_records WHERE id=?', [paymentId]);
+  if (!payment) throw new HttpError(404, 'PAYMENT_NOT_FOUND', 'Платёж не найден.');
+  const action = cleanText(body.action, 20, { required: true, field: 'Действие' });
+  const target = action === 'confirm' ? 'confirmed' : action === 'reject' ? 'rejected' : action === 'cancel' ? 'cancelled' : null;
+  if (!target) throw new HttpError(422, 'INVALID_PAYMENT_ACTION', 'Доступно подтверждение, отклонение или отмена.');
+  if (payment.status === target) return json(request, env, { ok: true, duplicate: true, payment: { id: payment.id, status: target } });
+  if (payment.status !== 'pending_verification') throw new HttpError(409, 'PAYMENT_ALREADY_REVIEWED', 'Платёж уже обработан.');
+  const order = await dbFirst(env, 'SELECT * FROM orders WHERE id=?', [payment.order_id]);
+  const timestamp = nowIso();
+  if (target !== 'confirmed') {
+    const pending = await dbFirst(env, `SELECT COUNT(*) AS count FROM payment_records
+      WHERE order_id=? AND status='pending_verification' AND id<>?`, [payment.order_id, payment.id]);
+    const nextStatus = Number(pending?.count || 0) ? order.payment_status : (order.payment_status === 'pending' ? 'failed' : order.payment_status);
+    await env.DB.batch([
+      env.DB.prepare('UPDATE payment_records SET status=?,confirmed_by=?,confirmed_at=?,updated_at=? WHERE id=?')
+        .bind(target, user.id, timestamp, timestamp, payment.id),
+      env.DB.prepare('UPDATE orders SET payment_status=?,updated_at=?,version=version+1 WHERE id=?')
+        .bind(nextStatus, timestamp, payment.order_id),
+      env.DB.prepare('INSERT INTO order_events (id,order_id,actor_user_id,event_type,payload_json,created_at) VALUES (?,?,?,?,?,?)')
+        .bind(makeId('evt'), payment.order_id, user.id, 'payment_reviewed', JSON.stringify({ paymentId, status: target }), timestamp),
+    ]);
+    return json(request, env, { ok: true, duplicate: false, payment: { id: payment.id, status: target } });
+  }
+
+  const receivedAmountMinor = normalizeMinor(body.receivedAmountMinor ?? payment.expected_amount_minor,
+    { allowNull: false, field: 'Полученная сумма' });
+  if (receivedAmountMinor < 0) throw new HttpError(422, 'VALIDATION_ERROR', 'Сумма не может быть отрицательной.');
+  const confirmed = await dbFirst(env, `SELECT COALESCE(SUM(received_amount_minor),0) AS total
+    FROM payment_records WHERE order_id=? AND status='confirmed' AND currency=?`, [payment.order_id, payment.currency]);
+  const confirmedTotal = Number(confirmed?.total || 0) + receivedAmountMinor;
+  const nextStatus = order.sales_total_minor !== null && confirmedTotal >= Number(order.sales_total_minor) ? 'paid' : 'partially_paid';
+  try { assertTransition('payment', order.payment_status, nextStatus); }
+  catch (error) { throw new HttpError(409, 'INVALID_STATUS_TRANSITION', error.message); }
+  const movementId = makeId('mov');
+  await env.DB.batch([
+    env.DB.prepare(`UPDATE payment_records SET status='confirmed',received_amount_minor=?,provider=?,external_reference=?,
+      confirmed_by=?,confirmed_at=?,updated_at=? WHERE id=?`).bind(receivedAmountMinor,
+      cleanText(body.provider, 120) || payment.provider, cleanText(body.externalReference, 200) || payment.external_reference,
+      user.id, timestamp, timestamp, payment.id),
+    env.DB.prepare(`INSERT OR IGNORE INTO money_movements
+      (id,order_id,direction,category,status,amount_minor,currency,occurred_at,note,external_event_id,created_by,created_at)
+      VALUES (?,?,'in','revenue','actual',?,?,?,?,?,?,?)`).bind(movementId, payment.order_id, receivedAmountMinor,
+      payment.currency, timestamp, 'Подтверждённый платёж', `payment:${payment.id}`, user.id, timestamp),
+    env.DB.prepare('UPDATE orders SET payment_status=?,updated_at=?,version=version+1 WHERE id=?')
+      .bind(nextStatus, timestamp, payment.order_id),
+    env.DB.prepare('INSERT INTO order_events (id,order_id,actor_user_id,event_type,payload_json,created_at) VALUES (?,?,?,?,?,?)')
+      .bind(makeId('evt'), payment.order_id, user.id, 'payment_confirmed', JSON.stringify({ paymentId, amountMinor: receivedAmountMinor, currency: payment.currency }), timestamp),
+  ]);
+  return json(request, env, { ok: true, duplicate: false, payment: { id: payment.id, status: 'confirmed' }, orderPaymentStatus: nextStatus }, 200);
+}
+
+async function createShipment(request, env, user, orderId) {
+  assertMethod(request, 'POST');
+  const body = await readJson(request, 20_000);
+  const order = await dbFirst(env, 'SELECT id FROM orders WHERE id=?', [orderId]);
+  if (!order) throw new HttpError(404, 'ORDER_NOT_FOUND', 'Заказ не найден.');
+  const idempotencyKey = cleanText(request.headers.get('idempotency-key') || body.idempotencyKey, 120,
+    { required: true, field: 'Idempotency-Key' });
+  if (!/^[A-Za-z0-9._:-]{8,120}$/.test(idempotencyKey)) throw new HttpError(422, 'INVALID_IDEMPOTENCY_KEY', 'Некорректный ключ защиты от повторов.');
+  const duplicate = await dbFirst(env, 'SELECT id,status FROM shipments WHERE idempotency_key=?', [idempotencyKey]);
+  if (duplicate) return json(request, env, { ok: true, duplicate: true, shipment: duplicate });
+  const pieces = Number(body.pieces || 1);
+  if (!Number.isSafeInteger(pieces) || pieces < 1) throw new HttpError(422, 'VALIDATION_ERROR', 'Количество мест должно быть целым положительным числом.');
+  const timestamp = nowIso();
+  const shipmentId = makeId('shp');
+  await env.DB.batch([
+    env.DB.prepare(`INSERT INTO shipments
+      (id,order_id,idempotency_key,cargo_name,status,tracking_code,pieces,note,created_at,updated_at)
+      VALUES (?,?,?,?,'pending_confirmation',?,?,?,?,?)`).bind(shipmentId, orderId, idempotencyKey,
+      cleanText(body.cargoName, 160, { required: true, field: 'Карго' }), cleanText(body.trackingCode, 200) || null,
+      pieces, cleanText(body.note, 1000) || null, timestamp, timestamp),
+    env.DB.prepare('INSERT INTO order_events (id,order_id,actor_user_id,event_type,payload_json,created_at) VALUES (?,?,?,?,?,?)')
+      .bind(makeId('evt'), orderId, user.id, 'shipment_submitted_for_confirmation', JSON.stringify({ shipmentId }), timestamp),
+  ]);
+  return json(request, env, { ok: true, duplicate: false, shipment: { id: shipmentId, status: 'pending_confirmation' } }, 201);
+}
+
+async function updateShipment(request, env, user, shipmentId) {
+  assertMethod(request, 'PATCH');
+  const body = await readJson(request, 20_000);
+  const shipment = await dbFirst(env, 'SELECT * FROM shipments WHERE id=?', [shipmentId]);
+  if (!shipment) throw new HttpError(404, 'SHIPMENT_NOT_FOUND', 'Отправление не найдено.');
+  const status = cleanText(body.status, 40, { required: true, field: 'Статус отправления' });
+  if (!SHIPMENT_STATUSES.includes(status)) throw new HttpError(422, 'INVALID_STATUS', 'Неизвестный статус отправления.');
+  try { assertTransition('shipment', shipment.status, status); }
+  catch (error) { throw new HttpError(409, 'INVALID_STATUS_TRANSITION', error.message); }
+  const order = await dbFirst(env, 'SELECT * FROM orders WHERE id=?', [shipment.order_id]);
+  const deliveryMap = { confirmed: 'preparing', partially_shipped: 'partially_shipped', shipped: 'shipped', delivered: 'delivered', not_collected: 'not_collected', returning: 'returning', returned: 'returned', issue: 'issue', cancelled: 'cancelled' };
+  const requestedDelivery = deliveryMap[status];
+  let nextDelivery = order.delivery_status;
+  if (requestedDelivery) {
+    try { assertTransition('delivery', order.delivery_status, requestedDelivery); nextDelivery = requestedDelivery; }
+    catch { nextDelivery = order.delivery_status; }
+  }
+  const timestamp = nowIso();
+  await env.DB.batch([
+    env.DB.prepare(`UPDATE shipments SET status=?,tracking_code=?,confirmed_by=?,confirmed_at=COALESCE(confirmed_at,?),updated_at=? WHERE id=?`)
+      .bind(status, cleanText(body.trackingCode, 200) || shipment.tracking_code, user.id, timestamp, timestamp, shipment.id),
+    env.DB.prepare(`UPDATE orders SET delivery_status=?,tracking_location=?,updated_at=?,version=version+1 WHERE id=?`)
+      .bind(nextDelivery, cleanText(body.location, 300) || order.tracking_location, timestamp, shipment.order_id),
+    env.DB.prepare('INSERT INTO order_events (id,order_id,actor_user_id,event_type,payload_json,created_at) VALUES (?,?,?,?,?,?)')
+      .bind(makeId('evt'), shipment.order_id, user.id, 'shipment_confirmed', JSON.stringify({ shipmentId, status, deliveryStatus: nextDelivery }), timestamp),
+  ]);
+  return json(request, env, { ok: true, shipment: { id: shipment.id, status }, deliveryStatus: nextDelivery });
+}
+
 async function updateOrderFinance(request, env, user, orderId) {
   assertMethod(request, 'PATCH');
   const body = await readJson(request, 30_000);
@@ -748,9 +929,11 @@ async function createSupplier(request, env) {
   const name = cleanText(body.name, 200, { required: true, field: 'Название поставщика' });
   const currency = body.defaultCurrency ? normalizeCurrency(body.defaultCurrency) : null;
   const timestamp = nowIso();
-  await dbRun(env, `INSERT INTO suppliers (id,name,channel,contact,default_currency,terms,active,created_at,updated_at)
-    VALUES (?,?,?,?,?,?,1,?,?)`, [id, name, cleanText(body.channel || 'manual', 60), cleanText(body.contact, 300) || null,
-    currency, cleanText(body.terms, 2000) || null, timestamp, timestamp]);
+  await dbRun(env, `INSERT INTO suppliers
+    (id,name,channel,contact,default_currency,terms,contact_timezone,contact_window_start,contact_window_end,active,created_at,updated_at)
+    VALUES (?,?,?,?,?,?,?,?,?,1,?,?)`, [id, name, cleanText(body.channel || 'manual', 60), cleanText(body.contact, 300) || null,
+    currency, cleanText(body.terms, 2000) || null, cleanText(body.contactTimezone || 'Asia/Shanghai', 80),
+    normalizeClockTime(body.contactWindowStart), normalizeClockTime(body.contactWindowEnd), timestamp, timestamp]);
   return json(request, env, { ok: true, supplier: { id, name, default_currency: currency } }, 201);
 }
 
@@ -1036,6 +1219,14 @@ async function handleAdminApi(request, env, url) {
   if (match) { await requireUser(request, env, ['owner', 'manager']); return createSupplierOrder(request, env, user, decodeURIComponent(match[1])); }
   match = path.match(/^\/api\/admin\/orders\/([^/]+)\/money-movements$/);
   if (match) { await requireUser(request, env, ['owner', 'finance']); return createMoneyMovement(request, env, user, decodeURIComponent(match[1])); }
+  match = path.match(/^\/api\/admin\/orders\/([^/]+)\/payments$/);
+  if (match) { await requireUser(request, env, ['owner', 'finance']); return createPaymentRecord(request, env, user, decodeURIComponent(match[1])); }
+  match = path.match(/^\/api\/admin\/payments\/([^/]+)$/);
+  if (match) { await requireUser(request, env, ['owner']); return reviewPaymentRecord(request, env, user, decodeURIComponent(match[1])); }
+  match = path.match(/^\/api\/admin\/orders\/([^/]+)\/shipments$/);
+  if (match) { await requireUser(request, env, ['owner', 'manager']); return createShipment(request, env, user, decodeURIComponent(match[1])); }
+  match = path.match(/^\/api\/admin\/shipments\/([^/]+)$/);
+  if (match) { await requireUser(request, env, ['owner']); return updateShipment(request, env, user, decodeURIComponent(match[1])); }
   match = path.match(/^\/api\/admin\/orders\/([^/]+)\/finance$/);
   if (match) { await requireUser(request, env, ['owner', 'finance']); return updateOrderFinance(request, env, user, decodeURIComponent(match[1])); }
   match = path.match(/^\/api\/admin\/supplier-orders\/([^/]+)$/);

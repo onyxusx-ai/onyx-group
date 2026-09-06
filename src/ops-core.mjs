@@ -1,4 +1,5 @@
 export const ROLES = ['owner', 'manager', 'finance'];
+export const BUYER_TYPES = ['consumer', 'dropshipper'];
 
 export const ORDER_STATUSES = [
   'new',
@@ -19,6 +20,7 @@ export const ORDER_STATUSES = [
 export const PAYMENT_STATUSES = [
   'unpaid',
   'pending',
+  'partially_paid',
   'paid',
   'failed',
   'partially_refunded',
@@ -52,6 +54,19 @@ export const SUPPLIER_ORDER_STATUSES = [
   'problem',
 ];
 
+export const SHIPMENT_STATUSES = [
+  'pending_confirmation',
+  'confirmed',
+  'partially_shipped',
+  'shipped',
+  'delivered',
+  'not_collected',
+  'returning',
+  'returned',
+  'issue',
+  'cancelled',
+];
+
 export const CURRENCIES = ['USD', 'UZS', 'RUB', 'KZT', 'TJS', 'KGS', 'BYN', 'EUR', 'CNY'];
 
 const TRANSITIONS = {
@@ -71,9 +86,10 @@ const TRANSITIONS = {
     cancelled: [],
   },
   payment: {
-    unpaid: ['pending', 'paid', 'cancelled'],
-    pending: ['paid', 'failed', 'cancelled'],
-    failed: ['pending', 'paid', 'cancelled'],
+    unpaid: ['pending', 'partially_paid', 'paid', 'cancelled'],
+    pending: ['partially_paid', 'paid', 'failed', 'cancelled'],
+    partially_paid: ['pending', 'paid', 'partially_refunded', 'refunded', 'cancelled'],
+    failed: ['pending', 'partially_paid', 'paid', 'cancelled'],
     paid: ['partially_refunded', 'refunded'],
     partially_refunded: ['refunded'],
     refunded: [],
@@ -102,6 +118,18 @@ const TRANSITIONS = {
     problem: ['awaiting_confirmation', 'cancelled'],
     cancelled: [],
     returned: [],
+  },
+  shipment: {
+    pending_confirmation: ['confirmed', 'cancelled', 'issue'],
+    confirmed: ['partially_shipped', 'shipped', 'cancelled', 'issue'],
+    partially_shipped: ['shipped', 'delivered', 'returning', 'issue'],
+    shipped: ['delivered', 'not_collected', 'returning', 'issue'],
+    delivered: ['returning'],
+    not_collected: ['returning'],
+    returning: ['returned', 'issue'],
+    issue: ['confirmed', 'shipped', 'returning', 'cancelled'],
+    returned: [],
+    cancelled: [],
   },
 };
 

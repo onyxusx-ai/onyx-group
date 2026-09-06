@@ -10,6 +10,8 @@ fs.mkdirSync(path.dirname(databasePath), { recursive: true });
 const databaseExists = fs.existsSync(databasePath);
 const DB = new TestD1(databasePath);
 if (!databaseExists) DB.migrate(path.resolve('migrations/0001_ops_mvp.sql'));
+const confirmedModelApplied = DB.prepare("SELECT 1 AS found FROM pragma_table_info('orders') WHERE name='buyer_type'").first();
+if (!confirmedModelApplied) DB.migrate(path.resolve('migrations/0002_confirmed_business_model.sql'));
 
 const env = {
   DB,

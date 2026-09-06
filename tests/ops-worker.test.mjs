@@ -6,7 +6,11 @@ import path from 'node:path';
 import worker, { runAutomationJob } from '../src/index.mjs';
 import { TestD1 } from './d1-test-adapter.mjs';
 
-const migration = path.resolve('migrations/0001_ops_mvp.sql');
+const migrations = [
+  path.resolve('migrations/0001_ops_mvp.sql'),
+  path.resolve('migrations/0002_confirmed_business_model.sql'),
+];
+const migrate = (DB) => migrations.forEach((migration) => DB.migrate(migration));
 const origin = 'https://onyxusx-ai.github.io';
 
 function envFor(DB) {
@@ -58,7 +62,7 @@ test('сквозной сценарий: сайт → сохранение → �
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'onyx-ops-'));
   const databasePath = path.join(directory, 'ops.sqlite');
   let DB = new TestD1(databasePath);
-  DB.migrate(migration);
+  migrate(DB);
   let env = envFor(DB);
   const ownerCookie = await bootstrapAndLogin(env);
 
@@ -93,7 +97,7 @@ test('сквозной сценарий: сайт → сохранение → �
 test('цена, наличие, несколько поставщиков, роли, возврат и очередь ошибок', async (t) => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'onyx-ops-'));
   const DB = new TestD1(path.join(directory, 'ops.sqlite'));
-  DB.migrate(migration);
+  migrate(DB);
   const env = envFor(DB);
   const ownerCookie = await bootstrapAndLogin(env);
   const managerCookie = await createStaffAndLogin(env, ownerCookie, 'manager', 'manager@onyx.test');
@@ -129,11 +133,46 @@ test('цена, наличие, несколько поставщиков, ро�
 
   const orderResponse = await call(env, '/api/orders', {
     method: 'POST', headers: { 'idempotency-key': 'site:test-order-002' },
-    body: { customerName: 'Клиент', customerContact: '+998 90 000 00 00', saleCurrency: 'RUB', salesTotalMinor: 300_000, items: [{ name: 'Товар', qty: 2, saleUnitMinor: 150_000, currency: 'RUB' }] },
+    body: { buyerType: 'dropshipper', customerName: 'Клиент', customerContact: '+998 90 000 00 00', saleCurrency: 'RUB', salesTotalMinor: 300_000, items: [{ name: 'Товар', qty: 2, saleUnitMinor: 150_000, currency: 'RUB' }] },
   });
   const orderId = (await orderResponse.json()).order.id;
   const detail = await (await call(env, `/api/admin/orders/${orderId}`, { cookie: managerCookie })).json();
+  assert.equal(detail.order.buyer_type, 'dropshipper');
   const orderItemId = detail.items[0].id;
+
+  const paymentOne = await call(env, `/api/admin/orders/${orderId}/payments`, {
+    method: 'POST', cookie: financeCookie, headers: { 'idempotency-key': 'manual-payment-001' },
+    body: { method: 'bank_transfer', expectedAmountMinor: 100_000, currency: 'RUB', provider: 'Тестовый банк' },
+  });
+  assert.equal(paymentOne.status, 201);
+  const paymentOneId = (await paymentOne.json()).payment.id;
+  const duplicatePayment = await call(env, `/api/admin/orders/${orderId}/payments`, {
+    method: 'POST', cookie: financeCookie, headers: { 'idempotency-key': 'manual-payment-001' },
+    body: { method: 'bank_transfer', expectedAmountMinor: 100_000, currency: 'RUB' },
+  });
+  assert.equal((await duplicatePayment.json()).duplicate, true);
+  assert.equal((await call(env, `/api/admin/payments/${paymentOneId}`, { method: 'PATCH', cookie: financeCookie, body: { action: 'confirm' } })).status, 403);
+  const confirmedOne = await call(env, `/api/admin/payments/${paymentOneId}`, { method: 'PATCH', cookie: ownerCookie, body: { action: 'confirm' } });
+  assert.equal((await confirmedOne.json()).orderPaymentStatus, 'partially_paid');
+  assert.equal((await (await call(env, `/api/admin/payments/${paymentOneId}`, { method: 'PATCH', cookie: ownerCookie, body: { action: 'confirm' } })).json()).duplicate, true);
+
+  const paymentTwo = await call(env, `/api/admin/orders/${orderId}/payments`, {
+    method: 'POST', cookie: ownerCookie, headers: { 'idempotency-key': 'manual-payment-002' },
+    body: { method: 'payment_provider', expectedAmountMinor: 200_000, currency: 'RUB', provider: 'Тестовый провайдер' },
+  });
+  const paymentTwoId = (await paymentTwo.json()).payment.id;
+  const confirmedTwo = await call(env, `/api/admin/payments/${paymentTwoId}`, { method: 'PATCH', cookie: ownerCookie, body: { action: 'confirm' } });
+  assert.equal((await confirmedTwo.json()).orderPaymentStatus, 'paid');
+
+  const shipment = await call(env, `/api/admin/orders/${orderId}/shipments`, {
+    method: 'POST', cookie: managerCookie, headers: { 'idempotency-key': 'cargo-shipment-001' },
+    body: { cargoName: 'Тест Карго', trackingCode: 'CARGO-1', pieces: 2 },
+  });
+  assert.equal(shipment.status, 201);
+  const shipmentId = (await shipment.json()).shipment.id;
+  assert.equal((await call(env, `/api/admin/shipments/${shipmentId}`, { method: 'PATCH', cookie: managerCookie, body: { status: 'confirmed' } })).status, 403);
+  const confirmedShipment = await call(env, `/api/admin/shipments/${shipmentId}`, { method: 'PATCH', cookie: ownerCookie, body: { status: 'confirmed' } });
+  assert.equal((await confirmedShipment.json()).deliveryStatus, 'preparing');
 
   const changedPrice = await call(env, `/api/admin/orders/${orderId}/supplier-orders`, {
     method: 'POST', cookie: managerCookie,

@@ -8,6 +8,7 @@ const site = read('index.html');
 const admin = adminShell();
 const worker = read('src/index.mjs');
 const migration = read('migrations/0001_ops_mvp.sql');
+const businessModelMigration = read('migrations/0002_confirmed_business_model.sql');
 const manifest = JSON.parse(read('manifest.json'));
 const inlineScripts = [...site.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)]
   .map((match) => match[1])
@@ -45,6 +46,10 @@ assert(worker.includes('env.STORAGE.put'), 'Worker не сохраняет из�
 for (const table of ['staff_users', 'customers', 'orders', 'order_items', 'supplier_orders', 'supplier_order_items', 'money_movements', 'automation_jobs']) {
   assert(migration.includes(`CREATE TABLE ${table}`), `В миграции нет таблицы ${table}`);
 }
+for (const table of ['payment_records', 'shipments']) {
+  assert(businessModelMigration.includes(`CREATE TABLE ${table}`), `В миграции бизнес-модели нет таблицы ${table}`);
+}
+assert(businessModelMigration.includes('buyer_type'), 'Не зафиксированы два типа покупателей');
 assert(manifest.manifest_version === 3, 'Расширение должно быть Manifest V3');
 assert(manifest.permissions.includes('activeTab'), 'Расширению не хватает activeTab');
 console.log('Smoke check: OK');
