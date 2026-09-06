@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import worker from '../worker/src/index.mjs';
+import path from 'node:path';
+import worker from './src/index.mjs';
+import { TestD1 } from './tests/d1-test-adapter.mjs';
 
 class FakeBucket {
   constructor() { this.values = new Map(); }
@@ -26,7 +28,9 @@ class FakeBucket {
 
 test('worker imports exact listing image into storage and returns catalog', async () => {
   const bucket = new FakeBucket();
-  const env = { STORAGE: bucket, ADMIN_TOKEN: 'secret', ALLOWED_ORIGINS: '*' };
+  const database = new TestD1();
+  database.migrate(path.resolve('migrations/0001_ops_mvp.sql'));
+  const env = { DB: database, STORAGE: bucket, ADMIN_TOKEN: 'secret', ALLOWED_ORIGINS: '*' };
   const originalFetch = globalThis.fetch;
   globalThis.fetch = async (input) => {
     const url = String(input);
@@ -62,5 +66,6 @@ test('worker imports exact listing image into storage and returns catalog', asyn
     assert.deepEqual([...new Uint8Array(await mediaResponse.arrayBuffer())], [1, 2, 3, 4]);
   } finally {
     globalThis.fetch = originalFetch;
+    database.close();
   }
 });

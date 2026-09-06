@@ -1,0 +1,22 @@
+-- Откат удаляет только таблицы первой версии. Перед применением обязателен экспорт D1.
+PRAGMA foreign_keys = OFF;
+DROP TABLE IF EXISTS webhook_events;
+DROP TABLE IF EXISTS automation_jobs;
+DROP TABLE IF EXISTS automation_rules;
+DROP TABLE IF EXISTS order_events;
+DROP TABLE IF EXISTS money_movements;
+DROP TABLE IF EXISTS supplier_order_items;
+DROP TABLE IF EXISTS supplier_orders;
+DROP TABLE IF EXISTS order_items;
+DROP TABLE IF EXISTS supplier_offers;
+DROP TABLE IF EXISTS suppliers;
+DROP TABLE IF EXISTS product_images;
+DROP TABLE IF EXISTS product_variants;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS staff_assignments;
+DROP TABLE IF EXISTS customers;
+DROP TABLE IF EXISTS login_attempts;
+DROP TABLE IF EXISTS staff_sessions;
+DROP TABLE IF EXISTS staff_users;
+PRAGMA foreign_keys = ON;
