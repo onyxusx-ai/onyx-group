@@ -311,7 +311,8 @@ async function handleLogin(request, env) {
   const expiresAt = new Date(Date.now() + SESSION_SECONDS * 1000).toISOString();
   await dbRun(env, 'INSERT INTO staff_sessions (token_hash,user_id,created_at,expires_at,last_seen_at) VALUES (?,?,?,?,?)',
     [tokenHash, user.id, createdAt, expiresAt, createdAt]);
-  const cookie = `onyx_session=${encodeURIComponent(token)}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${SESSION_SECONDS}`;
+  const secure = new URL(request.url).protocol === 'https:' ? '; Secure' : '';
+  const cookie = `onyx_session=${encodeURIComponent(token)}; Path=/; HttpOnly${secure}; SameSite=Strict; Max-Age=${SESSION_SECONDS}`;
   return json(request, env, { ok: true, user: { id: user.id, email: user.email, name: user.name, role: user.role } }, 200, { 'set-cookie': cookie });
 }
 
@@ -319,7 +320,8 @@ async function handleLogout(request, env) {
   assertMethod(request, 'POST');
   const user = await getCurrentUser(request, env);
   if (user) await dbRun(env, 'DELETE FROM staff_sessions WHERE token_hash = ?', [user.tokenHash]);
-  return json(request, env, { ok: true }, 200, { 'set-cookie': 'onyx_session=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0' });
+  const secure = new URL(request.url).protocol === 'https:' ? '; Secure' : '';
+  return json(request, env, { ok: true }, 200, { 'set-cookie': `onyx_session=; Path=/; HttpOnly${secure}; SameSite=Strict; Max-Age=0` });
 }
 
 async function upsertCustomer(env, payload, timestamp, buyerType = 'consumer') {
